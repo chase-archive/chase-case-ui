@@ -1,5 +1,5 @@
-import MapGL from "react-map-gl/maplibre";
-import "maplibre-gl/dist/maplibre-gl.css";
+import MapGL from 'react-map-gl/maplibre';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 export default function App() {
   return (
@@ -10,9 +10,9 @@ export default function App() {
         zoom: 4,
       }}
       style={{
-        position: "absolute",
-        width: "100%",
-        height: "100%",
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
         left: 0,
         top: 0,
       }}
@@ -20,7 +20,7 @@ export default function App() {
       minZoom={4}
       maxZoom={10}
       touchPitch={false}
-      mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+      mapStyle='https://basemaps.cartocdn.com/gl/positron-gl-style/style.json'
     />
   );
 }
