@@ -10,7 +10,7 @@ export function useSearchCases(query: string, limit: number = 5) {
 
 export function useGetCasesByYear(year: number) {
   return useQuery<ChaseCase[]>({
-    queryKey: ['year', year],
+    queryKey: ['get-by-year', year],
     queryFn: () => getChaseCasesByYear(year),
   });
 }
