@@ -1,11 +1,11 @@
 import Map from './Map';
-import SearchBar from './SearchBar';
+import { QueryCases } from './query';
 
 export default function Layout() {
   return (
     <>
       <Map />
-      <SearchBar />
+      <QueryCases />
     </>
   );
 }

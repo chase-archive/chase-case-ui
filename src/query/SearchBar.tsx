@@ -7,12 +7,12 @@ import {
   useCombobox,
 } from '@mantine/core';
 import { useDebouncedState } from '@mantine/hooks';
-import { useSearchCases } from './api';
-import { ChaseCase } from './types';
-import classes from './SearchBar.module.css';
+import { useSearchCases } from '../api';
+import { ChaseCase } from '../types';
 import { MdSearch } from 'react-icons/md';
-import { useChaseCaseStore } from './store';
+import { useChaseCaseStore } from '../store';
 import { DateTime } from 'luxon';
+import styles from './QueryCases.module.css';
 
 const EVENT_TYPES = {
   tornado: 'red',
@@ -64,11 +64,9 @@ export default function SearchBar() {
   });
   const [query, setQuery] = useDebouncedState('', 300);
   const { data, isLoading, refetch } = useSearchCases(query);
-  const setSelectedCaseId = useChaseCaseStore(
-    (state) => state.setSelectedCaseId
-  );
+  const setSelectedCase = useChaseCaseStore((state) => state.setSelectedCase);
 
-  const options = (data || []).map((item) => (
+  const options = (data ?? []).map((item) => (
     <Combobox.Option value={item.id} key={item.id}>
       <SearchEntryOption item={item} />
     </Combobox.Option>
@@ -77,7 +75,9 @@ export default function SearchBar() {
   return (
     <Combobox
       onOptionSubmit={(optionValue) => {
-        setSelectedCaseId(optionValue);
+        setSelectedCase(
+          (data ?? []).find((item) => item.id === optionValue) ?? null
+        );
         combobox.closeDropdown();
       }}
       withinPortal={false}
@@ -85,7 +85,7 @@ export default function SearchBar() {
     >
       <Combobox.Target>
         <TextInput
-          className={classes.searchBar}
+          className={styles.searchBar}
           placeholder='Enter a town, date, or keyword'
           onChange={(event) => {
             setQuery(event.currentTarget.value);
