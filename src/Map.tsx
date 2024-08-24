@@ -1,7 +1,8 @@
 import MapGL from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import { PropsWithChildren } from 'react';
 
-export default function App() {
+export default function Map({ children }: PropsWithChildren) {
   return (
     <MapGL
       initialViewState={{
@@ -21,6 +22,8 @@ export default function App() {
       maxZoom={10}
       touchPitch={false}
       mapStyle='https://basemaps.cartocdn.com/gl/positron-gl-style/style.json'
-    />
+    >
+      {children}
+    </MapGL>
   );
 }

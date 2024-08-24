@@ -16,13 +16,17 @@ export default function YearSelector() {
   );
 
   const { data } = useGetCasesByYear(year);
-  const setSelectedCases = useChaseCaseStore((state) => state.setSelectedCases);
+  const [setSelectedCases, setHighlightedCases] = useChaseCaseStore((state) => [
+    state.setSelectedCases,
+    state.setHighlightedCases,
+  ]);
 
   useEffect(() => {
     if (data) {
       setSelectedCases(data);
+      setHighlightedCases([]);
     }
-  }, [data, setSelectedCases]);
+  }, [data, setHighlightedCases, setSelectedCases]);
 
   return (
     <Select

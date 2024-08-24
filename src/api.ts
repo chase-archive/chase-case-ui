@@ -28,7 +28,7 @@ async function getChaseCases(query: string) {
 
 async function getChaseCasesByYear(year: number) {
   const response = await fetch(
-    `https://urchin-app-tpil4.ondigitalocean.app/cases/year/${year}&limit=5`,
+    `https://urchin-app-tpil4.ondigitalocean.app/cases/year/${year}`,
     { headers: { accept: 'application/json' } }
   );
   if (!response.ok) {

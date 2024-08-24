@@ -2,15 +2,15 @@ import { create } from 'zustand';
 import { ChaseCase } from './types';
 
 export type ChaseCaseStore = {
-  selectedCase: ChaseCase | null;
-  setSelectedCase: (selectedCase: ChaseCase | null) => void;
+  highlightedCases: ChaseCase[];
+  setHighlightedCases: (highlightedCases: ChaseCase[]) => void;
   selectedCases: ChaseCase[];
   setSelectedCases: (selectedCases: ChaseCase[]) => void;
 };
 
 export const useChaseCaseStore = create<ChaseCaseStore>((set) => ({
-  selectedCase: null,
-  setSelectedCase: (selectedCaseId) => set({ selectedCase: selectedCaseId }),
+  highlightedCases: [],
+  setHighlightedCases: (highlightedCases) => set({ highlightedCases }),
   selectedCases: [],
   setSelectedCases: (selectedCases) => set({ selectedCases }),
 }));
