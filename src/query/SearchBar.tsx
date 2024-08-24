@@ -64,9 +64,9 @@ export default function SearchBar() {
   });
   const [query, setQuery] = useDebouncedState('', 300);
   const { data, isLoading, refetch } = useSearchCases(query);
-  const [setHighlightedCases, setSelectedCases] = useChaseCaseStore((state) => [
+  const [setHighlightedCases, setQueriedCases] = useChaseCaseStore((state) => [
     state.setHighlightedCases,
-    state.setSelectedCases,
+    state.setQueriedCases,
   ]);
 
   const options = (data ?? []).map((item) => (
@@ -80,7 +80,7 @@ export default function SearchBar() {
       onOptionSubmit={(optionValue) => {
         const cases = (data ?? []).filter((item) => item.id === optionValue);
         setHighlightedCases(cases);
-        setSelectedCases(cases);
+        setQueriedCases(cases);
         combobox.closeDropdown();
       }}
       withinPortal={false}

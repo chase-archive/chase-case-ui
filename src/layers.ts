@@ -1,10 +1,10 @@
 export const sources = {
-  selectedCases: 'selected-cases',
+  queriedCases: 'queried-cases',
   highlightedCases: 'highlighted-cases',
 };
 
 export const layers = {
-  selectedCasesHeatmap: `${sources.selectedCases}-heatmap`,
-  selectedCasesPoints: `${sources.selectedCases}-points`,
+  queriedCasesHeatmap: `${sources.queriedCases}-heatmap`,
+  queriedCasesPoints: `${sources.queriedCases}-points`,
   highlightedCasesPoints: `${sources.highlightedCases}-points`,
 };

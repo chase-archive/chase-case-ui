@@ -23,23 +23,23 @@ function CasesSource({ id, cases, children }: CasesSourceProps<ChaseCase>) {
 }
 
 export default function CasesMapDisplay() {
-  const [highlightedCases, selectedCases] = useChaseCaseStore((state) => [
+  const [highlightedCases, queriedCases] = useChaseCaseStore((state) => [
     state.highlightedCases,
-    state.selectedCases,
+    state.queriedCases,
   ]);
 
   return (
     <>
-      <CasesSource id={sources.selectedCases} cases={selectedCases} />
+      <CasesSource id={sources.queriedCases} cases={queriedCases} />
       <CasesSource id={sources.highlightedCases} cases={highlightedCases} />
       <CasesHeatmap
-        layerId={layers.selectedCasesHeatmap}
-        sourceId={sources.selectedCases}
+        layerId={layers.queriedCasesHeatmap}
+        sourceId={sources.queriedCases}
         transitionOut={[8, 8.5]}
       />
       <CasesPoints
-        layerId={layers.selectedCasesPoints}
-        sourceId={sources.selectedCases}
+        layerId={layers.queriedCasesPoints}
+        sourceId={sources.queriedCases}
         color='red'
         strokeWidth={1}
         radius={6}
