@@ -60,7 +60,6 @@ export function TwitterEmbed({ link }: Pick<EmbedProps, 'link'>) {
       width='560'
       height='560'
       style={{ border: 'none', overflow: 'hidden' }}
-      allowTransparency
     />
   );
 }

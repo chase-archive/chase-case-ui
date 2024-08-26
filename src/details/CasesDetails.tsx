@@ -1,12 +1,11 @@
-import { Anchor, Divider, Flex, Text } from '@mantine/core';
+import { Divider, Flex, Text } from '@mantine/core';
 import { useChaseCaseStore } from '../store';
 import { ChaseCase } from '../types';
 import styles from './CasesDetails.module.css';
 import { DateTime } from 'luxon';
 import { Fragment, useState } from 'react';
-import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Embed } from './Embed';
-import { isTwitterLink, isYouTubeLink } from '../utils/socials';
+import { LinkList } from './Link';
 
 export default function CaseDetails() {
   const queriedCases = useChaseCaseStore((state) => state.queriedCases);
@@ -40,13 +39,7 @@ function SingleCaseDetails({ chaseCase }: { chaseCase: ChaseCase }) {
         </Text>
         <LinkList
           links={chaseCase.documentation}
-          onClickLink={(link) => {
-            if (isYouTubeLink(link) || isTwitterLink(link)) {
-              setOpenedLink(link);
-            } else {
-              window.open(link, '_blank', 'noopener noreferrer');
-            }
-          }}
+          onClickSocialLink={(link) => setOpenedLink(link)}
         />
         <Embed
           title={chaseCase.location}
@@ -56,45 +49,5 @@ function SingleCaseDetails({ chaseCase }: { chaseCase: ChaseCase }) {
         />
       </Flex>
     </Flex>
-  );
-}
-
-function LinkList({
-  links,
-  onClickLink,
-}: {
-  links: string[];
-  onClickLink?: (link: string) => void;
-}) {
-  const linkProps = (link: string) => {
-    if (onClickLink) {
-      return {
-        href: '#',
-        onClick: () => onClickLink(link),
-      };
-    } else {
-      return {
-        href: link,
-        target: '_blank',
-      };
-    }
-  };
-
-  return (
-    <>
-      {links.length === 0 && <Text size='sm'>N/A</Text>}
-      {links.map((link, idx) => (
-        <Fragment key={idx}>
-          <Anchor {...linkProps(link)} size='sm' underline='hover'>
-            {idx + 1} <FaExternalLinkAlt />
-          </Anchor>
-          {idx < links.length - 1 && (
-            <Text size='sm' mr={8}>
-              ,
-            </Text>
-          )}
-        </Fragment>
-      ))}
-    </>
   );
 }
