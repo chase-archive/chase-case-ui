@@ -15,4 +15,5 @@ export interface HasTags {
 
 export interface ChaseCase extends HasLocation, HasTime, HasTags {
   id: string;
+  documentation: string[];
 }
