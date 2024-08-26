@@ -8,9 +8,9 @@ export default function Layout() {
     <>
       <Map>
         <CasesMapDisplay />
+        <CasesDetails />
+        <QueryCases />
       </Map>
-      <QueryCases />
-      <CasesDetails />
     </>
   );
 }

@@ -6,6 +6,7 @@ import { DateTime } from 'luxon';
 import { Fragment, useState } from 'react';
 import { Embed } from './Embed';
 import { LinkList } from './Link';
+import { useMap } from 'react-map-gl';
 
 export default function CaseDetails() {
   const [queriedCases, highlightedCases, setHighlightedCases] =
@@ -14,6 +15,8 @@ export default function CaseDetails() {
       state.highlightedCases,
       state.setHighlightedCases,
     ]);
+
+  const { current: map } = useMap();
 
   const highlightedCasesIds = highlightedCases.map((chaseCase) => chaseCase.id);
   return (
@@ -28,6 +31,10 @@ export default function CaseDetails() {
                 setHighlightedCases([]);
               } else {
                 setHighlightedCases([chaseCase]);
+                map?.flyTo({
+                  center: [chaseCase.lon, chaseCase.lat],
+                  zoom: 8,
+                });
               }
             }}
           />
@@ -53,6 +60,7 @@ function SingleCaseDetails({
 
   return (
     <Flex
+      className={styles.singleCaseDetails}
       direction='column'
       px='md'
       py='sm'
@@ -63,7 +71,7 @@ function SingleCaseDetails({
       }}
       style={{
         cursor: 'pointer',
-        ...(isHighlighted && { backgroundColor: 'rgba(255, 255, 0, 0.2)' }),
+        ...(isHighlighted && { backgroundColor: 'rgba(255, 255, 153, 0.75)' }),
       }}
     >
       <Text fw={700}>{chaseCase.location}</Text>

@@ -5,6 +5,12 @@ import { layers } from './layers';
 import _ from 'lodash';
 import { useChaseCaseStore } from './store';
 
+const INITIAL_VIEW_STATE = {
+  longitude: -98.5556,
+  latitude: 39.8097,
+  zoom: 4,
+};
+
 export default function Map({ children }: PropsWithChildren) {
   const [queriedCases, setHighlightedCases] = useChaseCaseStore((state) => [
     state.queriedCases,
@@ -12,11 +18,7 @@ export default function Map({ children }: PropsWithChildren) {
   ]);
   return (
     <MapGL
-      initialViewState={{
-        longitude: -98.5556,
-        latitude: 39.8097,
-        zoom: 4,
-      }}
+      initialViewState={INITIAL_VIEW_STATE}
       style={{
         position: 'absolute',
         width: '100%',
