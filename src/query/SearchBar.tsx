@@ -14,6 +14,7 @@ import { useChaseCaseStore } from '../store';
 import { DateTime } from 'luxon';
 import styles from './QueryCases.module.css';
 import { useMap } from 'react-map-gl';
+import { useEffect, useState } from 'react';
 
 const EVENT_TYPES = {
   tornado: 'red',
@@ -64,12 +65,26 @@ export default function SearchBar() {
     onDropdownClose: () => combobox.resetSelectedOption(),
   });
   const [query, setQuery] = useDebouncedState('', 300);
+  const [value, setValue] = useState('');
   const { data, isLoading, refetch } = useSearchCases(query);
-  const [setHighlightedCases, setQueriedCases] = useChaseCaseStore((state) => [
+  const [
+    setHighlightedCases,
+    setQueriedCases,
+    setSavedSearchQuery,
+    savedYearQuery,
+  ] = useChaseCaseStore((state) => [
     state.setHighlightedCases,
     state.setQueriedCases,
+    state.setSavedSearchQuery,
+    state.savedYearQuery,
   ]);
   const { current: map } = useMap();
+
+  useEffect(() => {
+    if (savedYearQuery !== null) {
+      setValue('');
+    }
+  }, [savedYearQuery]);
 
   const options = (data ?? []).map((item) => (
     <Combobox.Option value={item.id} key={item.id}>
@@ -86,6 +101,7 @@ export default function SearchBar() {
         combobox.closeDropdown();
         if (cases.length === 1) {
           map?.flyTo({ center: [cases[0].lon, cases[0].lat], zoom: 8 });
+          setSavedSearchQuery(cases[0].location);
         }
       }}
       withinPortal={false}
@@ -95,8 +111,10 @@ export default function SearchBar() {
         <TextInput
           className={styles.searchBar}
           placeholder='Enter a town, date, or keyword'
+          value={value}
           onChange={(event) => {
             setQuery(event.currentTarget.value);
+            setValue(event.currentTarget.value);
             combobox.resetSelectedOption();
             combobox.openDropdown();
           }}
@@ -107,7 +125,9 @@ export default function SearchBar() {
               refetch();
             }
           }}
-          onBlur={() => combobox.closeDropdown()}
+          onBlur={() => {
+            combobox.closeDropdown();
+          }}
           rightSection={
             isLoading ? <Loader size={18} /> : <MdSearch size={20} />
           }

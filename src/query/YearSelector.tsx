@@ -8,32 +8,49 @@ import styles from './QueryCases.module.css';
 
 export default function YearSelector() {
   const currentDateTime = DateTime.now();
-  const [year, setYear] = useState(
+  const [year, setYear] = useState<number | null>(
     currentDateTime.month < 4 ? currentDateTime.year - 1 : currentDateTime.year
   );
-  const yearOptions = _.rangeRight(2000, currentDateTime.year + 1).map((year) =>
+  const yearOptions = _.rangeRight(1970, currentDateTime.year + 1).map((year) =>
     year.toString()
   );
 
   const { data } = useGetCasesByYear(year);
-  const [setQueriedCases, setHighlightedCases] = useChaseCaseStore((state) => [
+  const [
+    setQueriedCases,
+    setHighlightedCases,
+    setSavedYearQuery,
+    savedSearchQuery,
+  ] = useChaseCaseStore((state) => [
     state.setQueriedCases,
     state.setHighlightedCases,
+    state.setSavedYearQuery,
+    state.savedSearchQuery,
   ]);
 
   useEffect(() => {
     if (data) {
       setQueriedCases(data);
       setHighlightedCases([]);
+      setSavedYearQuery(year);
     }
-  }, [data, setHighlightedCases, setQueriedCases]);
+  }, [data, setHighlightedCases, setQueriedCases, setSavedYearQuery, year]);
+
+  useEffect(() => {
+    if (savedSearchQuery !== null) {
+      setYear(null);
+    }
+  }, [savedSearchQuery]);
 
   return (
     <Select
       className={styles.yearSelector}
       data={yearOptions}
-      value={year.toString()}
-      onChange={(_value, option) => setYear(Number(option.value))}
+      value={year?.toString() ?? null}
+      onChange={(value) => setYear(Number(value))}
+      searchable
+      placeholder='--'
+      clearable
     />
   );
 }

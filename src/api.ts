@@ -8,10 +8,11 @@ export function useSearchCases(query: string, limit: number = 5) {
   });
 }
 
-export function useGetCasesByYear(year: number) {
+export function useGetCasesByYear(year: number | null) {
   return useQuery<ChaseCase[]>({
     queryKey: ['get-by-year', year],
-    queryFn: () => getChaseCasesByYear(year),
+    queryFn: () => getChaseCasesByYear(year ?? 2024),
+    enabled: year !== null,
   });
 }
 

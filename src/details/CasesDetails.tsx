@@ -1,4 +1,4 @@
-import { Divider, Flex, Text } from '@mantine/core';
+import { Center, Divider, Flex, Text, Title } from '@mantine/core';
 import { useChaseCaseStore } from '../store';
 import { ChaseCase } from '../types';
 import styles from './CasesDetails.module.css';
@@ -9,18 +9,30 @@ import { LinkList } from './Link';
 import { useMap } from 'react-map-gl';
 
 export default function CaseDetails() {
-  const [queriedCases, highlightedCases, setHighlightedCases] =
-    useChaseCaseStore((state) => [
-      state.queriedCases,
-      state.highlightedCases,
-      state.setHighlightedCases,
-    ]);
+  const [
+    queriedCases,
+    highlightedCases,
+    setHighlightedCases,
+    savedSearchQuery,
+    savedYearQuery,
+  ] = useChaseCaseStore((state) => [
+    state.queriedCases,
+    state.highlightedCases,
+    state.setHighlightedCases,
+    state.savedSearchQuery,
+    state.savedYearQuery,
+  ]);
 
   const { current: map } = useMap();
 
   const highlightedCasesIds = highlightedCases.map((chaseCase) => chaseCase.id);
   return (
     <div className={styles.casesDetailsPanel}>
+      <Center className={styles.caseDetailsPanelTitle} py={6}>
+        <Title order={4}>
+          Cases for: {savedSearchQuery ?? savedYearQuery ?? '--'}
+        </Title>
+      </Center>
       {queriedCases.map((chaseCase, idx) => (
         <Fragment key={idx}>
           <SingleCaseDetails
@@ -71,7 +83,7 @@ function SingleCaseDetails({
       }}
       style={{
         cursor: 'pointer',
-        ...(isHighlighted && { backgroundColor: 'rgba(255, 255, 153, 0.75)' }),
+        ...(isHighlighted && { backgroundColor: 'rgba(255, 255, 224, 0.75)' }),
       }}
     >
       <Text fw={700}>{chaseCase.location}</Text>
