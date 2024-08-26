@@ -13,6 +13,7 @@ import { MdSearch } from 'react-icons/md';
 import { useChaseCaseStore } from '../store';
 import { DateTime } from 'luxon';
 import styles from './QueryCases.module.css';
+import { useMap } from 'react-map-gl';
 
 const EVENT_TYPES = {
   tornado: 'red',
@@ -68,6 +69,7 @@ export default function SearchBar() {
     state.setHighlightedCases,
     state.setQueriedCases,
   ]);
+  const { current: map } = useMap();
 
   const options = (data ?? []).map((item) => (
     <Combobox.Option value={item.id} key={item.id}>
@@ -82,6 +84,9 @@ export default function SearchBar() {
         setHighlightedCases(cases);
         setQueriedCases(cases);
         combobox.closeDropdown();
+        if (cases.length === 1) {
+          map?.flyTo({ center: [cases[0].lon, cases[0].lat], zoom: 8 });
+        }
       }}
       withinPortal={false}
       store={combobox}
