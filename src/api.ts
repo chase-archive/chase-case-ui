@@ -1,10 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import { ChaseCase } from './types';
 
-export function useSearchCases(query: string, limit: number = 5) {
+export function useSearchCases(
+  query: string,
+  limit: number = 5,
+  enabled: boolean = true
+) {
   return useQuery<ChaseCase[]>({
     queryKey: ['search', query, limit],
-    queryFn: () => getChaseCases(query),
+    queryFn: () => getChaseCases(query, limit),
+    enabled,
   });
 }
 
@@ -16,9 +21,9 @@ export function useGetCasesByYear(year: number | null) {
   });
 }
 
-async function getChaseCases(query: string) {
+async function getChaseCases(query: string, limit: number) {
   const response = await fetch(
-    `https://urchin-app-tpil4.ondigitalocean.app/cases/search?q=${query}&limit=5`,
+    `https://urchin-app-tpil4.ondigitalocean.app/cases/search?q=${query}&limit=${limit}`,
     { headers: { accept: 'application/json' } }
   );
   if (!response.ok) {

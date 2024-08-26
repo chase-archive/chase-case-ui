@@ -59,6 +59,8 @@ function SearchEntryOption({ item }: { item: ChaseCase }) {
   );
 }
 
+const SEARCH_ALL_ITEMS = 'search-all';
+
 export default function SearchBar() {
   // inspired by https://mantine.dev/combobox/?e=AsyncAutocomplete
   const combobox = useCombobox({
@@ -66,7 +68,14 @@ export default function SearchBar() {
   });
   const [query, setQuery] = useDebouncedState('', 300);
   const [value, setValue] = useState('');
-  const { data, isLoading, refetch } = useSearchCases(query);
+  const { data, isLoading, refetch } = useSearchCases(query, 3);
+  const [selectedOption, setSelectedOption] = useState('');
+  const { data: allResults } = useSearchCases(
+    query,
+    500,
+    selectedOption === SEARCH_ALL_ITEMS
+  );
+
   const [
     setHighlightedCases,
     setQueriedCases,
@@ -92,18 +101,46 @@ export default function SearchBar() {
     </Combobox.Option>
   ));
 
+  useEffect(() => {
+    if (selectedOption === SEARCH_ALL_ITEMS) {
+      if (allResults) {
+        setQueriedCases(allResults);
+        setHighlightedCases([]);
+        setSavedSearchQuery(query);
+        setValue(query);
+        setSelectedOption('');
+      }
+    } else {
+      const selectedCases = (data ?? []).filter(
+        (item) => item.id === selectedOption
+      );
+      if (selectedCases && selectedCases[0]) {
+        setQueriedCases(selectedCases);
+        setHighlightedCases(selectedCases);
+        setSavedSearchQuery(selectedCases[0].location);
+        setValue(selectedCases[0].location);
+        map?.flyTo({
+          center: [selectedCases[0].lon, selectedCases[0].lat],
+          zoom: 8,
+        });
+      }
+    }
+  }, [
+    allResults,
+    data,
+    map,
+    query,
+    selectedOption,
+    setHighlightedCases,
+    setQueriedCases,
+    setSavedSearchQuery,
+  ]);
+
   return (
     <Combobox
       onOptionSubmit={(optionValue) => {
-        const cases = (data ?? []).filter((item) => item.id === optionValue);
-        setHighlightedCases(cases);
-        setQueriedCases(cases);
+        setSelectedOption(optionValue);
         combobox.closeDropdown();
-        if (cases.length === 1) {
-          map?.flyTo({ center: [cases[0].lon, cases[0].lat], zoom: 8 });
-          setSavedSearchQuery(cases[0].location);
-          setValue(cases[0].location);
-        }
       }}
       withinPortal={false}
       store={combobox}
@@ -138,6 +175,14 @@ export default function SearchBar() {
       <Combobox.Dropdown hidden={!data}>
         <Combobox.Options>
           {options}
+          {data && data.length > 0 && (
+            <Combobox.Option value={SEARCH_ALL_ITEMS} key={SEARCH_ALL_ITEMS}>
+              <Flex align='center' gap={6}>
+                <MdSearch size={15} />
+                Search all results
+              </Flex>
+            </Combobox.Option>
+          )}
           {data && !data.length && (
             <Combobox.Empty>No results found</Combobox.Empty>
           )}
