@@ -8,12 +8,29 @@ import { Embed } from './Embed';
 import { LinkList } from './Link';
 
 export default function CaseDetails() {
-  const queriedCases = useChaseCaseStore((state) => state.queriedCases);
+  const [queriedCases, highlightedCases, setHighlightedCases] =
+    useChaseCaseStore((state) => [
+      state.queriedCases,
+      state.highlightedCases,
+      state.setHighlightedCases,
+    ]);
+
+  const highlightedCasesIds = highlightedCases.map((chaseCase) => chaseCase.id);
   return (
     <div className={styles.casesDetailsPanel}>
       {queriedCases.map((chaseCase, idx) => (
         <Fragment key={idx}>
-          <SingleCaseDetails chaseCase={chaseCase} />
+          <SingleCaseDetails
+            chaseCase={chaseCase}
+            isHighlighted={highlightedCasesIds.includes(chaseCase.id)}
+            onClick={() => {
+              if (highlightedCasesIds.includes(chaseCase.id)) {
+                setHighlightedCases([]);
+              } else {
+                setHighlightedCases([chaseCase]);
+              }
+            }}
+          />
           {idx < queriedCases.length - 1 && <Divider />}
         </Fragment>
       ))}
@@ -21,14 +38,34 @@ export default function CaseDetails() {
   );
 }
 
-function SingleCaseDetails({ chaseCase }: { chaseCase: ChaseCase }) {
+function SingleCaseDetails({
+  chaseCase,
+  isHighlighted,
+  onClick,
+}: {
+  chaseCase: ChaseCase;
+  isHighlighted?: boolean;
+  onClick?: () => void;
+}) {
   const datetime = DateTime.fromISO(chaseCase.timestamp, { zone: 'utc' });
   const datetimeCST = datetime.setZone('America/Chicago');
-
   const [openedLink, setOpenedLink] = useState('');
 
   return (
-    <Flex direction='column' mx='md' my='sm'>
+    <Flex
+      direction='column'
+      px='md'
+      py='sm'
+      onClick={() => {
+        if (onClick) {
+          onClick();
+        }
+      }}
+      style={{
+        cursor: 'pointer',
+        ...(isHighlighted && { backgroundColor: 'rgba(255, 255, 0, 0.2)' }),
+      }}
+    >
       <Text fw={700}>{chaseCase.location}</Text>
       <Text size='sm' fs='italic'>
         {datetimeCST.toFormat('DDD HH:MM') + ' CST'}
