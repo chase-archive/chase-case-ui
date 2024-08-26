@@ -26,33 +26,44 @@ export default function CaseDetails() {
   const { current: map } = useMap();
 
   const highlightedCasesIds = highlightedCases.map((chaseCase) => chaseCase.id);
+
   return (
     <div className={styles.casesDetailsPanel}>
       <Center className={styles.caseDetailsPanelTitle} py={6} px={10}>
         <Title order={4}>
-          Cases for: {savedSearchQuery ?? savedYearQuery ?? '--'}
+          Cases for:{' '}
+          {savedSearchQuery || savedYearQuery
+            ? savedSearchQuery ?? savedYearQuery
+            : '--'}
         </Title>
       </Center>
-      {queriedCases.map((chaseCase, idx) => (
-        <Fragment key={idx}>
-          <SingleCaseDetails
-            chaseCase={chaseCase}
-            isHighlighted={highlightedCasesIds.includes(chaseCase.id)}
-            onClick={() => {
-              if (highlightedCasesIds.includes(chaseCase.id)) {
-                setHighlightedCases([]);
-              } else {
-                setHighlightedCases([chaseCase]);
-                map?.flyTo({
-                  center: [chaseCase.lon, chaseCase.lat],
-                  zoom: 8,
-                });
-              }
-            }}
-          />
-          {idx < queriedCases.length - 1 && <Divider />}
-        </Fragment>
-      ))}
+      <div className={styles.casesDetailsList}>
+        {queriedCases.length === 0 && (
+          <Center py={6} className={styles.singleCaseDetails}>
+            <Text size='sm'>No cases found</Text>
+          </Center>
+        )}
+        {queriedCases.map((chaseCase, idx) => (
+          <Fragment key={idx}>
+            <SingleCaseDetails
+              chaseCase={chaseCase}
+              isHighlighted={highlightedCasesIds.includes(chaseCase.id)}
+              onClick={() => {
+                if (highlightedCasesIds.includes(chaseCase.id)) {
+                  setHighlightedCases([]);
+                } else {
+                  setHighlightedCases([chaseCase]);
+                  map?.flyTo({
+                    center: [chaseCase.lon, chaseCase.lat],
+                    zoom: 8,
+                  });
+                }
+              }}
+            />
+            {idx < queriedCases.length - 1 && <Divider />}
+          </Fragment>
+        ))}
+      </div>
     </div>
   );
 }

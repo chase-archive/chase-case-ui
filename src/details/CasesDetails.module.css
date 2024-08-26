@@ -4,10 +4,17 @@
   top: 2vh;
   min-width: 400px;
   max-width: 400px;
-  max-height: 90vh;
-  overflow-y: auto;
-  border: 1px solid #000;
+  /* max-height: 90vh; */
+  /* overflow-y: auto; */
+  outline: 1px solid #000;
   border-radius: 6px;
+}
+
+.casesDetailsList {
+  overflow-y: auto;
+  max-height: 80vh;
+  scrollbar-color: #000 #fff;
+  scroll-behavior: auto;
 }
 
 .caseDetailsPanelTitle {

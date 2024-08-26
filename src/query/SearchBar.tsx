@@ -102,6 +102,7 @@ export default function SearchBar() {
         if (cases.length === 1) {
           map?.flyTo({ center: [cases[0].lon, cases[0].lat], zoom: 8 });
           setSavedSearchQuery(cases[0].location);
+          setValue(cases[0].location);
         }
       }}
       withinPortal={false}
