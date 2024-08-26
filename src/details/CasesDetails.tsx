@@ -28,7 +28,7 @@ export default function CaseDetails() {
   const highlightedCasesIds = highlightedCases.map((chaseCase) => chaseCase.id);
   return (
     <div className={styles.casesDetailsPanel}>
-      <Center className={styles.caseDetailsPanelTitle} py={6}>
+      <Center className={styles.caseDetailsPanelTitle} py={6} px={10}>
         <Title order={4}>
           Cases for: {savedSearchQuery ?? savedYearQuery ?? '--'}
         </Title>
@@ -76,20 +76,24 @@ function SingleCaseDetails({
       direction='column'
       px='md'
       py='sm'
-      onClick={() => {
-        if (onClick) {
-          onClick();
-        }
-      }}
       style={{
-        cursor: 'pointer',
         ...(isHighlighted && { backgroundColor: 'rgba(255, 255, 224, 0.75)' }),
       }}
     >
-      <Text fw={700}>{chaseCase.location}</Text>
-      <Text size='sm' fs='italic'>
-        {datetimeCST.toFormat('DDD HH:MM') + ' CST'}
-      </Text>
+      <Flex
+        direction='column'
+        onClick={() => {
+          if (onClick) {
+            onClick();
+          }
+        }}
+        style={{ cursor: 'pointer' }}
+      >
+        <Text fw={700}>{chaseCase.location}</Text>
+        <Text size='sm' fs='italic'>
+          {datetimeCST.toFormat('DDD HH:MM') + ' CST'}
+        </Text>
+      </Flex>
       <Flex direction='row' mt={6} align='flex-start'>
         <Text fw={700} size='sm' mr={8}>
           Documentation:
