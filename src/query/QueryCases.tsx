@@ -7,10 +7,7 @@ export default function QueryCases() {
   return (
     <Flex direction='row' align='center' gap={10} className={styles.query}>
       <SearchBar />
-      <Text fw={800} c='#696969'>
-        {' '}
-        OR SELECT YEAR:{' '}
-      </Text>
+      <Text fw={800}> OR SELECT YEAR: </Text>
       <YearSelector />
     </Flex>
   );

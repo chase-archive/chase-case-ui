@@ -175,7 +175,7 @@ export default function SearchBar() {
       <Combobox.Dropdown hidden={!data}>
         <Combobox.Options>
           {options}
-          {data && data.length > 0 && (
+          {data && data.length > 1 && (
             <Combobox.Option value={SEARCH_ALL_ITEMS} key={SEARCH_ALL_ITEMS}>
               <Flex align='center' gap={6}>
                 <MdSearch size={15} />
