@@ -1,13 +1,9 @@
-.query {
-  position: absolute;
-  top: 2vh;
-  left: 1vw;
+.searchBar {
+  width: 20rem;
+  min-width: 200px;
 }
 
-.query .searchBar {
-  min-width: 350px;
-}
-
-.query .yearSelector {
-  max-width: 120px;
+.yearSelector {
+  max-width: 8rem;
+  min-width: 100px;
 }

@@ -1,0 +1,15 @@
+.overlay {
+  --left-padding: 1.5rem;
+  position: fixed;
+  top: 1rem;
+  left: var(--left-padding);
+  width: calc(100vw - 2 * var(--left-padding));
+  align-items: flex-start;
+  justify-content: space-between;
+  pointer-events: none;
+  gap: 1rem;
+}
+
+.overlay > * {
+  pointer-events: auto;
+}
