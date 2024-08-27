@@ -49,7 +49,7 @@ export default function YearSelector() {
       value={year?.toString() ?? null}
       onChange={(value) => setYear(Number(value))}
       searchable
-      placeholder='Select year'
+      placeholder='--'
       clearable
     />
   );

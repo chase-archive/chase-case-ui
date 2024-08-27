@@ -9,7 +9,7 @@ export default function QueryCases() {
       <SearchBar />
       <Text fw={800} size='sm' className={styles.yearText}>
         {' '}
-        OR{' '}
+        OR YEAR{' '}
       </Text>
       <YearSelector />
     </Flex>
