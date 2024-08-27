@@ -1,4 +1,5 @@
 import {
+  CloseButton,
   Combobox,
   Flex,
   Loader,
@@ -166,8 +167,29 @@ export default function SearchBar() {
           onBlur={() => {
             combobox.closeDropdown();
           }}
+          rightSectionWidth={value ? 55 : 30}
           rightSection={
-            isLoading ? <Loader size={18} /> : <MdSearch size={20} />
+            isLoading ? (
+              <Loader size={18} />
+            ) : (
+              <>
+                {value && (
+                  <CloseButton
+                    size={20}
+                    onClick={() => {
+                      setValue('');
+                      setQuery('');
+                      setSavedSearchQuery(null);
+                      setHighlightedCases([]);
+                      setQueriedCases([]);
+                    }}
+                    mr={5}
+                    variant='transparent'
+                  />
+                )}
+                <MdSearch size={20} />
+              </>
+            )
           }
         />
       </Combobox.Target>
