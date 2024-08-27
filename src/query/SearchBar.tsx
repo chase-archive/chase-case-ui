@@ -68,7 +68,19 @@ export default function SearchBar({ onSelectOption }: OnSelectOptionProps) {
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
   });
-  const savedSearchQuery = useChaseCaseStore((state) => state.savedSearchQuery);
+
+  const [
+    setHighlightedCases,
+    setQueriedCases,
+    savedSearchQuery,
+    setSavedSearchQuery,
+  ] = useChaseCaseStore((state) => [
+    state.setHighlightedCases,
+    state.setQueriedCases,
+    state.savedSearchQuery,
+    state.setSavedSearchQuery,
+  ]);
+
   const [value, setValue] = useState(savedSearchQuery ?? '');
   const [query] = useDebouncedValue(value, 300);
   const { data, isLoading, refetch } = useSearchCases(query, 3);
@@ -79,24 +91,12 @@ export default function SearchBar({ onSelectOption }: OnSelectOptionProps) {
     selectedOption === SEARCH_ALL_ITEMS
   );
 
-  const [
-    setHighlightedCases,
-    setQueriedCases,
-    setSavedSearchQuery,
-    savedYearQuery,
-  ] = useChaseCaseStore((state) => [
-    state.setHighlightedCases,
-    state.setQueriedCases,
-    state.setSavedSearchQuery,
-    state.savedYearQuery,
-  ]);
   const { current: map } = useMap();
 
   useEffect(() => {
-    if (savedYearQuery !== null) {
-      setValue('');
-    }
-  }, [savedYearQuery]);
+    // we need to wait for options to render before we can select first one
+    combobox.selectFirstOption();
+  }, [combobox, value]);
 
   const options = (data ?? []).map((item) => (
     <Combobox.Option value={item.id} key={item.id}>
@@ -153,7 +153,7 @@ export default function SearchBar({ onSelectOption }: OnSelectOptionProps) {
       <Combobox.Target>
         <TextInput
           className={styles.searchBar}
-          placeholder='Enter a town, date, or keyword'
+          placeholder='Enter a town, year, date, or keyword'
           value={value}
           onChange={(event) => {
             setValue(event.currentTarget.value);

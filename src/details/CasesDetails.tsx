@@ -14,13 +14,11 @@ export default function CaseDetails() {
     highlightedCases,
     setHighlightedCases,
     savedSearchQuery,
-    savedYearQuery,
   ] = useChaseCaseStore((state) => [
     state.queriedCases,
     state.highlightedCases,
     state.setHighlightedCases,
     state.savedSearchQuery,
-    state.savedYearQuery,
   ]);
 
   const { current: map } = useMap();
@@ -30,12 +28,7 @@ export default function CaseDetails() {
   return (
     <div className={styles.casesDetailsPanel}>
       <Center className={styles.caseDetailsPanelTitle} py={6} px={10}>
-        <Title order={4}>
-          Cases for:{' '}
-          {savedSearchQuery || savedYearQuery
-            ? savedSearchQuery ?? savedYearQuery
-            : '--'}
-        </Title>
+        <Title order={4}>Cases for: {savedSearchQuery || '--'}</Title>
       </Center>
       <div className={styles.casesDetailsList}>
         {queriedCases.length === 0 && (

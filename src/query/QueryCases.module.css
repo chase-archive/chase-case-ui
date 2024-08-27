@@ -1,9 +1,4 @@
 .searchBar {
-  width: 20rem;
-  min-width: 200px;
-}
-
-.yearSelector {
-  max-width: 7rem;
-  min-width: 100px;
+  width: 25vw;
+  min-width: 300px;
 }
