@@ -13,3 +13,26 @@
 .overlay > * {
   pointer-events: auto;
 }
+
+.mobileOverlay {
+  --right-padding: 1rem;
+  --overlay-width: 2rem;
+  position: absolute;
+  bottom: 10rem;
+  right: calc(var(--right-padding) + var(--overlay-width));
+  width: var(--overlay-width);
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+.mobileOverlay > * {
+  pointer-events: auto;
+}
+
+.mobileSearchBar {
+  background-color: rgba(245, 245, 245, 0.85);
+  /* padding-top: 1rem;
+  padding-right: 1rem;
+  padding-left: 1rem; */
+  /* padding: 0.5rem; */
+}

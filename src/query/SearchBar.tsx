@@ -7,7 +7,7 @@ import {
   TextInput,
   useCombobox,
 } from '@mantine/core';
-import { useDebouncedState } from '@mantine/hooks';
+import { useDebouncedValue } from '@mantine/hooks';
 import { useSearchCases } from '../api';
 import { ChaseCase } from '../types';
 import { MdSearch } from 'react-icons/md';
@@ -16,6 +16,7 @@ import { DateTime } from 'luxon';
 import styles from './QueryCases.module.css';
 import { useMap } from 'react-map-gl';
 import { useEffect, useState } from 'react';
+import { OnSelectOptionProps } from './types';
 
 const EVENT_TYPES = {
   tornado: 'red',
@@ -62,13 +63,14 @@ function SearchEntryOption({ item }: { item: ChaseCase }) {
 
 const SEARCH_ALL_ITEMS = 'search-all';
 
-export default function SearchBar() {
+export default function SearchBar({ onSelectOption }: OnSelectOptionProps) {
   // inspired by https://mantine.dev/combobox/?e=AsyncAutocomplete
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
   });
-  const [query, setQuery] = useDebouncedState('', 300);
-  const [value, setValue] = useState('');
+  const savedSearchQuery = useChaseCaseStore((state) => state.savedSearchQuery);
+  const [value, setValue] = useState(savedSearchQuery ?? '');
+  const [query] = useDebouncedValue(value, 300);
   const { data, isLoading, refetch } = useSearchCases(query, 3);
   const [selectedOption, setSelectedOption] = useState('');
   const { data: allResults } = useSearchCases(
@@ -108,7 +110,6 @@ export default function SearchBar() {
         setQueriedCases(allResults);
         setHighlightedCases([]);
         setSavedSearchQuery(query);
-        setValue(query);
         setSelectedOption('');
       }
     } else {
@@ -142,6 +143,9 @@ export default function SearchBar() {
       onOptionSubmit={(optionValue) => {
         setSelectedOption(optionValue);
         combobox.closeDropdown();
+        if (onSelectOption) {
+          onSelectOption();
+        }
       }}
       withinPortal={false}
       store={combobox}
@@ -152,7 +156,6 @@ export default function SearchBar() {
           placeholder='Enter a town, date, or keyword'
           value={value}
           onChange={(event) => {
-            setQuery(event.currentTarget.value);
             setValue(event.currentTarget.value);
             combobox.resetSelectedOption();
             combobox.openDropdown();
@@ -178,7 +181,6 @@ export default function SearchBar() {
                     size={20}
                     onClick={() => {
                       setValue('');
-                      setQuery('');
                       setSavedSearchQuery(null);
                       setHighlightedCases([]);
                       setQueriedCases([]);

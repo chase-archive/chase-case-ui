@@ -9,7 +9,7 @@ export function useSearchCases(
   return useQuery<ChaseCase[]>({
     queryKey: ['search', query, limit],
     queryFn: () => getChaseCases(query, limit),
-    enabled,
+    enabled: enabled && !!query,
   });
 }
 
