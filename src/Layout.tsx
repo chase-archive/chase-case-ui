@@ -1,10 +1,9 @@
-import { ActionIcon, Drawer, Flex } from '@mantine/core';
+import { Button, Drawer, Flex } from '@mantine/core';
 import Map from './Map';
 import { CasesDetails } from './details';
 import { CasesMapDisplay } from './mapDisplay';
 import { QueryCases } from './query';
 import styles from './Layout.module.css';
-import { MdSearch } from 'react-icons/md';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 
 export default function Layout() {
@@ -27,37 +26,34 @@ function DesktopOverlay() {
 }
 
 function MobileOverlay() {
-  const [isSearchOpen, { open: openSearch, close: closeSearch }] =
+  const [areCasesOpen, { open: openCases, close: closeCases }] =
     useDisclosure(false);
 
   return (
     <>
-      <Flex className={styles.mobileOverlay}>
-        <ActionIcon size={42} variant='default' onClick={openSearch}>
-          <MdSearch />
-        </ActionIcon>
+      <Flex
+        className={styles.mobileOverlay}
+        direction='column'
+        align='center'
+        justify='space-between'
+      >
+        <QueryCases />
+        <Button onClick={openCases}>Open Cases</Button>
       </Flex>
-      <Drawer.Root
-        opened={isSearchOpen}
-        onClose={closeSearch}
-        position='top'
-        size='65vh'
+      <Drawer
+        opened={areCasesOpen}
+        onClose={closeCases}
+        position='bottom'
+        size='50vh'
         shadow='md'
         trapFocus={false}
+        withOverlay={false}
+        removeScrollProps={{ allowPinchZoom: true }}
       >
-        <Drawer.Content className={styles.mobileSearchBar}>
-          <Flex
-            direction='column'
-            align='center'
-            justify='center'
-            gap={10}
-            p={20}
-          >
-            <Drawer.CloseButton />
-            <QueryCases onSelectOption={closeSearch} />
-          </Flex>
-        </Drawer.Content>
-      </Drawer.Root>
+        <Flex direction='column' align='center' justify='center' gap={4}>
+          <CasesDetails />
+        </Flex>
+      </Drawer>
     </>
   );
 }

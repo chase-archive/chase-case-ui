@@ -15,24 +15,16 @@
 }
 
 .mobileOverlay {
-  --right-padding: 1rem;
-  --overlay-width: 2rem;
-  position: absolute;
-  bottom: 10rem;
-  right: calc(var(--right-padding) + var(--overlay-width));
-  width: var(--overlay-width);
-  gap: 0.5rem;
+  --left-padding: 0.5rem;
+  --top-padding: 1rem;
+  height: calc(100vh - 2 * var(--top-padding) - 25px);
+  position: fixed;
+  top: var(--top-padding);
+  left: var(--left-padding);
+  width: calc(100vw - 2 * var(--left-padding));
   pointer-events: none;
 }
 
 .mobileOverlay > * {
   pointer-events: auto;
-}
-
-.mobileSearchBar {
-  background-color: rgba(245, 245, 245, 0.85);
-  /* padding-top: 1rem;
-  padding-right: 1rem;
-  padding-left: 1rem; */
-  /* padding: 0.5rem; */
 }
