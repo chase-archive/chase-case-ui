@@ -7,7 +7,7 @@ import styles from './Layout.module.css';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 
 export default function Layout() {
-  const isDesktop = useMediaQuery('(min-width: 801px)');
+  const isDesktop = useMediaQuery('(min-width: 768px)');
   return (
     <Map>
       <CasesMapDisplay />
@@ -44,13 +44,14 @@ function MobileOverlay() {
         opened={areCasesOpen}
         onClose={closeCases}
         position='bottom'
-        size='50vh'
+        size='45vh'
         shadow='md'
         trapFocus={false}
         withOverlay={false}
         removeScrollProps={{ allowPinchZoom: true }}
+        closeOnClickOutside
       >
-        <Flex direction='column' align='center' justify='center' gap={4}>
+        <Flex direction='column' align='center' justify='center'>
           <CasesDetails />
         </Flex>
       </Drawer>

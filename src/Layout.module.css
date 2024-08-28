@@ -15,9 +15,9 @@
 }
 
 .mobileOverlay {
-  --left-padding: 0.5rem;
+  --left-padding: 1rem;
   --top-padding: 1rem;
-  height: calc(100vh - 2 * var(--top-padding) - 25px);
+  height: calc(100vh - 2 * var(--top-padding) - 40px);
   position: fixed;
   top: var(--top-padding);
   left: var(--left-padding);

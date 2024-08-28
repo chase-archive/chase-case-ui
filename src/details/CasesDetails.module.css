@@ -5,6 +5,12 @@
   border-radius: 6px;
 }
 
+@media screen and (max-width: 480px) {
+  .casesDetailsPanel {
+    width: calc(100vw - 2rem);
+  }
+}
+
 .casesDetailsList {
   overflow-y: auto;
   max-height: 80vh;
