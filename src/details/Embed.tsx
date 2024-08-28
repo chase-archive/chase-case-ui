@@ -5,6 +5,7 @@ import {
   isYouTubeLink,
 } from '../utils/socials';
 import { ReactNode } from 'react';
+import styles from './Embed.module.css';
 
 interface EmbedProps {
   link: string;
@@ -36,8 +37,9 @@ export function YouTubeEmbed({ link }: Pick<EmbedProps, 'link'>) {
 
   return (
     <iframe
-      width='560'
-      height='315'
+      width='680'
+      height='400'
+      className={styles.youtubeEmbed}
       src={'https://www.youtube.com/embed/' + videoId}
       allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
       referrerPolicy='strict-origin-when-cross-origin'
@@ -51,6 +53,7 @@ export function TwitterEmbed({ link }: Pick<EmbedProps, 'link'>) {
   const twitterLink = link.replace('x.com/', 'twitter.com/');
   return (
     <iframe
+      className={styles.twitterEmbed}
       srcDoc={`<!DOCTYPE html><html><body>
   <blockquote class="twitter-tweet">
     <a href="${twitterLink}"></a>
