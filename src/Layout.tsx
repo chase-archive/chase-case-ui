@@ -44,7 +44,7 @@ function MobileOverlay() {
         opened={areCasesOpen}
         onClose={closeCases}
         position='bottom'
-        size='45vh'
+        size='45svh'
         shadow='md'
         trapFocus={false}
         withOverlay={false}
