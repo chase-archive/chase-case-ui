@@ -146,6 +146,7 @@ export default function SearchBar({ onSelectOption }: OnSelectOptionProps) {
         if (onSelectOption) {
           onSelectOption();
         }
+        combobox.targetRef.current?.blur();
       }}
       withinPortal={false}
       store={combobox}

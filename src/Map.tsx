@@ -21,8 +21,8 @@ export default function Map({ children }: PropsWithChildren) {
       initialViewState={INITIAL_VIEW_STATE}
       style={{
         position: 'absolute',
-        width: '100%',
-        height: '100%',
+        width: '100svw',
+        height: '100svh',
         left: 0,
         top: 0,
       }}

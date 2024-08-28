@@ -8,7 +8,6 @@
 @media screen and (max-width: 480px) {
   .casesDetailsPanel {
     width: calc(100svw - 2rem);
-    max-width: calc(100svw - 2rem);
   }
 }
 
