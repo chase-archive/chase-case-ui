@@ -51,7 +51,7 @@ function MobileOverlay() {
         removeScrollProps={{ allowPinchZoom: true }}
         closeOnClickOutside
       >
-        <Flex direction='column' align='center' justify='center'>
+        <Flex direction='column' align='center' justify='center' mt={1}>
           <CasesDetails />
         </Flex>
       </Drawer>
