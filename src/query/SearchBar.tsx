@@ -199,15 +199,15 @@ export default function SearchBar({ onSelectOption }: OnSelectOptionProps) {
 
       <Combobox.Dropdown hidden={!data}>
         <Combobox.Options>
-          {options}
           {data && data.length > 1 && (
             <Combobox.Option value={SEARCH_ALL_ITEMS} key={SEARCH_ALL_ITEMS}>
               <Flex align='center' gap={6}>
                 <MdSearch size={15} />
-                Search all results
+                Search all results for {query}
               </Flex>
             </Combobox.Option>
           )}
+          {options}
           {data && !data.length && (
             <Combobox.Empty>No results found</Combobox.Empty>
           )}
