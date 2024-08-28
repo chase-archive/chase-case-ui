@@ -5,7 +5,7 @@
 
 @media screen and (max-width: 480px) {
   .searchBar {
-    width: calc(100lvw - 2rem);
+    width: calc(100dvw - 2rem);
     min-width: 300px;
   }
 }
