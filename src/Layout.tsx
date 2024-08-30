@@ -3,16 +3,20 @@ import Map from './Map';
 import { CasesDetails } from './details';
 import { CasesMapDisplay } from './mapDisplay';
 import { QueryCases } from './query';
+import { Header } from './header';
 import styles from './Layout.module.css';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 
 export default function Layout() {
   const isDesktop = useMediaQuery('(min-width: 768px)');
   return (
+    <div className={styles.map}>
+    <Header />
     <Map>
       <CasesMapDisplay />
       {isDesktop ? <DesktopOverlay /> : <MobileOverlay />}
     </Map>
+    </div>
   );
 }
 

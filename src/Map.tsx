@@ -22,9 +22,10 @@ export default function Map({ children }: PropsWithChildren) {
       style={{
         position: 'absolute',
         width: '100svw',
-        height: '100svh',
+        height: '90svh',
         left: 0,
-        top: 0,
+        bottom: 0,
+        //zIndex: -1
       }}
       // onRender={(event) => event.target.resize()}
       minZoom={4}
