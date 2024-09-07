@@ -36,6 +36,7 @@ export default function LineContours({
             'symbol-placement': 'line-center',
             // 'symbol-spacing': 1000,
             'symbol-avoid-edges': true,
+            'icon-allow-overlap': true,
           }}
           paint={{
             'text-color': color,

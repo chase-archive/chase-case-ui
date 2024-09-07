@@ -6,11 +6,8 @@ import { ContourProps } from './types';
 function useLoadWindBarbs() {
   const { current: map } = useMap();
 
-  const barbs = _.range(0, 22).map(
-    (idx) =>
-      `./windbarbs/Symbol_wind_speed_${idx.toString().padStart(2, '0')}.png`
-  );
-  const wspds = _.range(0, 22).map((idx) => idx * 5);
+  const wspds = _.range(0, 51).map((idx) => idx * 5);
+  const barbs = wspds.map((wspd) => `./windbarbs/wind_barb_${wspd}kt.png`);
   const imageIds = wspds.map((wspd) => `wind-barb-${wspd}`);
 
   useEffect(() => {
@@ -58,12 +55,12 @@ export default function WindBarbPlot({
             filter={['all', ['>=', 'wspd', wspd], ['<', 'wspd', wspd + 5]]}
             layout={{
               'icon-image': imageId,
-              'icon-size': wspd === 0 ? 0.12 : 0.2,
+              'icon-size': 0.25,
               'icon-allow-overlap': false,
-              'icon-rotation-alignment': 'map',
-              'icon-anchor': 'right',
-              'icon-rotate': ['+', ['get', 'wdir'], 180],
-              'icon-padding': 1,
+              // 'icon-rotation-alignment': 'map',
+              'icon-anchor': 'top-right',
+              'icon-rotate': ['-', ['get', 'wdir'], 90],
+              'icon-padding': 3,
             }}
           />
         );
