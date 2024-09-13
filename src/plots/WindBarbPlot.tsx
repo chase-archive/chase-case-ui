@@ -2,6 +2,7 @@ import { Layer, Source, useMap } from 'react-map-gl/maplibre';
 import { useEffect } from 'react';
 import _ from 'lodash';
 import { ContourProps } from './types';
+import { FilterSpecification } from 'maplibre-gl';
 
 function useLoadWindBarbs() {
   const { current: map } = useMap();
@@ -43,28 +44,33 @@ export default function WindBarbPlot({
 
   return (
     <Source id={id} type='geojson' data={data}>
-      {_.zip(wspds, imageIds).map(([wspd, imageId], idx) => {
-        if (!imageId || wspd === undefined) {
-          return null;
+      {_.zip(wspds, wspds.slice(1), imageIds).map(
+        ([wspd, nextWspd, imageId], idx) => {
+          if (!imageId || wspd === undefined) {
+            return null;
+          }
+          const filter: FilterSpecification = ['all', ['>=', 'wspd', wspd]];
+          if (nextWspd !== undefined) {
+            filter.push(['<', 'wspd', nextWspd]);
+          }
+          return (
+            <Layer
+              id={`${id}-${wspd}`}
+              key={idx}
+              type='symbol'
+              filter={filter}
+              layout={{
+                'icon-image': imageId,
+                'icon-size': 0.25,
+                'icon-allow-overlap': false,
+                'icon-anchor': 'top-right',
+                'icon-rotate': ['-', ['get', 'wdir'], 90],
+                'icon-padding': 3,
+              }}
+            />
+          );
         }
-        return (
-          <Layer
-            id={`${id}-${wspd}`}
-            key={idx}
-            type='symbol'
-            filter={['all', ['>=', 'wspd', wspd], ['<', 'wspd', wspd + 5]]}
-            layout={{
-              'icon-image': imageId,
-              'icon-size': 0.25,
-              'icon-allow-overlap': false,
-              // 'icon-rotation-alignment': 'map',
-              'icon-anchor': 'top-right',
-              'icon-rotate': ['-', ['get', 'wdir'], 90],
-              'icon-padding': 3,
-            }}
-          />
-        );
-      })}
+      )}
     </Source>
   );
 }
