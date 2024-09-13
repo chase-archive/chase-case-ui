@@ -1,9 +1,9 @@
 import { Layer, Source } from 'react-map-gl/maplibre';
-import { ContourProps } from './types';
+import { Colormap, ContourProps } from './types';
+import { DataDrivenPropertyValueSpecification } from 'maplibre-gl';
 
 interface FilledContoursProps extends ContourProps {
-  levels: number[];
-  colors: string[];
+  cmap: Colormap;
   opacity?: number;
 }
 
@@ -11,8 +11,7 @@ export default function FilledContours({
   id,
   data,
   levelProp = 'level',
-  levels,
-  colors,
+  cmap,
   opacity = 0.8,
 }: FilledContoursProps) {
   return (
@@ -21,18 +20,23 @@ export default function FilledContours({
         id={`${id}-fill`}
         type='fill'
         paint={{
-          'fill-color': [
-            'interpolate',
-            ['linear'],
-            ['get', levelProp],
-            ...levels.flatMap((level, i) => [
-              level,
-              colors[i] ?? 'rgba(1, 1, 1, 0)',
-            ]),
-          ],
+          'fill-color': toFill(cmap, levelProp),
           'fill-opacity': opacity,
         }}
       />
     </Source>
   );
+}
+
+function toFill(
+  cmap: Colormap,
+  levelProp: string
+): DataDrivenPropertyValueSpecification<string> {
+  const { colors, levels } = cmap;
+  return [
+    'interpolate',
+    ['linear'],
+    ['get', levelProp],
+    ...levels.flatMap((level, i) => [level, colors[i] ?? 'rgba(1, 1, 1, 0)']),
+  ];
 }

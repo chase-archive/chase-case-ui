@@ -5,3 +5,8 @@ export interface ContourProps {
   data: FeatureCollection;
   levelProp?: string;
 }
+
+export interface Colormap {
+  levels: number[];
+  colors: string[];
+}
