@@ -1,1 +1,1 @@
-export { ISOTACHS_500MB } from './isotachs';
+export { default as isotachs } from './isotachs';

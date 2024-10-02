@@ -13,7 +13,7 @@ export default function LineContours({
   levelProp = 'level',
   color = '#000000',
   width = 1.5,
-  labels = false,
+  labels = true,
 }: LineContoursProps) {
   return (
     <Source id={id} type='geojson' data={data}>

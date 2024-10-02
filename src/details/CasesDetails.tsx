@@ -21,6 +21,10 @@ export default function CaseDetails() {
     state.savedSearchQuery,
   ]);
 
+  const [setEnvironmentEventId, resetEnvironment] = useChaseCaseStore(
+    (state) => [state.setEnvironmentEventId, state.resetEnvironment]
+  );
+
   const { current: map } = useMap();
 
   const highlightedCasesIds = highlightedCases.map((chaseCase) => chaseCase.id);
@@ -44,11 +48,14 @@ export default function CaseDetails() {
               onClick={() => {
                 if (highlightedCasesIds.includes(chaseCase.id)) {
                   setHighlightedCases([]);
+                  resetEnvironment();
                 } else {
                   setHighlightedCases([chaseCase]);
+                  setEnvironmentEventId(chaseCase.id);
+
                   map?.flyTo({
                     center: [chaseCase.lon, chaseCase.lat],
-                    zoom: 8,
+                    zoom: 5,
                   });
                 }
               }}

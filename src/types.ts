@@ -17,3 +17,15 @@ export interface ChaseCase extends HasLocation, HasTime, HasTags {
   id: string;
   documentation: string[];
 }
+
+export type Level = number | 'sfc';
+
+export type DisplayVar =
+  | 'height'
+  | 'temperature'
+  | 'dewpoint'
+  | 'vorticity'
+  | 'rh'
+  | 'barbs'
+  | 'isotachs'
+  | 'mslp';
