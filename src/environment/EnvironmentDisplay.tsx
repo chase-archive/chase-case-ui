@@ -6,6 +6,7 @@ import { DisplayVar, Level } from '../types';
 import { useEnvironmentData } from './api';
 import { EnvironmentData } from './types';
 import ORDERING from './ordering';
+import { layers } from '../layers';
 
 interface RenderDisplayProps {
   eventId: string;
@@ -28,17 +29,36 @@ function RenderDisplay({
   }
   const layerId = `${eventId}-${timestamp.toISO()}-${level}-${displayVar}`;
   if (displayVar === 'barbs') {
-    return <Barbs id={layerId} data={data[displayVar]} />;
+    return (
+      <Barbs
+        id={layerId}
+        data={data[displayVar]}
+        beforeId={layers.queriedCasesHeatmap}
+      />
+    );
   }
   if (displayVar === 'isotachs') {
     const cmap = isotachs[level];
     if (!cmap) {
       return null;
     }
-    return <FilledContours id={layerId} data={data[displayVar]} cmap={cmap} />;
+    return (
+      <FilledContours
+        id={layerId}
+        data={data[displayVar]}
+        cmap={cmap}
+        beforeId={layers.queriedCasesHeatmap}
+      />
+    );
   }
   if (displayVar === 'height') {
-    return <LineContour id={layerId} data={data[displayVar]} />;
+    return (
+      <LineContour
+        id={layerId}
+        data={data[displayVar]}
+        beforeId={layers.queriedCasesHeatmap}
+      />
+    );
   }
 }
 
@@ -82,7 +102,7 @@ export default function EnvironmentDisplay() {
     <>
       {environmentDisplaySorted.map((displayVar) => (
         <RenderDisplay
-          key={displayVar}
+          key={`${environmentEventId}-${environmentTimestamp.toISO()}-${environmentLevel}-${displayVar}`}
           eventId={environmentEventId}
           timestamp={environmentTimestamp}
           level={environmentLevel}

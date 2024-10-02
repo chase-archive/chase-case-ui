@@ -11,10 +11,10 @@ export default function Layout() {
   const isDesktop = useMediaQuery('(min-width: 768px)');
   return (
     <Map>
-      <CasesMapDisplay />
       {isDesktop ? <DesktopOverlay /> : <MobileOverlay />}
       <EnvironmentToggle />
       <EnvironmentDisplay />
+      <CasesMapDisplay />
     </Map>
   );
 }

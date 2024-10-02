@@ -1,6 +1,10 @@
 import { FeatureCollection } from 'geojson';
 
-export interface ContourProps {
+interface ReactMapGlProps {
+  beforeId?: string;
+}
+
+export interface ContourProps extends ReactMapGlProps {
   id: string;
   data: FeatureCollection;
   levelProp?: string;

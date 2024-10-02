@@ -13,6 +13,7 @@ export default function FilledContours({
   levelProp = 'level',
   cmap,
   opacity = 0.8,
+  beforeId,
 }: FilledContoursProps) {
   return (
     <Source id={id} type='geojson' data={data}>
@@ -23,6 +24,7 @@ export default function FilledContours({
           'fill-color': toFill(cmap, levelProp),
           'fill-opacity': opacity,
         }}
+        beforeId={beforeId}
       />
     </Source>
   );

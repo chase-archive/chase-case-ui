@@ -14,6 +14,7 @@ export default function LineContours({
   color = '#000000',
   width = 1.5,
   labels = true,
+  beforeId,
 }: LineContoursProps) {
   return (
     <Source id={id} type='geojson' data={data}>
@@ -47,6 +48,7 @@ export default function LineContours({
             'text-halo-color': 'rgba(255, 255, 255, 0.8)',
             'text-halo-width': 10,
           }}
+          beforeId={beforeId}
         />
       )}
     </Source>

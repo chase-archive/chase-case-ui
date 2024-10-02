@@ -55,7 +55,7 @@ export default function CaseDetails() {
 
                   map?.flyTo({
                     center: [chaseCase.lon, chaseCase.lat],
-                    zoom: 5,
+                    // zoom: 5,
                   });
                 }
               }}
