@@ -1,0 +1,7 @@
+.environmentTimeSlider {
+  padding: 3rem 6rem;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background-color: rgba(211,211,211, 0.5);
+}

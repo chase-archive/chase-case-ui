@@ -5,7 +5,7 @@ import { CasesMapDisplay } from './mapDisplay';
 import { QueryCases } from './query';
 import styles from './Layout.module.css';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { EnvironmentDisplay } from './environment';
+import { EnvironmentDisplay, EnvironmentTimeSlider } from './environment';
 
 export default function Layout() {
   const isDesktop = useMediaQuery('(min-width: 768px)');
@@ -14,6 +14,7 @@ export default function Layout() {
       {isDesktop ? <DesktopOverlay /> : <MobileOverlay />}
       <EnvironmentDisplay />
       <CasesMapDisplay />
+      <EnvironmentTimeSlider />
     </Map>
   );
 }
