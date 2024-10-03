@@ -74,11 +74,15 @@ export default function SearchBar({ onSelectOption }: OnSelectOptionProps) {
     setQueriedCases,
     savedSearchQuery,
     setSavedSearchQuery,
+    resetEnvironment,
+    setEnvironmentEventId,
   ] = useChaseCaseStore((state) => [
     state.setHighlightedCases,
     state.setQueriedCases,
     state.savedSearchQuery,
     state.setSavedSearchQuery,
+    state.resetEnvironment,
+    state.setEnvironmentEventId,
   ]);
 
   const [value, setValue] = useState(savedSearchQuery ?? '');
@@ -97,6 +101,13 @@ export default function SearchBar({ onSelectOption }: OnSelectOptionProps) {
     // we need to wait for options to render before we can select first one
     combobox.selectFirstOption();
   }, [combobox, value]);
+
+  useEffect(() => {
+    // if user removes input, assume they intend to clear selected option
+    if (!value) {
+      setSelectedOption('');
+    }
+  }, [value]);
 
   const options = (data ?? []).map((item) => (
     <Combobox.Option value={item.id} key={item.id}>
@@ -123,8 +134,9 @@ export default function SearchBar({ onSelectOption }: OnSelectOptionProps) {
         setValue(selectedCases[0].location);
         map?.flyTo({
           center: [selectedCases[0].lon, selectedCases[0].lat],
-          zoom: 8,
+          zoom: 4.5,
         });
+        setEnvironmentEventId(selectedCases[0].id);
       }
     }
   }, [
@@ -133,6 +145,7 @@ export default function SearchBar({ onSelectOption }: OnSelectOptionProps) {
     map,
     query,
     selectedOption,
+    setEnvironmentEventId,
     setHighlightedCases,
     setQueriedCases,
     setSavedSearchQuery,
@@ -185,6 +198,7 @@ export default function SearchBar({ onSelectOption }: OnSelectOptionProps) {
                       setSavedSearchQuery(null);
                       setHighlightedCases([]);
                       setQueriedCases([]);
+                      resetEnvironment();
                     }}
                     mr={5}
                     variant='transparent'
