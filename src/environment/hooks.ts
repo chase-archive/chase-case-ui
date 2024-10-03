@@ -31,5 +31,10 @@ export function useEnvironmentDataSeries(
     }
   }, [index, overviews.length, result.data, result.isFetching, simultaneous]);
 
+  useEffect(() => {
+    setIndex(0);
+    setAllEnvironmentData([]);
+  }, [caseId]);
+
   return allEnvironmentData;
 }
