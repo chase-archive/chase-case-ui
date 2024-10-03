@@ -1,25 +1,24 @@
-import { DateTime } from 'luxon';
 import { Barbs, FilledContours, LineContour } from '../plots';
 import { isotachs } from '../plots/cmaps';
 import { useChaseCaseStore } from '../store';
-import { DisplayVar, Level } from '../types';
-import { useEnvironmentData } from './api';
+import { DisplayVar } from '../types';
+import { useEnvironmentOverviews } from './api';
 import { EnvironmentData } from './types';
 import ORDERING from './ordering';
 import { layers } from '../layers';
+import { Colormap } from '../plots/types';
+import { useEnvironmentDataSeries } from './hooks';
 
 interface RenderDisplayProps {
-  eventId: string;
-  timestamp: DateTime;
-  level: Level;
+  layerId: string;
+  cmap?: Colormap;
   displayVar: DisplayVar;
   environmentData: EnvironmentData;
 }
 
 function RenderDisplay({
-  eventId,
-  timestamp,
-  level,
+  layerId,
+  cmap,
   displayVar,
   environmentData,
 }: RenderDisplayProps) {
@@ -27,7 +26,6 @@ function RenderDisplay({
   if (data[displayVar] === null) {
     return null;
   }
-  const layerId = `${eventId}-${timestamp.toISO()}-${level}-${displayVar}`;
   if (displayVar === 'barbs') {
     return (
       <Barbs
@@ -38,7 +36,6 @@ function RenderDisplay({
     );
   }
   if (displayVar === 'isotachs') {
-    const cmap = isotachs[level];
     if (!cmap) {
       return null;
     }
@@ -65,23 +62,26 @@ function RenderDisplay({
 export default function EnvironmentDisplay() {
   const [
     environmentEventId,
-    environmentTimestamp,
     environmentDisplayVars,
     environmentLevel,
+    environmentTimeIndex,
   ] = useChaseCaseStore((state) => [
     state.environmentEventId,
-    state.environmentTimestamp,
     state.environmentDisplayVars,
     state.environmentLevel,
+    state.environmentTimeIndex,
   ]);
 
-  const { data: environmentData } = useEnvironmentData(
+  const { data: environmentOverviews } =
+    useEnvironmentOverviews(environmentEventId);
+
+  const data = useEnvironmentDataSeries(
     environmentEventId,
-    environmentTimestamp,
-    environmentLevel
+    environmentLevel,
+    environmentOverviews ?? []
   );
 
-  if (!environmentEventId || !environmentTimestamp || !environmentData?.data) {
+  if (!environmentEventId || !data.length || !data[environmentTimeIndex]) {
     return null;
   }
 
@@ -100,16 +100,20 @@ export default function EnvironmentDisplay() {
 
   return (
     <>
-      {environmentDisplaySorted.map((displayVar) => (
-        <RenderDisplay
-          key={`${environmentEventId}-${environmentTimestamp.toISO()}-${environmentLevel}-${displayVar}`}
-          eventId={environmentEventId}
-          timestamp={environmentTimestamp}
-          level={environmentLevel}
-          displayVar={displayVar}
-          environmentData={environmentData}
-        />
-      ))}
+      {environmentDisplaySorted.map((displayVar) => {
+        const layerId = `${environmentEventId}-${environmentTimeIndex}-${environmentLevel}-${displayVar}`;
+        const cmap =
+          displayVar === 'isotachs' ? isotachs[environmentLevel] : undefined;
+        return (
+          <RenderDisplay
+            key={layerId}
+            layerId={layerId}
+            cmap={cmap ?? undefined}
+            displayVar={displayVar}
+            environmentData={data[environmentTimeIndex]}
+          />
+        );
+      })}
     </>
   );
 }

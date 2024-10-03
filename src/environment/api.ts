@@ -3,16 +3,24 @@ import { EnvironmentData, EnvironmentOverview } from './types';
 import { DateTime } from 'luxon';
 import { Level } from '../types';
 
+const BASE_URL = 'https://urchin-app-tpil4.ondigitalocean.app';
+
 export function useEnvironmentData(
   caseId: string | null,
-  timestamp: DateTime | null,
+  timestamps: DateTime[] | null,
   level: Level
 ) {
-  return useQuery<EnvironmentData>({
-    queryKey: ['environmentData', caseId, timestamp, level],
-    queryFn: () =>
-      getEnvironmentData(caseId ?? '', timestamp ?? DateTime.now(), level),
-    enabled: !!caseId && !!timestamp,
+  const timestampsKey = timestamps?.map((t) => t.toISO()).join(',') ?? '';
+  return useQuery<EnvironmentData[]>({
+    queryKey: ['environmentData', caseId, timestampsKey, level],
+    queryFn: () => {
+      const promises = (timestamps ?? []).map((timestamp) =>
+        getEnvironmentData(caseId ?? '', timestamp, level)
+      );
+      return Promise.all(promises);
+    },
+
+    enabled: !!caseId && timestamps !== null && timestamps.length > 0,
   });
 }
 
@@ -30,7 +38,7 @@ async function getEnvironmentData(
   level: Level
 ) {
   const response = await fetch(
-    `https://urchin-app-tpil4.ondigitalocean.app/environment/data/${caseId}/${encodeURIComponent(
+    `${BASE_URL}/environment/data/${caseId}/${encodeURIComponent(
       timestamp.toISO() ?? ''
     )}/${level}`,
     { headers: { accept: 'application/json' } }
@@ -42,10 +50,9 @@ async function getEnvironmentData(
 }
 
 async function getEnvironmentOverviews(caseId: string) {
-  const response = await fetch(
-    `https://urchin-app-tpil4.ondigitalocean.app/environment/overview/${caseId}`,
-    { headers: { accept: 'application/json' } }
-  );
+  const response = await fetch(`${BASE_URL}/environment/overview/${caseId}`, {
+    headers: { accept: 'application/json' },
+  });
   if (!response.ok) {
     throw new Error(`Response status: ${response.status}`);
   }

@@ -28,7 +28,7 @@ export default function Map({ children }: PropsWithChildren) {
       }}
       // onRender={(event) => event.target.resize()}
       minZoom={4}
-      maxZoom={7}
+      maxZoom={6.5}
       touchPitch={false}
       mapStyle='https://basemaps.cartocdn.com/gl/positron-gl-style/style.json'
       interactiveLayerIds={[

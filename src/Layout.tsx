@@ -5,14 +5,13 @@ import { CasesMapDisplay } from './mapDisplay';
 import { QueryCases } from './query';
 import styles from './Layout.module.css';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { EnvironmentDisplay, EnvironmentToggle } from './environment';
+import { EnvironmentDisplay } from './environment';
 
 export default function Layout() {
   const isDesktop = useMediaQuery('(min-width: 768px)');
   return (
     <Map>
       {isDesktop ? <DesktopOverlay /> : <MobileOverlay />}
-      <EnvironmentToggle />
       <EnvironmentDisplay />
       <CasesMapDisplay />
     </Map>
