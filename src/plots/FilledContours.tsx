@@ -14,6 +14,7 @@ export default function FilledContours({
   cmap,
   opacity = 0.8,
   beforeId,
+  hide,
 }: FilledContoursProps) {
   return (
     <Source id={id} type='geojson' data={data}>
@@ -24,6 +25,7 @@ export default function FilledContours({
           'fill-color': toFill(cmap, levelProp),
           'fill-opacity': opacity,
         }}
+        layout={{ visibility: hide ? 'none' : 'visible' }}
         beforeId={beforeId}
       />
     </Source>

@@ -15,6 +15,7 @@ export default function LineContours({
   width = 1.5,
   labels = true,
   beforeId,
+  hide,
 }: LineContoursProps) {
   return (
     <Source id={id} type='geojson' data={data}>
@@ -42,6 +43,7 @@ export default function LineContours({
             // 'icon-overlap': 'cooperative',
             // 'icon-ignore-placement': true,
             'text-padding': 1,
+            visibility: hide ? 'none' : 'visible',
           }}
           paint={{
             'text-color': color,

@@ -40,7 +40,8 @@ export default function WindBarbPlot({
   id,
   data,
   beforeId,
-}: Pick<ContourProps, 'id' | 'data' | 'beforeId'>) {
+  hide,
+}: Pick<ContourProps, 'id' | 'data' | 'beforeId' | 'hide'>) {
   const { imageIds, wspds } = useLoadWindBarbs();
 
   return (
@@ -67,6 +68,7 @@ export default function WindBarbPlot({
                 'icon-anchor': 'top-right',
                 'icon-rotate': ['-', ['get', 'wdir'], 90],
                 'icon-padding': 3,
+                visibility: hide ? 'none' : 'visible',
               }}
               beforeId={beforeId}
             />

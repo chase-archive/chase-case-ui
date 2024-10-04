@@ -8,6 +8,7 @@ export interface ContourProps extends ReactMapGlProps {
   id: string;
   data: FeatureCollection;
   levelProp?: string;
+  hide?: boolean;
 }
 
 export interface Colormap {
