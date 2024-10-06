@@ -1,4 +1,4 @@
-import { Layer, Source } from 'react-map-gl/maplibre';
+import { Layer } from 'react-map-gl/maplibre';
 import { Colormap, ContourProps } from './types';
 import { DataDrivenPropertyValueSpecification } from 'maplibre-gl';
 
@@ -9,7 +9,6 @@ interface FilledContoursProps extends ContourProps {
 
 export default function FilledContours({
   id,
-  data,
   levelProp = 'level',
   cmap,
   opacity = 0.8,
@@ -17,18 +16,17 @@ export default function FilledContours({
   hide,
 }: FilledContoursProps) {
   return (
-    <Source id={id} type='geojson' data={data}>
-      <Layer
-        id={`${id}-fill`}
-        type='fill'
-        paint={{
-          'fill-color': toFill(cmap, levelProp),
-          'fill-opacity': opacity,
-        }}
-        layout={{ visibility: hide ? 'none' : 'visible' }}
-        beforeId={beforeId}
-      />
-    </Source>
+    <Layer
+      id={`${id}-fill`}
+      source={id}
+      type='fill'
+      paint={{
+        'fill-color': toFill(cmap, levelProp),
+        'fill-opacity': opacity,
+      }}
+      layout={{ visibility: hide ? 'none' : 'visible' }}
+      beforeId={beforeId}
+    />
   );
 }
 

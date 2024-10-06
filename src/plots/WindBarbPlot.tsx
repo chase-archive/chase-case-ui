@@ -1,4 +1,4 @@
-import { Layer, Source, useMap } from 'react-map-gl/maplibre';
+import { Layer, useMap } from 'react-map-gl/maplibre';
 import { useEffect } from 'react';
 import _ from 'lodash';
 import { ContourProps } from './types';
@@ -38,14 +38,13 @@ function useLoadWindBarbs() {
 
 export default function WindBarbPlot({
   id,
-  data,
   beforeId,
   hide,
-}: Pick<ContourProps, 'id' | 'data' | 'beforeId' | 'hide'>) {
+}: Pick<ContourProps, 'id' | 'beforeId' | 'hide'>) {
   const { imageIds, wspds } = useLoadWindBarbs();
 
   return (
-    <Source id={id} type='geojson' data={data}>
+    <>
       {_.zip(wspds, wspds.slice(1), imageIds).map(
         ([wspd, nextWspd, imageId], idx) => {
           if (!imageId || wspd === undefined) {
@@ -58,6 +57,7 @@ export default function WindBarbPlot({
           return (
             <Layer
               id={`${id}-${wspd}`}
+              source={id}
               key={idx}
               type='symbol'
               filter={filter}
@@ -75,6 +75,6 @@ export default function WindBarbPlot({
           );
         }
       )}
-    </Source>
+    </>
   );
 }

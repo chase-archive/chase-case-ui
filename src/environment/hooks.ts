@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { EnvironmentData, EnvironmentOverview } from './types';
 import { Level } from '../types';
-import { useEnvironmentData } from './api';
+import { useEnvironmentData, useEnvironmentOverviews } from './api';
 import { DateTime } from 'luxon';
+import { useChaseCaseStore } from '../store';
+import ORDERING from './ordering';
+import { useShallow } from 'zustand/react/shallow';
 
 export function useEnvironmentDataSeries(
   caseId: string | null,
@@ -37,4 +40,58 @@ export function useEnvironmentDataSeries(
   }, [caseId]);
 
   return allEnvironmentData;
+}
+
+export function useEnvironmentLayerDefs() {
+  const [environmentEventId, environmentDisplayVars, environmentLevel] =
+    useChaseCaseStore(
+      useShallow((state) => [
+        state.environmentEventId,
+        state.environmentDisplayVars,
+        state.environmentLevel,
+      ])
+    );
+
+  const { data: environmentOverviews } =
+    useEnvironmentOverviews(environmentEventId);
+
+  const data = useEnvironmentDataSeries(
+    environmentEventId,
+    environmentLevel,
+    environmentOverviews ?? []
+  );
+
+  if (!environmentEventId || !data.length) {
+    return [];
+  }
+
+  const environmentDisplaySorted = [...environmentDisplayVars];
+  environmentDisplaySorted.sort((e1, e2) => {
+    if (!ORDERING[e1] || !ORDERING[e2]) {
+      return 0;
+    }
+    if (ORDERING[e1] > ORDERING[e2]) {
+      return -1;
+    } else if (ORDERING[e1] < ORDERING[e2]) {
+      return 1;
+    }
+    return 0;
+  });
+
+  return data.flatMap((dataSlice, idx) => {
+    return environmentDisplaySorted
+      .map((displayVar) => {
+        if (!dataSlice.data[displayVar]) {
+          return null;
+        }
+        return {
+          id: `${environmentEventId}-${environmentLevel}-${displayVar}-${idx}`,
+          data: dataSlice.data[displayVar],
+          displayVar,
+          level: environmentLevel,
+          timeIndex: idx,
+        };
+      })
+      .filter((d) => d !== null);
+  });
 }

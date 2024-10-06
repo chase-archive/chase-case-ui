@@ -1,4 +1,4 @@
-import { Layer, Source } from 'react-map-gl/maplibre';
+import { Layer } from 'react-map-gl/maplibre';
 import { ContourProps } from './types';
 
 interface LineContoursProps extends ContourProps {
@@ -9,7 +9,6 @@ interface LineContoursProps extends ContourProps {
 
 export default function LineContours({
   id,
-  data,
   levelProp = 'level',
   color = '#000000',
   width = 1.5,
@@ -18,7 +17,7 @@ export default function LineContours({
   hide,
 }: LineContoursProps) {
   return (
-    <Source id={id} type='geojson' data={data}>
+    <>
       <Layer
         id={`${id}-line`}
         type='line'
@@ -26,10 +25,12 @@ export default function LineContours({
           'line-color': color,
           'line-width': width,
         }}
+        source={id}
       />
       {labels && (
         <Layer
           id={`${id}-label`}
+          source={id}
           type='symbol'
           layout={{
             'text-field': ['get', levelProp],
@@ -53,6 +54,6 @@ export default function LineContours({
           beforeId={beforeId}
         />
       )}
-    </Source>
+    </>
   );
 }
