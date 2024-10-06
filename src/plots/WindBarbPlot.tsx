@@ -43,13 +43,8 @@ export default function WindBarbPlot({
 }: Pick<ContourProps, 'id' | 'beforeId' | 'hide'>) {
   const { imageIds, wspds } = useLoadWindBarbs();
 
-  const layout = useMemo(
+  const visibilityLayout = useMemo(
     () => ({
-      'icon-size': 0.25,
-      'icon-allow-overlap': false,
-      'icon-anchor': 'top-right',
-      'icon-rotate': ['-', ['get', 'wdir'], 90],
-      'icon-padding': 3,
       visibility: hide ? 'none' : 'visible',
     }),
     [hide]
@@ -76,7 +71,12 @@ export default function WindBarbPlot({
               layout={
                 {
                   'icon-image': imageId,
-                  ...layout,
+                  'icon-size': 0.25,
+                  'icon-allow-overlap': false,
+                  'icon-anchor': 'top-right',
+                  'icon-rotate': ['-', ['get', 'wdir'], 90],
+                  'icon-padding': 3,
+                  ...visibilityLayout,
                 } as object
               }
               beforeId={beforeId}

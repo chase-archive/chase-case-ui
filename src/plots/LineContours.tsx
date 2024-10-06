@@ -17,26 +17,9 @@ export default function LineContours({
   beforeId,
   hide,
 }: LineContoursProps) {
-  const lineLayout = useMemo(
+  const visibilityLayout = useMemo(
     () => ({ visibility: hide ? 'none' : 'visible' }),
     [hide]
-  );
-  const labelLayout = useMemo(
-    () => ({
-      'text-field': ['get', levelProp],
-      'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-      'text-size': 12,
-      'symbol-placement': 'line-center',
-      // 'symbol-spacing': 1000,
-      'symbol-avoid-edges': true,
-      'icon-allow-overlap': true,
-      'icon-ignore-placement': true,
-      // 'icon-overlap': 'cooperative',
-      // 'icon-ignore-placement': true,
-      'text-padding': 1,
-      visibility: hide ? 'none' : 'visible',
-    }),
-    [hide, levelProp]
   );
 
   return (
@@ -49,14 +32,29 @@ export default function LineContours({
           'line-width': width,
         }}
         source={id}
-        layout={lineLayout as object}
+        layout={visibilityLayout as object}
       />
       {labels && (
         <Layer
           id={`${id}-label`}
           source={id}
           type='symbol'
-          layout={labelLayout as object}
+          layout={
+            {
+              'text-field': ['get', levelProp],
+              'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+              'text-size': 12,
+              'symbol-placement': 'line-center',
+              // 'symbol-spacing': 1000,
+              'symbol-avoid-edges': true,
+              'icon-allow-overlap': true,
+              'icon-ignore-placement': true,
+              // 'icon-overlap': 'cooperative',
+              // 'icon-ignore-placement': true,
+              'text-padding': 1,
+              ...visibilityLayout,
+            } as object
+          }
           paint={{
             'text-color': color,
             'text-halo-color': 'rgba(255, 255, 255, 0.8)',

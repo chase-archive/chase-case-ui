@@ -16,7 +16,7 @@ export default function FilledContours({
   beforeId,
   hide,
 }: FilledContoursProps) {
-  const layout = useMemo(
+  const visibilityLayout = useMemo(
     () => ({ visibility: hide ? 'none' : 'visible' }),
     [hide]
   );
@@ -29,7 +29,7 @@ export default function FilledContours({
         'fill-color': toFill(cmap, levelProp),
         'fill-opacity': opacity,
       }}
-      layout={layout as object}
+      layout={visibilityLayout as object}
       beforeId={beforeId}
     />
   );

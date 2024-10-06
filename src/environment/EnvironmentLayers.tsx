@@ -38,6 +38,7 @@ function RenderLayer({ layerId, cmap, displayVar, hide }: RenderDisplayProps) {
         id={layerId}
         beforeId={layers.queriedCasesHeatmap}
         hide={hide}
+        labels={false}
       />
     );
   }
