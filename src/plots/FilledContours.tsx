@@ -1,6 +1,7 @@
 import { Layer } from 'react-map-gl/maplibre';
 import { Colormap, ContourProps } from './types';
 import { DataDrivenPropertyValueSpecification } from 'maplibre-gl';
+import { useMemo } from 'react';
 
 interface FilledContoursProps extends ContourProps {
   cmap: Colormap;
@@ -15,6 +16,10 @@ export default function FilledContours({
   beforeId,
   hide,
 }: FilledContoursProps) {
+  const layout = useMemo(
+    () => ({ visibility: hide ? 'none' : 'visible' }),
+    [hide]
+  );
   return (
     <Layer
       id={`${id}-fill`}
@@ -24,7 +29,7 @@ export default function FilledContours({
         'fill-color': toFill(cmap, levelProp),
         'fill-opacity': opacity,
       }}
-      layout={{ visibility: hide ? 'none' : 'visible' }}
+      layout={layout as object}
       beforeId={beforeId}
     />
   );

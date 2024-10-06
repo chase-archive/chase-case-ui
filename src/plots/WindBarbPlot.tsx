@@ -1,5 +1,5 @@
 import { Layer, useMap } from 'react-map-gl/maplibre';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import _ from 'lodash';
 import { ContourProps } from './types';
 import { FilterSpecification } from 'maplibre-gl';
@@ -43,6 +43,18 @@ export default function WindBarbPlot({
 }: Pick<ContourProps, 'id' | 'beforeId' | 'hide'>) {
   const { imageIds, wspds } = useLoadWindBarbs();
 
+  const layout = useMemo(
+    () => ({
+      'icon-size': 0.25,
+      'icon-allow-overlap': false,
+      'icon-anchor': 'top-right',
+      'icon-rotate': ['-', ['get', 'wdir'], 90],
+      'icon-padding': 3,
+      visibility: hide ? 'none' : 'visible',
+    }),
+    [hide]
+  );
+
   return (
     <>
       {_.zip(wspds, wspds.slice(1), imageIds).map(
@@ -61,15 +73,12 @@ export default function WindBarbPlot({
               key={idx}
               type='symbol'
               filter={filter}
-              layout={{
-                'icon-image': imageId,
-                'icon-size': 0.25,
-                'icon-allow-overlap': false,
-                'icon-anchor': 'top-right',
-                'icon-rotate': ['-', ['get', 'wdir'], 90],
-                'icon-padding': 3,
-                visibility: hide ? 'none' : 'visible',
-              }}
+              layout={
+                {
+                  'icon-image': imageId,
+                  ...layout,
+                } as object
+              }
               beforeId={beforeId}
             />
           );

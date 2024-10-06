@@ -13,9 +13,11 @@ interface RenderDisplayProps {
   hide?: boolean;
 }
 
-function RenderLayer({ layerId, cmap, displayVar }: RenderDisplayProps) {
+function RenderLayer({ layerId, cmap, displayVar, hide }: RenderDisplayProps) {
   if (displayVar === 'barbs') {
-    return <Barbs id={layerId} beforeId={layers.queriedCasesHeatmap} />;
+    return (
+      <Barbs id={layerId} beforeId={layers.queriedCasesHeatmap} hide={hide} />
+    );
   }
   if (displayVar === 'isotachs') {
     if (!cmap) {
@@ -26,11 +28,18 @@ function RenderLayer({ layerId, cmap, displayVar }: RenderDisplayProps) {
         id={layerId}
         cmap={cmap}
         beforeId={layers.queriedCasesHeatmap}
+        hide={hide}
       />
     );
   }
   if (displayVar === 'height') {
-    return <LineContour id={layerId} beforeId={layers.queriedCasesHeatmap} />;
+    return (
+      <LineContour
+        id={layerId}
+        beforeId={layers.queriedCasesHeatmap}
+        hide={hide}
+      />
+    );
   }
 }
 
@@ -45,15 +54,13 @@ export default function EnvironmentLayers() {
       {layerDefs.map((layerDef) => {
         const { id, displayVar, level, timeIndex } = layerDef;
         const cmap = displayVar === 'isotachs' ? isotachs[level] : undefined;
-        if (timeIndex !== environmentTimeIndex) {
-          return null;
-        }
         return (
           <RenderLayer
             key={id}
             layerId={id}
             cmap={cmap ?? undefined}
             displayVar={displayVar}
+            hide={timeIndex !== environmentTimeIndex}
           />
         );
       })}
