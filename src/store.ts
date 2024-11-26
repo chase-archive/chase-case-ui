@@ -8,6 +8,8 @@ export type ChaseCaseStore = {
   setHighlightedCases: (highlightedCases: ChaseCase[]) => void;
   queriedCases: ChaseCase[];
   setQueriedCases: (queriedCases: ChaseCase[]) => void;
+  soundingCaseId: string | null;
+  setSoundingCaseId: (soundingCaseId: string | null) => void;
 };
 
 export const useChaseCaseStore = create<ChaseCaseStore>((set) => ({
@@ -17,4 +19,6 @@ export const useChaseCaseStore = create<ChaseCaseStore>((set) => ({
   setHighlightedCases: (highlightedCases) => set({ highlightedCases }),
   queriedCases: [],
   setQueriedCases: (queriedCases) => set({ queriedCases }),
+  soundingCaseId: null,
+  setSoundingCaseId: (soundingCaseId) => set({ soundingCaseId }),
 }));
