@@ -14,11 +14,13 @@ export default function CaseDetails() {
     highlightedCases,
     setHighlightedCases,
     savedSearchQuery,
+    setSoundingCaseId,
   ] = useChaseCaseStore((state) => [
     state.queriedCases,
     state.highlightedCases,
     state.setHighlightedCases,
     state.savedSearchQuery,
+    state.setSoundingCaseId,
   ]);
 
   const { current: map } = useMap();
@@ -51,6 +53,8 @@ export default function CaseDetails() {
                     zoom: 8,
                   });
                 }
+
+                setSoundingCaseId(chaseCase.id);
               }}
             />
             {idx < queriedCases.length - 1 && <Divider />}
