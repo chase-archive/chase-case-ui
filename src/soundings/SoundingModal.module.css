@@ -1,0 +1,21 @@
+
+* {
+  --table-margin: 5px;
+}
+
+
+.datatables table {
+  /* width: calc(100% - 2 * var(--table-margin));
+  height: calc(100% - 2 * var(--table-margin)); */
+  width: 100%;
+  border: 1px solid #c3c3c3;
+  /* margin: var(--table-margin); */
+  font-size: 14px;
+  font-weight: 500;
+  color: #c3c3c3;
+}
+
+.datatables table * {
+  padding: 2px;
+  padding-left: 4px;
+}
