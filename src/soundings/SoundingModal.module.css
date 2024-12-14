@@ -1,21 +1,29 @@
 
-* {
-  --table-margin: 5px;
-}
-
-
-.datatables table {
-  /* width: calc(100% - 2 * var(--table-margin));
-  height: calc(100% - 2 * var(--table-margin)); */
-  width: 100%;
-  border: 1px solid #c3c3c3;
-  /* margin: var(--table-margin); */
+.datatables {
   font-size: 14px;
   font-weight: 500;
-  color: #c3c3c3;
+  color: #F5F5F5;
 }
 
-.datatables table * {
-  padding: 2px;
-  padding-left: 4px;
+.datatables table {
+  width: 100%;
+  border: 1px solid #c3c3c3;
 }
+
+.selectedTableContainer {
+  min-height: 100%;
+  overflow-y: auto;
+}
+
+.selectedTableContainer table {
+  height: min-content;
+  border: none;
+}
+
+#selected-table {
+  border: 1px solid red !important;
+}
+
+/* #selected-table {
+  height: auto !important;
+} */

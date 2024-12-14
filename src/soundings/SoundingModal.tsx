@@ -1,23 +1,23 @@
-import { Flex, Modal } from '@mantine/core';
+import { Flex, Modal, ActionIcon } from '@mantine/core';
 import { useChaseCaseStore } from '../store';
-import {
-  Hodograph,
-  KinematicTable,
-  LayersTable,
-  ParametersTable,
-  ParcelTable,
-  ProfileProvider,
-  SelectedPointsTable,
-  SkewT,
-} from 'upperair';
+import { Hodograph, ParcelType, ProfileProvider, SkewT } from 'upperair';
 import { useGetSounding } from './api';
-import styles from './SoundingModal.module.css';
+import { useState } from 'react';
+import { LuMousePointerClick } from 'react-icons/lu';
+import { AiOutlineDrag } from 'react-icons/ai';
+import { TbCancel } from 'react-icons/tb';
+import { SoundingParameters } from './SoundingParameters';
 
 export function SoundingModal({ isDesktop }: { isDesktop: boolean }) {
   const [soundingCaseId, setSoundingCaseId] = useChaseCaseStore((state) => [
     state.soundingCaseId,
     state.setSoundingCaseId,
   ]);
+
+  const [parcel, setParcel] = useState<ParcelType>('ML');
+  const [interactioneMode, setInteractionMode] = useState<
+    'none' | 'pan' | 'select'
+  >('none');
 
   const onClose = () => setSoundingCaseId(null);
 
@@ -27,39 +27,56 @@ export function SoundingModal({ isDesktop }: { isDesktop: boolean }) {
     return null;
   }
 
+  const interactionProps = {
+    interactive: interactioneMode !== 'none',
+    mode: interactioneMode === 'none' ? undefined : interactioneMode,
+  };
+
   return (
     <Modal opened={!!soundingCaseId} onClose={onClose} size='85%'>
       <Flex direction='column' bg='dark'>
+        <Flex direction='row' flex={1} justify='flex-end'>
+          <ActionIcon
+            size='lg'
+            color='dark'
+            aria-label='Remove interactivity'
+            onClick={() => setInteractionMode('none')}
+          >
+            <TbCancel />
+          </ActionIcon>
+          <ActionIcon
+            size='lg'
+            color='dark'
+            aria-label='Select'
+            onClick={() => setInteractionMode('select')}
+          >
+            <LuMousePointerClick />
+          </ActionIcon>
+          <ActionIcon
+            size='lg'
+            color='dark'
+            aria-label='Pan'
+            onClick={() => setInteractionMode('pan')}
+          >
+            <AiOutlineDrag />
+          </ActionIcon>
+        </Flex>
         <ProfileProvider profile={data.data}>
           <Flex direction={isDesktop ? 'row' : 'column'}>
-            <SkewT interactive mode='pan'>
+            <SkewT {...interactionProps}>
               <SkewT.ReferenceLines />
-              <SkewT.ProfileData showParcel='ML' />
+              <SkewT.ProfileData showParcel={parcel} />
             </SkewT>
-            <Hodograph interactive mode='pan'>
+            <Hodograph {...interactionProps}>
               <Hodograph.ReferenceLines />
               <Hodograph.ProfileData />
             </Hodograph>
           </Flex>
-          <Flex
-            className={styles.datatables}
-            direction={isDesktop ? 'row' : 'column'}
-          >
-            <ParcelTable />
-            <KinematicTable />
-          </Flex>
-          <Flex
-            className={styles.datatables}
-            direction={isDesktop ? 'row' : 'column'}
-          >
-            <Flex direction='column' flex={1}>
-              <LayersTable />
-              <ParametersTable />
-            </Flex>
-            <Flex flex={2}>
-              <SelectedPointsTable />
-            </Flex>
-          </Flex>
+          <SoundingParameters
+            isDesktop={isDesktop}
+            parcel={parcel}
+            setParcel={setParcel}
+          />
         </ProfileProvider>
       </Flex>
     </Modal>

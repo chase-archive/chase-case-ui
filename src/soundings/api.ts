@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { importProfile } from 'upperair';
+import { importProfile } from '@upperair/utilities';
 import { Sounding } from './types';
 
 export function useGetSounding(caseId: string | null) {
