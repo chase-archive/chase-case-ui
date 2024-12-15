@@ -1,4 +1,4 @@
-import { Center, Flex } from '@mantine/core';
+import { Flex } from '@mantine/core';
 import {
   KinematicTable,
   LayersTable,
