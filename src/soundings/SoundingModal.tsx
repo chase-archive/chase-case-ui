@@ -6,6 +6,7 @@ import {
   ParcelType,
   ProfileProvider,
   SkewT,
+  useResetSelection,
 } from 'upperair';
 import { useGetSounding } from './api';
 import { useState } from 'react';
@@ -23,7 +24,12 @@ export function SoundingModal({ isDesktop }: { isDesktop: boolean }) {
   const [interactionMode, setInteractionMode] =
     useState<InteractionMode>('select');
 
-  const onClose = () => setSoundingCaseId(null);
+  const resetSelection = useResetSelection();
+
+  const onClose = () => {
+    setSoundingCaseId(null);
+    resetSelection();
+  };
 
   const { data } = useGetSounding(soundingCaseId);
 
@@ -37,7 +43,8 @@ export function SoundingModal({ isDesktop }: { isDesktop: boolean }) {
         <Flex direction='row' flex={1} justify='flex-end'>
           <ActionIcon
             size='lg'
-            color='dark'
+            variant='filled'
+            color={interactionMode === 'select' ? 'blue' : 'dark'}
             aria-label='Select'
             onClick={() => setInteractionMode('select')}
           >
@@ -45,7 +52,8 @@ export function SoundingModal({ isDesktop }: { isDesktop: boolean }) {
           </ActionIcon>
           <ActionIcon
             size='lg'
-            color='dark'
+            variant='filled'
+            color={interactionMode === 'pan' ? 'blue' : 'dark'}
             aria-label='Pan'
             onClick={() => setInteractionMode('pan')}
           >

@@ -8,7 +8,7 @@ import {
   SelectedPointsTable,
 } from 'upperair';
 import styles from './SoundingModal.module.css';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface SoundingParamters {
   parcel: ParcelType;
@@ -22,6 +22,14 @@ export function SoundingParameters({
   setParcel,
 }: SoundingParamters) {
   const flexRef = useRef<HTMLDivElement>(null);
+  const [tblHght, setTblHght] = useState(0);
+
+  useEffect(() => {
+    if (flexRef?.current) {
+      setTblHght(flexRef.current.offsetHeight);
+    }
+  }, []);
+
   return (
     <>
       <Flex
@@ -47,7 +55,7 @@ export function SoundingParameters({
           className={styles.selectedTableContainer}
           style={{
             overflowY: 'auto',
-            maxHeight: flexRef?.current?.offsetHeight,
+            maxHeight: tblHght,
           }}
         >
           <SelectedPointsTable />
