@@ -3,6 +3,7 @@
   font-size: 14px;
   font-weight: 500;
   color: #F5F5F5;
+  max-width: 100%;
 }
 
 .datatables table {
@@ -19,11 +20,3 @@
   height: min-content;
   border: none;
 }
-
-/* #selected-table {
-  border: 1px solid red !important;
-} */
-
-/* #selected-table {
-  height: auto !important;
-} */

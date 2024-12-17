@@ -38,7 +38,7 @@ export function SoundingModal({ isDesktop }: { isDesktop: boolean }) {
   }
 
   return (
-    <Modal opened={!!soundingCaseId} onClose={onClose} size='85%'>
+    <Modal opened={!!soundingCaseId} onClose={onClose} size='90%'>
       <Flex direction='column' bg='dark'>
         <Flex direction='row' flex={1} justify='flex-end'>
           <ActionIcon
