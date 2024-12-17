@@ -1,11 +1,16 @@
 import { Flex, Modal, ActionIcon } from '@mantine/core';
 import { useChaseCaseStore } from '../store';
-import { Hodograph, ParcelType, ProfileProvider, SkewT } from 'upperair';
+import {
+  InteractionMode,
+  Hodograph,
+  ParcelType,
+  ProfileProvider,
+  SkewT,
+} from 'upperair';
 import { useGetSounding } from './api';
 import { useState } from 'react';
 import { LuMousePointerClick } from 'react-icons/lu';
 import { AiOutlineDrag } from 'react-icons/ai';
-import { TbCancel } from 'react-icons/tb';
 import { SoundingParameters } from './SoundingParameters';
 
 export function SoundingModal({ isDesktop }: { isDesktop: boolean }) {
@@ -15,9 +20,8 @@ export function SoundingModal({ isDesktop }: { isDesktop: boolean }) {
   ]);
 
   const [parcel, setParcel] = useState<ParcelType>('ML');
-  const [interactioneMode, setInteractionMode] = useState<
-    'none' | 'pan' | 'select'
-  >('none');
+  const [interactionMode, setInteractionMode] =
+    useState<InteractionMode>('select');
 
   const onClose = () => setSoundingCaseId(null);
 
@@ -27,23 +31,10 @@ export function SoundingModal({ isDesktop }: { isDesktop: boolean }) {
     return null;
   }
 
-  const interactionProps = {
-    interactive: interactioneMode !== 'none',
-    mode: interactioneMode === 'none' ? undefined : interactioneMode,
-  };
-
   return (
     <Modal opened={!!soundingCaseId} onClose={onClose} size='85%'>
       <Flex direction='column' bg='dark'>
         <Flex direction='row' flex={1} justify='flex-end'>
-          <ActionIcon
-            size='lg'
-            color='dark'
-            aria-label='Remove interactivity'
-            onClick={() => setInteractionMode('none')}
-          >
-            <TbCancel />
-          </ActionIcon>
           <ActionIcon
             size='lg'
             color='dark'
@@ -63,11 +54,11 @@ export function SoundingModal({ isDesktop }: { isDesktop: boolean }) {
         </Flex>
         <ProfileProvider profile={data.data}>
           <Flex direction={isDesktop ? 'row' : 'column'}>
-            <SkewT {...interactionProps}>
+            <SkewT interactive mode={interactionMode}>
               <SkewT.ReferenceLines />
               <SkewT.ProfileData showParcel={parcel} />
             </SkewT>
-            <Hodograph {...interactionProps}>
+            <Hodograph interactive mode={interactionMode}>
               <Hodograph.ReferenceLines />
               <Hodograph.ProfileData />
             </Hodograph>
