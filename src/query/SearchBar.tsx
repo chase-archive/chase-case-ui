@@ -43,13 +43,13 @@ function getEventCard(tags: string[]) {
 
 function SearchEntryOption({ item }: { item: ChaseCase }) {
   const card = getEventCard(item.tags);
-  const datetime = DateTime.fromISO(item.timestamp, { zone: 'utc' });
+  const datetime = DateTime.fromISO(item.time_start, { zone: 'utc' });
   const datetimeCST = datetime.setZone('America/Chicago');
 
   return (
     <Flex direction='row' align='center' gap={10}>
       <Text size='md' fw={600} flex={1} mr={2}>
-        {item.location}
+        {item.event_name}
       </Text>
       <Text fw={500} size='xs' flex={1}>
         {datetimeCST.toFormat('DDD')}
@@ -119,8 +119,8 @@ export default function SearchBar({ onSelectOption }: OnSelectOptionProps) {
       if (selectedCases && selectedCases[0]) {
         setQueriedCases(selectedCases);
         setHighlightedCases(selectedCases);
-        setSavedSearchQuery(selectedCases[0].location);
-        setValue(selectedCases[0].location);
+        setSavedSearchQuery(selectedCases[0].event_name);
+        setValue(selectedCases[0].event_name);
         map?.flyTo({
           center: [selectedCases[0].lon, selectedCases[0].lat],
           zoom: 8,

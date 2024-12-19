@@ -74,7 +74,7 @@ function SingleCaseDetails({
   isHighlighted?: boolean;
   onClick?: () => void;
 }) {
-  const datetime = DateTime.fromISO(chaseCase.timestamp, { zone: 'utc' });
+  const datetime = DateTime.fromISO(chaseCase.time_start, { zone: 'utc' });
   const datetimeCST = datetime.setZone('America/Chicago');
   const [openedLink, setOpenedLink] = useState('');
 
@@ -97,7 +97,7 @@ function SingleCaseDetails({
         }}
         style={{ cursor: 'pointer' }}
       >
-        <Text fw={700}>{chaseCase.location}</Text>
+        <Text fw={700}>{chaseCase.event_name}</Text>
         <Text size='sm' fs='italic'>
           {datetimeCST.toFormat('DDD HH:MM') + ' CST'}
         </Text>
@@ -107,11 +107,11 @@ function SingleCaseDetails({
           Documentation:
         </Text>
         <LinkList
-          links={chaseCase.documentation}
+          links={chaseCase.photo_video}
           onClickSocialLink={(link) => setOpenedLink(link)}
         />
         <Embed
-          title={chaseCase.location}
+          title={chaseCase.event_name}
           link={openedLink}
           isOpen={openedLink !== ''}
           onClose={() => setOpenedLink('')}

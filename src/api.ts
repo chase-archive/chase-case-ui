@@ -16,6 +16,7 @@ export function useSearchCases(
 async function getChaseCases(query: string, limit: number) {
   const response = await fetch(
     `https://urchin-app-tpil4.ondigitalocean.app/cases/search?q=${query}&limit=${limit}`,
+    // `http://localhost:8000/cases/search?q=${query}&limit=${limit}`,
     { headers: { accept: 'application/json' } }
   );
   if (!response.ok) {

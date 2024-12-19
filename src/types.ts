@@ -1,12 +1,13 @@
 export interface HasLocation {
   lat: number;
   lon: number;
-  location: string;
+  event_name: string;
   country: string;
 }
 
 export interface HasTime {
-  timestamp: string;
+  time_start: string;
+  time_end: string | null;
 }
 
 export interface HasTags {
@@ -15,5 +16,5 @@ export interface HasTags {
 
 export interface ChaseCase extends HasLocation, HasTime, HasTags {
   id: string;
-  documentation: string[];
+  photo_video: string[];
 }
