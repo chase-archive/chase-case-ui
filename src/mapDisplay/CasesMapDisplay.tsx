@@ -3,11 +3,11 @@ import toGeojson from '../utils/geojson';
 import CasesHeatmap from './CasesHeatmap';
 import CasesPoints from './CasesPoints';
 import { sources, layers } from '../layers';
-import { rgba, transition } from '../utils/mapbox';
 import { ChaseCase, HasLocation } from '../types';
 
 import { PropsWithChildren } from 'react';
 import { useChaseCaseStore } from '../store';
+import HighlightedPoints from './HighlightedPoints';
 
 interface CasesSourceProps<T extends HasLocation> extends PropsWithChildren {
   id: string;
@@ -34,26 +34,24 @@ export default function CasesMapDisplay() {
         <CasesHeatmap
           layerId={layers.queriedCasesHeatmap}
           sourceId={sources.queriedCases}
-          transitionOut={[8, 8.5]}
+          transitionOut={[5.5, 6.5]}
         />
         <CasesPoints
           layerId={layers.queriedCasesPoints}
           sourceId={sources.queriedCases}
           color='red'
-          strokeWidth={1}
-          radius={6}
-          transitionIn={[8, 8.5]}
+          strokeWidth={0}
+          radius={7}
+          transitionIn={[5, 5.5]}
         />
       </CasesSource>
       <CasesSource id={sources.highlightedCases} cases={highlightedCases}>
-        <CasesPoints
+        <HighlightedPoints
           layerId={layers.highlightedCasesPoints}
           sourceId={sources.highlightedCases}
-          color={rgba(1, 1, 1, 0)}
-          strokeColor='yellow'
-          strokeWidth={transition([7.5, 8.5], [2, 4])}
-          radius={transition([5, 8.5], [3, 6])}
-          transitionIn={[3, 4]}
+          transitionIn={[5, 5.5]}
+          beforeId={layers.queriedCasesPoints}
+          color='rgba(128, 0, 255, 0.5)'
         />
       </CasesSource>
     </>

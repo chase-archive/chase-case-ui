@@ -3,10 +3,9 @@ import {
   transitionIn as generateTransitionIn,
   transition,
 } from '../utils/mapbox';
+import { LayerDisplayProps } from './types';
 
-interface CasesPointsProps {
-  layerId: string;
-  sourceId: string;
+interface CasesPointsProps extends LayerDisplayProps {
   color: string;
   strokeWidth: number | ReturnType<typeof transition>;
   strokeColor?: string;

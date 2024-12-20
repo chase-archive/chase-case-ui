@@ -1,6 +1,6 @@
 import MapGL from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useState } from 'react';
 import { layers } from './layers';
 import _ from 'lodash';
 import { useChaseCaseStore } from './store';
@@ -16,6 +16,11 @@ export default function Map({ children }: PropsWithChildren) {
     state.queriedCases,
     state.setHighlightedCases,
   ]);
+
+  const [hoveredFeature, setHoveredFeature] = useState<string | number | null>(
+    null
+  );
+
   return (
     <MapGL
       initialViewState={INITIAL_VIEW_STATE}
@@ -27,7 +32,7 @@ export default function Map({ children }: PropsWithChildren) {
         top: 0,
       }}
       // onRender={(event) => event.target.resize()}
-      minZoom={4}
+      minZoom={2.5}
       maxZoom={10}
       touchPitch={false}
       mapStyle='https://basemaps.cartocdn.com/gl/positron-gl-style/style.json'
@@ -35,6 +40,18 @@ export default function Map({ children }: PropsWithChildren) {
         layers.queriedCasesHeatmap,
         layers.queriedCasesPoints,
       ]}
+      onMouseEnter={({ features }) => {
+        if (features) {
+          const { properties } = features[0] ?? {};
+          if (properties) {
+            setHoveredFeature(properties.id);
+          }
+        }
+      }}
+      onMouseLeave={() => {
+        setHoveredFeature(null);
+      }}
+      cursor={hoveredFeature ? 'pointer' : 'grab'}
       onClick={({ lngLat, features }) => {
         const cases: string[] = (features ?? [])
           .map((feat) => {
