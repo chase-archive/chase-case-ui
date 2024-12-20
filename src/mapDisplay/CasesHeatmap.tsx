@@ -20,7 +20,7 @@ export default function CasesHeatmap({
     source: sourceId,
     maxzoom: endZoom,
     paint: {
-      'heatmap-intensity': transition([3, 6], [0.2, 2]),
+      'heatmap-intensity': transition([2, 7], [0.1, 2]),
       // 'heatmap-intensity': 0.7,
       'heatmap-radius': 50,
       'heatmap-opacity': generateTransitionOut(startZoom, endZoom),
