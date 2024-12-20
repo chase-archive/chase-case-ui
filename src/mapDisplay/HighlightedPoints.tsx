@@ -8,10 +8,12 @@ export default function HighlightedPoints({
   transitionIn,
   beforeId,
   color,
+  radius,
 }: LayerDisplayProps & {
   transitionIn: [number, number];
   beforeId?: string;
   color: string;
+  radius: number;
 }) {
   const [startZoom, endZoom] = transitionIn;
   const layerProps: LayerProps = {
@@ -21,9 +23,9 @@ export default function HighlightedPoints({
     source: sourceId,
     paint: {
       'circle-color': color,
-      'circle-radius': 22,
+      'circle-radius': radius,
       'circle-opacity': generateTransitionIn(startZoom, endZoom),
-      'circle-blur': 0.8,
+      'circle-blur': 1,
     } as object,
   };
   return <Layer {...layerProps} beforeId={beforeId} />;

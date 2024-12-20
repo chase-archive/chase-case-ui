@@ -2,8 +2,8 @@ import { Layer, LayerProps } from 'react-map-gl/maplibre';
 import {
   scale,
   rgba,
-  transition,
   transitionOut as generateTransitionOut,
+  transition,
 } from '../utils/mapbox';
 import { LayerDisplayProps } from './types';
 
@@ -20,8 +20,9 @@ export default function CasesHeatmap({
     source: sourceId,
     maxzoom: endZoom,
     paint: {
-      'heatmap-intensity': transition([4, 8], [1, 3]),
-      'heatmap-radius': transition([7.5, 8], [35, 30]),
+      'heatmap-intensity': transition([3, 6], [0.2, 2]),
+      // 'heatmap-intensity': 0.7,
+      'heatmap-radius': 50,
       'heatmap-opacity': generateTransitionOut(startZoom, endZoom),
 
       // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
