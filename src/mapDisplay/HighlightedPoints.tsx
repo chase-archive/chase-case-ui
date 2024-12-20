@@ -21,7 +21,7 @@ export default function HighlightedPoints({
     source: sourceId,
     paint: {
       'circle-color': color,
-      'circle-radius': 25,
+      'circle-radius': 22,
       'circle-opacity': generateTransitionIn(startZoom, endZoom),
       'circle-blur': 0.8,
     } as object,

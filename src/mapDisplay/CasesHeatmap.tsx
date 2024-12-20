@@ -11,6 +11,7 @@ export default function CasesHeatmap({
   layerId,
   sourceId,
   transitionOut,
+  beforeId,
 }: LayerDisplayProps & { transitionOut: [number, number] }) {
   const [startZoom, endZoom] = transitionOut;
   const layerProps: LayerProps = {
@@ -47,5 +48,5 @@ export default function CasesHeatmap({
       ],
     } as object,
   };
-  return <Layer {...layerProps} />;
+  return <Layer {...layerProps} beforeId={beforeId} />;
 }

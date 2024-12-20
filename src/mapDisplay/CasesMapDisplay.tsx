@@ -35,6 +35,7 @@ export default function CasesMapDisplay() {
           layerId={layers.queriedCasesHeatmap}
           sourceId={sources.queriedCases}
           transitionOut={[5.5, 6.5]}
+          beforeId={layers.highlightedCasesPoints}
         />
         <CasesPoints
           layerId={layers.queriedCasesPoints}
@@ -49,9 +50,9 @@ export default function CasesMapDisplay() {
         <HighlightedPoints
           layerId={layers.highlightedCasesPoints}
           sourceId={sources.highlightedCases}
-          transitionIn={[5, 5.5]}
+          transitionIn={[1, 2]}
           beforeId={layers.queriedCasesPoints}
-          color='rgba(128, 0, 255, 0.5)'
+          color='rgba(128, 0, 255, 0.75)'
         />
       </CasesSource>
     </>
