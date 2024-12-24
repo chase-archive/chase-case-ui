@@ -20,7 +20,7 @@ export default function CasesHeatmap({
     source: sourceId,
     maxzoom: endZoom,
     paint: {
-      'heatmap-intensity': transition([2, 7], [0.1, 2]),
+      'heatmap-intensity': transition([2, 7], [0.1, 1.2]),
       // 'heatmap-intensity': 0.7,
       'heatmap-radius': 50,
       'heatmap-opacity': generateTransitionOut(startZoom, endZoom),
@@ -36,12 +36,12 @@ export default function CasesHeatmap({
         rgba(255, 255, 0, 0),
         ...scale(
           [
-            rgba(255, 255, 0, 0.15), // Light Yellow (low intensity)
-            rgba(255, 204, 0, 0.4), // Yellow-Orange (medium-low intensity)
+            rgba(255, 255, 0, 0.25), // Light Yellow (low intensity)
+            rgba(255, 204, 0, 0.55), // Yellow-Orange (medium-low intensity)
             rgba(255, 153, 0, 0.65), // Deep Orange (medium intensity)
             rgba(255, 102, 0, 0.7), // Reddish Orange (high intensity)
             rgba(255, 50, 0, 0.75),
-            rgba(255, 0, 0, 0.8), // Red (maximum intensity)
+            rgba(255, 20, 20, 0.8), // Red (maximum intensity)
           ],
           0.15,
           0.9
