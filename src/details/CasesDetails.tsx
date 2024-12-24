@@ -6,31 +6,19 @@ import { DateTime } from 'luxon';
 import { Fragment, useState } from 'react';
 import { Embed } from './Embed';
 import { LinkList } from './Link';
-import { useMap } from 'react-map-gl';
+import { useCases } from '../hooks';
 
 export default function CaseDetails() {
-  const [
-    queriedCases,
-    highlightedCases,
-    setHighlightedCases,
-    savedSearchQuery,
-    setSoundingCaseId,
-  ] = useChaseCaseStore((state) => [
-    state.queriedCases,
-    state.highlightedCases,
-    state.setHighlightedCases,
-    state.savedSearchQuery,
-    state.setSoundingCaseId,
-  ]);
-
-  const { current: map } = useMap();
-
-  const highlightedCasesIds = highlightedCases.map((chaseCase) => chaseCase.id);
+  const searchQuery = useChaseCaseStore((state) => state.searchQuery);
+  const [highlightedCaseId, setHighlightedCaseId] = useChaseCaseStore(
+    (state) => [state.highlightedCaseId, state.setHighlightedCaseId]
+  );
+  const { queriedCases } = useCases();
 
   return (
     <div className={styles.casesDetailsPanel}>
       <Center className={styles.caseDetailsPanelTitle} py={6} px={10}>
-        <Title order={4}>Cases for: {savedSearchQuery || '--'}</Title>
+        <Title order={4}>Cases for: {searchQuery || '--'}</Title>
       </Center>
       <div className={styles.casesDetailsList}>
         {queriedCases.length === 0 && (
@@ -42,19 +30,13 @@ export default function CaseDetails() {
           <Fragment key={idx}>
             <SingleCaseDetails
               chaseCase={chaseCase}
-              isHighlighted={highlightedCasesIds.includes(chaseCase.id)}
+              isHighlighted={chaseCase.id === highlightedCaseId}
               onClick={() => {
-                if (highlightedCasesIds.includes(chaseCase.id)) {
-                  setHighlightedCases([]);
+                if (highlightedCaseId === chaseCase.id) {
+                  setHighlightedCaseId(null);
                 } else {
-                  setHighlightedCases([chaseCase]);
-                  map?.flyTo({
-                    center: [chaseCase.lon, chaseCase.lat],
-                    zoom: 8,
-                  });
+                  setHighlightedCaseId(chaseCase.id);
                 }
-
-                setSoundingCaseId(chaseCase.id);
               }}
             />
             {idx < queriedCases.length - 1 && <Divider />}

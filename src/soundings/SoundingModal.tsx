@@ -13,12 +13,13 @@ import { useState } from 'react';
 import { LuMousePointerClick } from 'react-icons/lu';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { SoundingParameters } from './SoundingParameters';
+import { useCases } from '../hooks';
 
 export function SoundingModal({ isDesktop }: { isDesktop: boolean }) {
-  const [soundingCaseId, setSoundingCaseId] = useChaseCaseStore((state) => [
-    state.soundingCaseId,
-    state.setSoundingCaseId,
-  ]);
+  const { highlightedCase } = useCases();
+  const setHighlightedCaseId = useChaseCaseStore(
+    (state) => state.setHighlightedCaseId
+  );
 
   const [parcel, setParcel] = useState<ParcelType>('ML');
   const [interactionMode, setInteractionMode] =
@@ -27,18 +28,18 @@ export function SoundingModal({ isDesktop }: { isDesktop: boolean }) {
   const resetSelection = useResetSelection();
 
   const onClose = () => {
-    setSoundingCaseId(null);
+    setHighlightedCaseId(null);
     resetSelection();
   };
 
-  const { data } = useGetSounding(soundingCaseId);
+  const { data } = useGetSounding(highlightedCase?.id ?? null);
 
   if (!data) {
     return null;
   }
 
   return (
-    <Modal opened={!!soundingCaseId} onClose={onClose} size='90%'>
+    <Modal opened={!!highlightedCase} onClose={onClose} size='90%'>
       <Flex direction='column' bg='dark'>
         <Flex direction='row' flex={1} justify='flex-end'>
           <ActionIcon

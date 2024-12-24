@@ -4,10 +4,9 @@ import CasesHeatmap from './CasesHeatmap';
 import CasesPoints from './CasesPoints';
 import { sources, layers } from '../layers';
 import { ChaseCase, HasLocation } from '../types';
-
 import { PropsWithChildren } from 'react';
-import { useChaseCaseStore } from '../store';
 import HighlightedPoints from './HighlightedPoints';
+import { useCases } from '../hooks';
 
 interface CasesSourceProps<T extends HasLocation> extends PropsWithChildren {
   id: string;
@@ -23,10 +22,7 @@ function CasesSource({ id, cases, children }: CasesSourceProps<ChaseCase>) {
 }
 
 export default function CasesMapDisplay() {
-  const [highlightedCases, queriedCases] = useChaseCaseStore((state) => [
-    state.highlightedCases,
-    state.queriedCases,
-  ]);
+  const { queriedCases, highlightedCase } = useCases();
 
   return (
     <>
@@ -46,7 +42,10 @@ export default function CasesMapDisplay() {
           transitionIn={[5, 6]}
         />
       </CasesSource>
-      <CasesSource id={sources.highlightedCases} cases={highlightedCases}>
+      <CasesSource
+        id={sources.highlightedCases}
+        cases={highlightedCase ? [highlightedCase] : []}
+      >
         <HighlightedPoints
           layerId={layers.highlightedCasesPoints}
           sourceId={sources.highlightedCases}

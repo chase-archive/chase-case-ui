@@ -2,7 +2,6 @@ import MapGL from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { PropsWithChildren, useState } from 'react';
 import { layers } from './layers';
-import _ from 'lodash';
 import { useChaseCaseStore } from './store';
 
 const INITIAL_VIEW_STATE = {
@@ -12,10 +11,9 @@ const INITIAL_VIEW_STATE = {
 };
 
 export default function Map({ children }: PropsWithChildren) {
-  const [queriedCases, setHighlightedCases] = useChaseCaseStore((state) => [
-    state.queriedCases,
-    state.setHighlightedCases,
-  ]);
+  const [highlightedCaseId, setHighlightedCaseId] = useChaseCaseStore(
+    (state) => [state.highlightedCaseId, state.setHighlightedCaseId]
+  );
 
   const [hoveredFeature, setHoveredFeature] = useState<string | number | null>(
     null
@@ -64,15 +62,11 @@ export default function Map({ children }: PropsWithChildren) {
           })
           .filter((chaseCase) => !!chaseCase) as string[];
 
-        // remove dups - point and cluster cases will be duplicated
-        const casesFiltered = _.uniq(cases);
-
-        // we only want to replace view of highlighted reports
-        // if there are any
-        if (casesFiltered.length) {
-          setHighlightedCases(
-            queriedCases.filter((item) => casesFiltered.includes(item.id))
-          );
+        const highlightedCase = cases[0];
+        if (highlightedCase === highlightedCaseId) {
+          setHighlightedCaseId(null);
+        } else {
+          setHighlightedCaseId(highlightedCase);
         }
       }}
     >
