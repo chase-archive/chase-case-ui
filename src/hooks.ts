@@ -6,13 +6,19 @@ export function useCases(limit: number = 500) {
   const highlightedCaseId = useChaseCaseStore(
     (state) => state.highlightedCaseId
   );
-  const cases = useSearchCases(searchQuery ?? '', limit, !!searchQuery);
+  const filteredTags = useChaseCaseStore((state) => state.filteredTags);
+  const cases = useSearchCases(searchQuery ?? '', [], limit, !!searchQuery);
+
+  const queriedCases =
+    cases.data?.filter(({ tags }) =>
+      tags.some((tag) => (filteredTags.size > 0 ? filteredTags.has(tag) : true))
+    ) ?? [];
 
   return {
-    queriedCases: cases.data ?? [],
+    queriedCases,
     isLoading: cases.isLoading,
     isError: cases.isError,
     highlightedCase:
-      cases.data?.find((c) => c.id === highlightedCaseId) ?? null,
+      queriedCases.find((c) => c.id === highlightedCaseId) ?? null,
   };
 }

@@ -1,14 +1,17 @@
-import { Flex, Text } from '@mantine/core';
-import TornadoIcon from './tornado.svg';
-import HailIcon from './hail.svg';
-import WindIcon from './wind.svg';
-import StructureIcon from './structure.svg';
-import HurricaneIcon from './hurricane.svg';
-import FloodIcon from './flood.svg';
-import FireIcon from './fire.svg';
-import SnowIcon from './snow.svg';
-import LightningIcon from './lightning.svg';
+import { CloseButton, Flex, Text } from '@mantine/core';
+import TornadoIcon from './icons/tornado.svg';
+import HailIcon from './icons/hail.svg';
+import WindIcon from './icons/wind.svg';
+import StructureIcon from './icons/structure.svg';
+import HurricaneIcon from './icons/hurricane.svg';
+import FloodIcon from './icons/flood.svg';
+import FireIcon from './icons/fire.svg';
+import SnowIcon from './icons/snow.svg';
+import LightningIcon from './icons/lightning.svg';
 import styles from './Tags.module.css';
+import { TagInteractionProps } from './types';
+import { useHover } from '@mantine/hooks';
+import { RefObject } from 'react';
 
 type TagType = keyof typeof TAG_COLORS;
 
@@ -36,7 +39,7 @@ const TAG_ICONS = {
   lightning: LightningIcon,
 };
 
-interface EventTagProps {
+interface EventTagProps extends TagInteractionProps {
   name: string;
   color?: string;
   img?: typeof TornadoIcon;
@@ -76,25 +79,51 @@ function toEventProps(name: string) {
   };
 }
 
-export function Tag({ name }: Pick<EventTagProps, 'name'>) {
+export function Tag({
+  name,
+  ...rest
+}: Pick<EventTagProps, 'name'> & TagInteractionProps) {
   return (
-    <EventTag name={name.toLowerCase()} {...toEventProps(name.toLowerCase())} />
+    <EventTag
+      name={name.toLowerCase()}
+      {...toEventProps(name.toLowerCase())}
+      {...rest}
+    />
   );
 }
 
-export function EventTag({ name, color, img }: EventTagProps) {
+export function EventTag({
+  name,
+  color,
+  img,
+  onTagClick,
+  onTagClose,
+}: EventTagProps) {
+  const { hovered, ref } = useHover();
   return (
     <Flex
+      ref={ref as RefObject<HTMLDivElement>}
       className={styles.tag}
       bg={color ?? 'rgba(211,211,211,0.5)'}
       direction='row'
       gap={5}
       align='center'
     >
-      <Text size='xs' flex={1}>
+      <Text
+        size='xs'
+        flex={1}
+        onClick={() => {
+          if (onTagClick) {
+            onTagClick(name);
+          }
+        }}
+        td={onTagClick && hovered ? 'underline' : 'none'}
+        style={onTagClick && { ...{ cursor: 'pointer' } }}
+      >
         {name}
       </Text>
       {img && <img src={img} />}
+      {onTagClose && <CloseButton size='xs' onClick={() => onTagClose(name)} />}
     </Flex>
   );
 }

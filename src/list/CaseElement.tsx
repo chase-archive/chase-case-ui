@@ -3,6 +3,7 @@ import { DateTime } from 'luxon';
 import { forwardRef } from 'react';
 import { ChaseCase } from '../types';
 import { TagList } from '../tags/TagList';
+import { useChaseCaseStore } from '../store';
 
 export interface ChaseCaseElementProps {
   chaseCase: ChaseCase;
@@ -13,6 +14,7 @@ export interface ChaseCaseElementProps {
 
 export const CaseElement = forwardRef<HTMLDivElement, ChaseCaseElementProps>(
   ({ chaseCase, isHighlighted, onClick, onClose }, ref) => {
+    const addFilteredTag = useChaseCaseStore((state) => state.addFilteredTag);
     const { event_name, time_start, lat, lon, tags } = chaseCase;
     const dateTimeStr = DateTime.fromISO(time_start, { zone: 'utc' }).toFormat(
       'yyyy-MM-dd HH:mm'
@@ -47,7 +49,11 @@ export const CaseElement = forwardRef<HTMLDivElement, ChaseCaseElementProps>(
             </CloseButton>
           )}
         </Flex>
-        <TagList tags={tags} maxTagLength={4} />
+        <TagList
+          tags={tags}
+          maxTagLength={4}
+          onTagClick={(tag) => addFilteredTag(tag)}
+        />
         <Flex direction='row' gap={10}>
           <Text size='sm' flex={1}>{`${dateTimeStr}Z`}</Text>
           <Text size='sm' flex={1} fs='italic'>{`(${lat.toFixed(

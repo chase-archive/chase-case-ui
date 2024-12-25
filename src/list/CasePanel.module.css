@@ -21,9 +21,18 @@
   border-radius: 6px;
 }
 
+.caseFilteredTags {
+  padding-left: 1em;
+  padding-right: 1em;
+  /* border: 1px solid #ceceec; */
+  /* border-radius: 6px; */
+  max-width: 100%;
+}
+
 .caseList {
   overflow-y: auto;
   max-height: 100svh;
+  margin-top: 0.5em;
   padding-left: 0.75em;
   padding-right: 0.75em;
   scrollbar-color: #000 #fff;

@@ -26,35 +26,33 @@ export default function CasesMapDisplay() {
 
   return (
     <>
-      <CasesSource id={sources.queriedCases} cases={queriedCases}>
-        <CasesHeatmap
-          layerId={layers.queriedCasesHeatmap}
-          sourceId={sources.queriedCases}
-          transitionOut={[5, 6]}
-          beforeId={layers.highlightedCasesPoints}
-        />
-        <CasesPoints
-          layerId={layers.queriedCasesPoints}
-          sourceId={sources.queriedCases}
-          color='red'
-          strokeWidth={0}
-          radius={6}
-          transitionIn={[5, 6]}
-        />
-      </CasesSource>
       <CasesSource
         id={sources.highlightedCases}
         cases={highlightedCase ? [highlightedCase] : []}
-      >
-        <HighlightedPoints
-          layerId={layers.highlightedCasesPoints}
-          sourceId={sources.highlightedCases}
-          transitionIn={[1, 2]}
-          beforeId={layers.queriedCasesPoints}
-          color='rgba(128, 0, 255, 0.9)'
-          radius={15}
-        />
-      </CasesSource>
+      />
+      <CasesSource id={sources.queriedCases} cases={queriedCases} />
+      <CasesHeatmap
+        layerId={layers.queriedCasesHeatmap}
+        sourceId={sources.queriedCases}
+        transitionOut={[5, 6]}
+        beforeId={layers.highlightedCasesPoints}
+      />
+      <CasesPoints
+        layerId={layers.queriedCasesPoints}
+        sourceId={sources.queriedCases}
+        color='red'
+        strokeWidth={0}
+        radius={6}
+        transitionIn={[5, 6]}
+      />
+      <HighlightedPoints
+        layerId={layers.highlightedCasesPoints}
+        sourceId={sources.highlightedCases}
+        transitionIn={[1, 2]}
+        beforeId={layers.queriedCasesPoints}
+        color='rgba(128, 0, 255, 0.9)'
+        radius={15}
+      />
     </>
   );
 }

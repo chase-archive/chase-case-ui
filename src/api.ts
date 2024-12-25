@@ -3,17 +3,19 @@ import { ChaseCase } from './types';
 
 export function useSearchCases(
   query: string,
+  // TODO: the tags is not used here: want to do as much caching as possible
+  tags: string[] = [],
   limit: number = 5,
   enabled: boolean = true
 ) {
   return useQuery<ChaseCase[]>({
-    queryKey: ['search', query, limit],
-    queryFn: () => getChaseCases(query, limit),
+    queryKey: ['search', query, limit, tags.join(',')],
+    queryFn: () => getChaseCases(query, limit, tags),
     enabled: enabled && !!query,
   });
 }
 
-async function getChaseCases(query: string, limit: number) {
+async function getChaseCases(query: string, limit: number, tags: string[]) {
   const response = await fetch(
     `https://urchin-app-tpil4.ondigitalocean.app/cases/search?q=${query}&limit=${limit}`,
     // `http://localhost:8000/cases/search?q=${query}&limit=${limit}`,
@@ -22,5 +24,11 @@ async function getChaseCases(query: string, limit: number) {
   if (!response.ok) {
     throw new Error(`Response status: ${response.status}`);
   }
-  return response.json();
+  const res = await response.json();
+  if (tags.length > 0) {
+    return res.filter((c: ChaseCase) =>
+      c.tags.some((tag) => tags.includes(tag))
+    );
+  }
+  return res;
 }
