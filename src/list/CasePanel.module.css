@@ -24,6 +24,7 @@
 .caseFilteredTags {
   padding-left: 1em;
   padding-right: 1em;
+  padding-bottom: 0.25em;
   /* border: 1px solid #ceceec; */
   /* border-radius: 6px; */
   max-width: 100%;

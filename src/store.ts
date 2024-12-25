@@ -20,14 +20,18 @@ export const useChaseCaseStore = create<ChaseCaseStore>((set) => ({
   selectedCaseId: null,
   setSelectedCaseId: (selectedCaseId) => set({ selectedCaseId }),
   filteredTags: new Set(),
+  // these actions *have* to return a new set to trigger a re-render
+  // see: https://gis.stackexchange.com/questions/431120/mapbox-layer-doesnt-update-on-variable-change-react-map-gl
   addFilteredTag: (tag) =>
     set((state) => {
       state.filteredTags.add(tag);
-      return { filteredTags: state.filteredTags };
+      const newTags = new Set(state.filteredTags);
+      return { filteredTags: newTags };
     }),
   removeFilteredTag: (tag) =>
     set((state) => {
       state.filteredTags.delete(tag);
-      return { filteredTags: state.filteredTags };
+      const newTags = new Set(state.filteredTags);
+      return { filteredTags: newTags };
     }),
 }));
