@@ -6,6 +6,7 @@ import { QueryCases } from './query';
 import styles from './Layout.module.css';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { SoundingModal } from './soundings/SoundingModal';
+import { CasePanel } from './list/CasePanel';
 
 export default function Layout() {
   const isDesktop = useMediaQuery('(min-width: 768px)');
@@ -19,12 +20,7 @@ export default function Layout() {
 }
 
 function DesktopOverlay() {
-  return (
-    <Flex className={styles.overlay}>
-      <QueryCases />
-      <CasesDetails />
-    </Flex>
-  );
+  return <CasePanel />;
 }
 
 function MobileOverlay() {

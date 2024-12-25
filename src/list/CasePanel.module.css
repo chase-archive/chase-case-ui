@@ -1,0 +1,32 @@
+.searchBar {
+  width: 100%;
+  padding: 1em;
+}
+
+/* @media screen and (max-width: 480px) {
+  .searchBar {
+    width: calc(100svw - 2rem);
+    min-width: 300px;
+  }
+} */
+
+.casePanel {
+  width: 25vw;
+  min-width: 380px;
+  min-height: 100vh;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgba(245, 245, 245, 0.65);
+  border-radius: 6px;
+}
+
+.caseList {
+  overflow-y: auto;
+  max-height: 100vh;
+  padding-left: 1.25em;
+  padding-right: 1.25em;
+  padding-top: 0.75em;
+  scrollbar-color: #000 #fff;
+  scroll-behavior: auto;
+}
