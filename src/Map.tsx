@@ -12,9 +12,12 @@ const INITIAL_VIEW_STATE = {
 };
 
 export default function Map({ children }: PropsWithChildren) {
-  const [highlightedCaseId, setHighlightedCaseId] = useChaseCaseStore(
-    (state) => [state.highlightedCaseId, state.setHighlightedCaseId]
-  );
+  const [highlightedCaseId, setHighlightedCaseId, setSelectedCaseId] =
+    useChaseCaseStore((state) => [
+      state.highlightedCaseId,
+      state.setHighlightedCaseId,
+      state.setSelectedCaseId,
+    ]);
   const { scrollToEvent } = useScrollToEvent();
   const [hoveredFeature, setHoveredFeature] = useState<string | number | null>(
     null
@@ -65,7 +68,7 @@ export default function Map({ children }: PropsWithChildren) {
 
         const highlightedCase = cases[0];
         if (highlightedCase === highlightedCaseId) {
-          setHighlightedCaseId(null);
+          setSelectedCaseId(highlightedCase);
         } else {
           setHighlightedCaseId(highlightedCase);
           scrollToEvent(highlightedCase);

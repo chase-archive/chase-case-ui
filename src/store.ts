@@ -5,6 +5,8 @@ export type ChaseCaseStore = {
   setSearchQuery: (searchQuery: string | null) => void;
   highlightedCaseId: string | null;
   setHighlightedCaseId: (highlightedCaseId: string | null) => void;
+  selectedCaseId: string | null;
+  setSelectedCaseId: (selectedCaseId: string | null) => void;
 };
 
 export const useChaseCaseStore = create<ChaseCaseStore>((set) => ({
@@ -12,4 +14,6 @@ export const useChaseCaseStore = create<ChaseCaseStore>((set) => ({
   setSearchQuery: (searchQuery) => set({ searchQuery }),
   highlightedCaseId: null,
   setHighlightedCaseId: (highlightedCaseId) => set({ highlightedCaseId }),
+  selectedCaseId: null,
+  setSelectedCaseId: (selectedCaseId) => set({ selectedCaseId }),
 }));

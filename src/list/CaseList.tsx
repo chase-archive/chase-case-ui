@@ -1,19 +1,30 @@
-import { Box, Center, Divider, Flex, Loader, Text } from '@mantine/core';
+import {
+  Box,
+  Center,
+  Divider,
+  Flex,
+  Loader,
+  Text,
+  CloseButton,
+  VisuallyHidden,
+} from '@mantine/core';
 import { useCases } from '../hooks';
 import { ChaseCase } from '../types';
 import { DateTime } from 'luxon';
 import { forwardRef, Fragment, HTMLProps } from 'react';
 import { useChaseCaseStore } from '../store';
 import { useScrollToEvent } from './context';
+import { useMap } from 'react-map-gl';
 
 export function CaseList({
   className,
 }: Pick<HTMLProps<HTMLElement>, 'className'>) {
   const { queriedCases, isLoading, highlightedCase } = useCases();
-  const setHighlightedCaseId = useChaseCaseStore(
-    (state) => state.setHighlightedCaseId
+  const [setHighlightedCaseId, setSelectedCaseId] = useChaseCaseStore(
+    (state) => [state.setHighlightedCaseId, state.setSelectedCaseId]
   );
   const { eventRefs } = useScrollToEvent();
+  const { current: map } = useMap();
 
   return (
     <Box className={className}>
@@ -42,11 +53,15 @@ export function CaseList({
                 isHighlighted={chaseCase.id === highlightedCase?.id}
                 onClick={() => {
                   if (highlightedCase?.id === chaseCase.id) {
-                    setHighlightedCaseId(null);
+                    setSelectedCaseId(chaseCase.id);
                   } else {
+                    map?.flyTo({
+                      center: [chaseCase.lon, chaseCase.lat],
+                    });
                     setHighlightedCaseId(chaseCase.id);
                   }
                 }}
+                onClose={() => setHighlightedCaseId(null)}
               />
               <Divider my={5} />
             </Fragment>
@@ -61,10 +76,11 @@ interface ChaseCaseElementProps {
   chaseCase: ChaseCase;
   isHighlighted?: boolean;
   onClick?: () => void;
+  onClose?: () => void;
 }
 
 const ChaseCaseElement = forwardRef<HTMLDivElement, ChaseCaseElementProps>(
-  ({ chaseCase, isHighlighted, onClick }, ref) => {
+  ({ chaseCase, isHighlighted, onClick, onClose }, ref) => {
     const { event_name, time_start, lat, lon } = chaseCase;
     const dateTimeStr = DateTime.fromISO(time_start, { zone: 'utc' }).toFormat(
       'yyyy-MM-dd HH:mm'
@@ -88,9 +104,16 @@ const ChaseCaseElement = forwardRef<HTMLDivElement, ChaseCaseElementProps>(
           }
         }}
       >
-        <Text fw={600} lineClamp={3}>
-          {event_name}
-        </Text>
+        <Flex direction='row' gap={10}>
+          <Text fw={600} lineClamp={3} flex={1}>
+            {event_name}
+          </Text>
+          {onClose && isHighlighted && (
+            <CloseButton size='sm' onClick={onClose}>
+              <VisuallyHidden>Unhighlight Case</VisuallyHidden>
+            </CloseButton>
+          )}
+        </Flex>
         <Flex direction='row' gap={10}>
           <Text size='sm' flex={1}>{`${dateTimeStr}Z`}</Text>
           <Text size='sm' flex={1} fs='italic'>{`(${lat.toFixed(
