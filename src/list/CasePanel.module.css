@@ -11,9 +11,9 @@
 } */
 
 .casePanel {
-  width: 25vw;
+  width: 30vw;
   min-width: 380px;
-  min-height: 100vh;
+  min-height: 100svh;
   position: absolute;
   top: 0;
   right: 0;
@@ -23,7 +23,7 @@
 
 .caseList {
   overflow-y: auto;
-  max-height: 100vh;
+  max-height: 100svh;
   padding-left: 0.75em;
   padding-right: 0.75em;
   scrollbar-color: #000 #fff;
