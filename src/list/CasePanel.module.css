@@ -24,9 +24,8 @@
 .caseList {
   overflow-y: auto;
   max-height: 100vh;
-  padding-left: 1.25em;
-  padding-right: 1.25em;
-  padding-top: 0.75em;
+  padding-left: 0.75em;
+  padding-right: 0.75em;
   scrollbar-color: #000 #fff;
   scroll-behavior: auto;
 }

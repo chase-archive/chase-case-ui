@@ -3,6 +3,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import { PropsWithChildren, useState } from 'react';
 import { layers } from './layers';
 import { useChaseCaseStore } from './store';
+import { useScrollToEvent } from './list/context';
 
 const INITIAL_VIEW_STATE = {
   longitude: -98.5556,
@@ -14,7 +15,7 @@ export default function Map({ children }: PropsWithChildren) {
   const [highlightedCaseId, setHighlightedCaseId] = useChaseCaseStore(
     (state) => [state.highlightedCaseId, state.setHighlightedCaseId]
   );
-
+  const { scrollToEvent } = useScrollToEvent();
   const [hoveredFeature, setHoveredFeature] = useState<string | number | null>(
     null
   );
@@ -67,6 +68,7 @@ export default function Map({ children }: PropsWithChildren) {
           setHighlightedCaseId(null);
         } else {
           setHighlightedCaseId(highlightedCase);
+          scrollToEvent(highlightedCase);
         }
       }}
     >

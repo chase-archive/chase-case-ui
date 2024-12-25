@@ -7,15 +7,18 @@ import styles from './Layout.module.css';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { SoundingModal } from './soundings/SoundingModal';
 import { CasePanel } from './list/CasePanel';
+import { EventScrollProvider } from './list/EventScrollProvider';
 
 export default function Layout() {
   const isDesktop = useMediaQuery('(min-width: 768px)');
   return (
-    <Map>
-      <CasesMapDisplay />
-      {isDesktop ? <DesktopOverlay /> : <MobileOverlay />}
-      <SoundingModal isDesktop={isDesktop ?? true} />
-    </Map>
+    <EventScrollProvider>
+      <Map>
+        <CasesMapDisplay />
+        {isDesktop ? <DesktopOverlay /> : <MobileOverlay />}
+        <SoundingModal isDesktop={isDesktop ?? true} />
+      </Map>
+    </EventScrollProvider>
   );
 }
 
