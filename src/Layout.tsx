@@ -7,7 +7,7 @@ import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { SoundingModal } from './soundings/SoundingModal';
 import { CasePanel } from './list/CasePanel';
 import { EventScrollProvider } from './list/EventScrollProvider';
-import { CaseDetailsModal } from './details/CasesDetails';
+import { CaseDetailsModal } from './details/CaseDetails';
 
 export default function Layout() {
   const isDesktop = useMediaQuery('(min-width: 768px)');

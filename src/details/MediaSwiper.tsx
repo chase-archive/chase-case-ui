@@ -15,7 +15,7 @@ import {
   TwitterEmbed,
   YouTubeEmbed,
 } from './Embed';
-import styles from './CasesDetails.module.css';
+import styles from './CaseDetails.module.css';
 import { Flex } from '@mantine/core';
 
 interface MediaSwiperProps {

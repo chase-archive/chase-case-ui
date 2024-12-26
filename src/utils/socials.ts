@@ -1,3 +1,12 @@
+export function isSocialLink(url: string) {
+  return (
+    isYouTubeLink(url) ||
+    isTwitterLink(url) ||
+    isInstagramLink(url) ||
+    isFacebookLink(url)
+  );
+}
+
 export function getYouTubeVideoId(url: string) {
   const regExp =
     /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
@@ -29,6 +38,10 @@ export function getTweetId(url: string) {
   try {
     const parsedUrl = new URL(url);
     const pathParts = parsedUrl.pathname.split('/'); // Split the path into segments
+    console.log('**** PATH PARTS ', {
+      pathParts,
+      res: pathParts[pathParts.indexOf('status') + 1],
+    });
     return pathParts.includes('status')
       ? pathParts[pathParts.indexOf('status') + 1]
       : null;
