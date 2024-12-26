@@ -58,7 +58,7 @@ function toEventProps(name: string) {
       name.includes('bow echo') ||
       name.includes('derecho') ||
       name.includes('haboob') ||
-      name.includes('dust')
+      name === 'dust storm'
     ) {
       return { color: TAG_COLORS.wind, img: TAG_ICONS.wind };
     }
