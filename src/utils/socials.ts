@@ -12,3 +12,16 @@ export function isYouTubeLink(url: string) {
 export function isTwitterLink(url: string) {
   return url.includes('twitter.com/') || url.includes('x.com/');
 }
+
+export function getTweetId(url: string) {
+  try {
+    const parsedUrl = new URL(url);
+    const pathParts = parsedUrl.pathname.split('/'); // Split the path into segments
+    return pathParts.includes('status')
+      ? pathParts[pathParts.indexOf('status') + 1]
+      : null;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_err) {
+    return null;
+  }
+}

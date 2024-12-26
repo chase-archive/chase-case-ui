@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { ChaseCase } from './types';
+import { API_BASE_URL } from './constants';
 
 export function useSearchCases(
   query: string,
@@ -17,8 +18,7 @@ export function useSearchCases(
 
 async function getChaseCases(query: string, limit: number, tags: string[]) {
   const response = await fetch(
-    `https://urchin-app-tpil4.ondigitalocean.app/cases/search?q=${query}&limit=${limit}`,
-    // `http://localhost:8000/cases/search?q=${query}&limit=${limit}`,
+    `${API_BASE_URL}/cases/search?q=${query}&limit=${limit}`,
     { headers: { accept: 'application/json' } }
   );
   if (!response.ok) {

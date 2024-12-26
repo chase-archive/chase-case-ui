@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { importProfile } from '@upperair/utilities';
 import { Sounding } from './types';
+import { API_BASE_URL } from '../constants';
 
 export function useGetSounding(caseId: string | null) {
   return useQuery<Sounding>({
@@ -11,11 +12,9 @@ export function useGetSounding(caseId: string | null) {
 }
 
 async function getProfile(caseId: string) {
-  const response = await fetch(
-    `https://urchin-app-tpil4.ondigitalocean.app/soundings/${caseId}`,
-    // `http://localhost:8000/soundings/${caseId}`,
-    { headers: { accept: 'application/json' } }
-  );
+  const response = await fetch(`${API_BASE_URL}/soundings/${caseId}`, {
+    headers: { accept: 'application/json' },
+  });
   if (!response.ok) {
     throw new Error(`Response status: ${response.status}`);
   }

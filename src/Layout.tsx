@@ -1,6 +1,5 @@
 import { Button, Drawer, Flex } from '@mantine/core';
 import Map from './Map';
-import { CasesDetails } from './details';
 import { CasesMapDisplay } from './mapDisplay';
 import { QueryCases } from './query';
 import styles from './Layout.module.css';
@@ -8,6 +7,7 @@ import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { SoundingModal } from './soundings/SoundingModal';
 import { CasePanel } from './list/CasePanel';
 import { EventScrollProvider } from './list/EventScrollProvider';
+import { CaseDetailsModal } from './details/CasesDetails';
 
 export default function Layout() {
   const isDesktop = useMediaQuery('(min-width: 768px)');
@@ -23,7 +23,12 @@ export default function Layout() {
 }
 
 function DesktopOverlay() {
-  return <CasePanel />;
+  return (
+    <>
+      <CasePanel />
+      <CaseDetailsModal />
+    </>
+  );
 }
 
 function MobileOverlay() {
@@ -53,7 +58,7 @@ function MobileOverlay() {
         closeOnClickOutside
       >
         <Flex direction='column' align='center' justify='center' mt={1}>
-          <CasesDetails />
+          {/* <CasesDetails /> */}
         </Flex>
       </Drawer>
     </>
