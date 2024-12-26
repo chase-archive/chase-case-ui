@@ -38,10 +38,6 @@ export function getTweetId(url: string) {
   try {
     const parsedUrl = new URL(url);
     const pathParts = parsedUrl.pathname.split('/'); // Split the path into segments
-    console.log('**** PATH PARTS ', {
-      pathParts,
-      res: pathParts[pathParts.indexOf('status') + 1],
-    });
     return pathParts.includes('status')
       ? pathParts[pathParts.indexOf('status') + 1]
       : null;

@@ -51,6 +51,13 @@ export function CaseList({
                     setHighlightedCaseId(chaseCase.id);
                   }
                 }}
+                onClickTitle={() => {
+                  setSelectedCaseId(chaseCase.id);
+                  setHighlightedCaseId(chaseCase.id);
+                  map?.flyTo({
+                    center: [chaseCase.lon, chaseCase.lat],
+                  });
+                }}
                 onClose={() => setHighlightedCaseId(null)}
               />
               <Divider my={5} />
