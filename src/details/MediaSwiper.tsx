@@ -4,14 +4,18 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 import {
-  getTweetId,
-  getYouTubeVideoId,
+  isFacebookLink,
+  isInstagramLink,
   isTwitterLink,
   isYouTubeLink,
 } from '../utils/socials';
-import { YouTubeEmbed } from './Embed';
+import {
+  FacebookEmbed,
+  InstagramEmbed,
+  TwitterEmbed,
+  YouTubeEmbed,
+} from './Embed';
 import styles from './CasesDetails.module.css';
-import { TwitterTweetEmbed } from 'react-twitter-embed';
 import { Flex } from '@mantine/core';
 
 interface MediaSwiperProps {
@@ -36,12 +40,10 @@ export function MediaSwiper({ urls }: MediaSwiperProps) {
             justify='space-between'
             align='center'
           >
-            {isYouTubeLink(url) && getYouTubeVideoId(url) && (
-              <YouTubeEmbed videoId={getYouTubeVideoId(url) as string} />
-            )}
-            {isTwitterLink(url) && getTweetId(url) && (
-              <TwitterTweetEmbed tweetId={getTweetId(url) as string} />
-            )}
+            {isYouTubeLink(url) && <YouTubeEmbed url={url} />}
+            {isTwitterLink(url) && <TwitterEmbed url={url} />}
+            {isInstagramLink(url) && <InstagramEmbed url={url} />}
+            {isFacebookLink(url) && <FacebookEmbed url={url} />}
           </Flex>
         </SwiperSlide>
       ))}

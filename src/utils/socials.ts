@@ -13,6 +13,18 @@ export function isTwitterLink(url: string) {
   return url.includes('twitter.com/') || url.includes('x.com/');
 }
 
+export function isInstagramLink(url: string) {
+  return url.includes('instagram.com/');
+}
+
+export function isFacebookLink(url: string) {
+  return url.includes('facebook.com/');
+}
+
+export function isBlueskyLink(url: string) {
+  return url.includes('bsky.app/');
+}
+
 export function getTweetId(url: string) {
   try {
     const parsedUrl = new URL(url);

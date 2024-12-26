@@ -6,6 +6,7 @@
   width: 90%;
   height: 75vh;
   margin: 0 auto;
+  overflow-y: auto;
 }
 
 .caseMediaCarousel iframe {
