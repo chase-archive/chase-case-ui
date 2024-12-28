@@ -24,7 +24,7 @@ export function CaseDetailsModal() {
     <Modal
       opened={!!selectedCaseId}
       onClose={onClose}
-      size='90%'
+      size='80%'
       title={
         <Flex direction='row' gap={15} justify='center'>
           <Text size='xl' fw={700}>

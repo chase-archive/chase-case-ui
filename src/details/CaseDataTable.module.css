@@ -1,8 +1,8 @@
 .dataTable {
-  width: 90%;
+  width: 95%;
   height: 60vh;
   border-collapse: collapse;
-  margin: 20px 0;
+  margin: 0 auto;
   font-size: 16px;
   text-align: left;
   background-color: #fff;
