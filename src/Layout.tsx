@@ -4,7 +4,6 @@ import { CasesMapDisplay } from './mapDisplay';
 import { QueryCases } from './query';
 import styles from './Layout.module.css';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { SoundingModal } from './soundings/SoundingModal';
 import { CasePanel } from './list/CasePanel';
 import { EventScrollProvider } from './list/EventScrollProvider';
 import { CaseDetailsModal } from './details/CaseDetails';
@@ -16,7 +15,6 @@ export default function Layout() {
       <Map>
         <CasesMapDisplay />
         {isDesktop ? <DesktopOverlay /> : <MobileOverlay />}
-        <SoundingModal isDesktop={isDesktop ?? true} />
       </Map>
     </EventScrollProvider>
   );
