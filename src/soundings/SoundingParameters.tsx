@@ -7,10 +7,10 @@ import {
   ParcelType,
   SelectedPointsTable,
 } from 'upperair';
-import styles from './SoundingModal.module.css';
+import styles from './Soundings.module.css';
 import { useEffect, useRef, useState } from 'react';
 
-interface SoundingParamters {
+interface SoundingParametersProps {
   parcel: ParcelType;
   setParcel: (parcel: ParcelType) => void;
   isDesktop: boolean;
@@ -20,7 +20,7 @@ export function SoundingParameters({
   isDesktop,
   parcel,
   setParcel,
-}: SoundingParamters) {
+}: SoundingParametersProps) {
   const flexRef = useRef<HTMLDivElement>(null);
   const [tblHght, setTblHght] = useState(0);
 

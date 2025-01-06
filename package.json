@@ -24,7 +24,7 @@
     "react-social-media-embed": "^2.5.17",
     "react-twitter-embed": "^4.0.4",
     "swiper": "^11.1.15",
-    "upperair": "^0.0.5-alpha",
+    "upperair": "^0.0.6-alpha",
     "zustand": "^4.5.5"
   },
   "devDependencies": {
