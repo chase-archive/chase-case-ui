@@ -9,7 +9,6 @@ import { ChaseCaseProps } from './types';
 import { CaseDataTable } from './CaseDataTable';
 import { isSocialLink } from '../utils/socials';
 import { SoundingViewer } from '../soundings/SoundingViewer';
-import { useGetSounding } from '../soundings/api';
 
 export function CaseDetailsModal() {
   const [selectedCaseId, setSelectedCaseId] = useChaseCaseStore((state) => [
@@ -53,7 +52,6 @@ function CaseDetailsContent({ chaseCase }: ChaseCaseProps) {
   const socialLinks = chaseCase.photo_video.filter((link) =>
     isSocialLink(link)
   );
-  const sounding = useGetSounding(chaseCase.id);
   return (
     <Tabs defaultValue='data-table' variant='outline' color='gray' mt={2}>
       <Tabs.List>
@@ -71,7 +69,7 @@ function CaseDetailsContent({ chaseCase }: ChaseCaseProps) {
         <MediaSwiper urls={socialLinks} />
       </Tabs.Panel>
       <Tabs.Panel value='soundings' className={styles.caseDetailsContent}>
-        <SoundingViewer sounding={sounding.data ?? null} />
+        <SoundingViewer caseId={chaseCase.id} />
       </Tabs.Panel>
     </Tabs>
   );
