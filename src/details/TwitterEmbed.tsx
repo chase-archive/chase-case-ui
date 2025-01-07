@@ -1,61 +1,48 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
-// from https://github.com/saurabhnemade/react-twitter-embed/issues/105
-import React, { useRef, useState, useEffect } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import script from 'scriptjs';
 
-const TwitterTweet = (props) => {
-  const ref = useRef(null);
-  const [loading, setLoading] = useState(true);
-  const methodName$5 = 'createTweet';
-  const twitterWidgetJs = 'https://platform.twitter.com/widgets.js';
+interface TweetEmbedProps {
+  tweetId: string;
+  placeholder?: ReactNode;
+}
 
-  useEffect(
-    function () {
-      let isComponentMounted = true;
+const TWITTER_WIDGET_JS = 'https://platform.twitter.com/widgets.js';
 
-      script(twitterWidgetJs, 'twitter-embed', function () {
-        if (!window.twttr) {
-          console.error('Failure to load window.twttr, aborting load');
+// inspired from https://github.com/saurabhnemade/react-twitter-embed/issues/105
+export function TweetEmbed({ tweetId, placeholder }: TweetEmbedProps) {
+  const tweetRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const method = 'createTweet';
+
+  useEffect(() => {
+    let isComponentMounted = true;
+
+    script(TWITTER_WIDGET_JS, 'twitter-embed', () => {
+      if (!window.twttr) {
+        console.error('Failed to load Twitter widget JS.');
+        return;
+      }
+
+      if (isComponentMounted && tweetRef.current) {
+        if (!window.twttr.widgets[method]) {
+          console.error('Failed to load Twitter widget JS.');
           return;
         }
 
-        if (isComponentMounted) {
-          if (!window.twttr.widgets[methodName$5]) {
-            console.error(
-              `Method ${methodName$5} is not present anymore in twttr.widget api`
-            );
-            return;
-          }
+        window.twttr.widgets[method](tweetId, tweetRef.current, {
+          // theme: 'dark',
+          align: 'center',
+          conversation: 'none',
+        }).then(() => {
+          setIsLoading(false);
+        });
+      }
+    });
 
-          window.twttr.widgets[methodName$5](
-            props.tweetId,
-            ref === null || ref === void 0 ? void 0 : ref.current,
-            props.options
-          ).then(function (element) {
-            setLoading(false);
+    return () => {
+      isComponentMounted = false;
+    };
+  }, [tweetId]);
 
-            if (props.onLoad) {
-              props.onLoad(element);
-            }
-          });
-        }
-      });
-      return function () {
-        isComponentMounted = false;
-      };
-    },
-    [props]
-  );
-  return React.createElement(
-    React.Fragment,
-    null,
-    loading && React.createElement(React.Fragment, null, props.placeholder),
-    React.createElement('div', {
-      ref: ref,
-    })
-  );
-};
-
-export default TwitterTweet;
+  return <div ref={tweetRef}>{isLoading && placeholder}</div>;
+}

@@ -4,7 +4,7 @@ import {
   FacebookEmbed as ReactFacebookEmbed,
 } from 'react-social-media-embed';
 import { useEffect, useState } from 'react';
-import TwitterTweet from './TwitterEmbed';
+import { TweetEmbed } from './TwitterEmbed';
 
 interface EmbedProps {
   url: string;
@@ -30,7 +30,7 @@ export function TwitterEmbed({ url }: EmbedProps) {
   if (!tweetId) {
     return null;
   }
-  return <TwitterTweet tweetId={tweetId} />;
+  return <TweetEmbed tweetId={tweetId} />;
 }
 
 export function InstagramEmbed({ url }: EmbedProps) {
