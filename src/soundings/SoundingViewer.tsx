@@ -1,4 +1,5 @@
 import { ActionIcon, Flex } from '@mantine/core';
+import { Sounding } from './types';
 import { LuMousePointerClick } from 'react-icons/lu';
 import {
   Hodograph,
@@ -12,14 +13,12 @@ import 'upperair/tables.css';
 import { useState } from 'react';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { SoundingParameters } from './SoundingParameters';
-import { useGetSounding } from './api';
 
 interface SoundingViewerProps {
-  caseId: string;
+  sounding: Sounding | null;
 }
 
-export function SoundingViewer({ caseId }: SoundingViewerProps) {
-  const { data: sounding } = useGetSounding(caseId);
+export function SoundingViewer({ sounding }: SoundingViewerProps) {
   const [parcel, setParcel] = useState<ParcelType>('ML');
   const [interactionMode, setInteractionMode] =
     useState<InteractionMode>('select');

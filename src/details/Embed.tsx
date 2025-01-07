@@ -2,9 +2,9 @@ import { getTweetId, getYouTubeVideoId } from '../utils/socials';
 import {
   InstagramEmbed as ReactInstagramEmbed,
   FacebookEmbed as ReactFacebookEmbed,
-  XEmbed as ReactTwitterEmbed,
 } from 'react-social-media-embed';
 import { useEffect, useState } from 'react';
+import TwitterTweet from './TwitterEmbed';
 
 interface EmbedProps {
   url: string;
@@ -30,7 +30,7 @@ export function TwitterEmbed({ url }: EmbedProps) {
   if (!tweetId) {
     return null;
   }
-  return <ReactTwitterEmbed url={url} />;
+  return <TwitterTweet tweetId={tweetId} />;
 }
 
 export function InstagramEmbed({ url }: EmbedProps) {
@@ -78,6 +78,7 @@ export function BlueskyEmbed({ url }: EmbedProps) {
           `https://embed.bsky.app/oembed?url=${url}`,
           { mode: 'no-cors' }
         );
+        console.log('**** RESPONSE ', response);
         const data = await response.json();
         setEmbedHtml(data.html);
       } catch (error) {
