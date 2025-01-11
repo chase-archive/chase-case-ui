@@ -2,12 +2,12 @@ import { Center, Flex, Loader, Modal, Tabs, Text } from '@mantine/core';
 import { useChaseCaseStore } from '../store';
 import { useGetCaseDetails } from './api';
 import { TagList } from '../tags/TagList';
-import { MediaSwiper } from './MediaSwiper';
+import { MediaSwiper } from '../media/MediaSwiper';
 import { ChaseCase } from '../types';
 import styles from './CaseDetails.module.css';
 import { ChaseCaseProps } from './types';
 import { CaseDataTable } from './CaseDataTable';
-import { isSocialLink } from '../utils/socials';
+import { isSocialLink } from '../media/utils';
 import { SoundingViewer } from '../soundings/SoundingViewer';
 
 export function CaseDetailsModal() {
@@ -23,7 +23,7 @@ export function CaseDetailsModal() {
 
   return (
     <Modal
-      opened={!!selectedCaseId}
+      opened={selectedCaseId !== null}
       onClose={onClose}
       size='90%'
       title={

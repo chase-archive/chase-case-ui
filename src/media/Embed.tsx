@@ -1,4 +1,4 @@
-import { getTweetId, getYouTubeVideoId } from '../utils/socials';
+import { getTweetId, getYouTubeVideoId } from './utils';
 import {
   InstagramEmbed as ReactInstagramEmbed,
   FacebookEmbed as ReactFacebookEmbed,
@@ -78,7 +78,6 @@ export function BlueskyEmbed({ url }: EmbedProps) {
           `https://embed.bsky.app/oembed?url=${url}`,
           { mode: 'no-cors' }
         );
-        console.log('**** RESPONSE ', response);
         const data = await response.json();
         setEmbedHtml(data.html);
       } catch (error) {

@@ -30,7 +30,7 @@ export const CaseElement = forwardRef<HTMLDivElement, ChaseCaseElementProps>(
         py='xs'
         style={{
           ...(isHighlighted && {
-            backgroundColor: 'rgba(255, 255, 143, 0.8)',
+            backgroundColor: 'rgba(255, 255, 143, 0.6)',
             borderRadius: 8,
           }),
           ...(onClick && { cursor: 'pointer' }),
@@ -43,6 +43,7 @@ export const CaseElement = forwardRef<HTMLDivElement, ChaseCaseElementProps>(
       >
         <Flex direction='row' gap={10} justify='space-between'>
           <Text
+            component='a'
             fw={600}
             lineClamp={3}
             // flex={1}
@@ -61,7 +62,13 @@ export const CaseElement = forwardRef<HTMLDivElement, ChaseCaseElementProps>(
             {event_name}
           </Text>
           {onClose && isHighlighted && (
-            <CloseButton size='sm' onClick={onClose}>
+            <CloseButton
+              size='sm'
+              onClick={(e) => {
+                onClose();
+                e.stopPropagation();
+              }}
+            >
               <VisuallyHidden>Unhighlight Case</VisuallyHidden>
             </CloseButton>
           )}

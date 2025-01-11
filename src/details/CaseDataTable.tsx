@@ -1,6 +1,6 @@
 import { ChaseCaseProps } from './types';
 import styles from './CaseDataTable.module.css';
-import { isSocialLink } from '../utils/socials';
+import { isSocialLink } from '../media/utils';
 import { Anchor, Flex } from '@mantine/core';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 

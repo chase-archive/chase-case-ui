@@ -58,7 +58,10 @@ export function CaseList({
                     center: [chaseCase.lon, chaseCase.lat],
                   });
                 }}
-                onClose={() => setHighlightedCaseId(null)}
+                onClose={() => {
+                  setHighlightedCaseId(null);
+                  setSelectedCaseId(null);
+                }}
               />
               <Divider my={5} />
             </Fragment>

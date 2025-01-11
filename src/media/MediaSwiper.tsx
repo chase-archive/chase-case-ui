@@ -8,14 +8,14 @@ import {
   isInstagramLink,
   isTwitterLink,
   isYouTubeLink,
-} from '../utils/socials';
+} from './utils';
 import {
   FacebookEmbed,
   InstagramEmbed,
   TwitterEmbed,
   YouTubeEmbed,
 } from './Embed';
-import styles from './CaseDetails.module.css';
+import styles from './MediaSwiper.module.css';
 import { Flex } from '@mantine/core';
 
 interface MediaSwiperProps {
