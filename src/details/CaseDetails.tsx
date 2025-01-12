@@ -23,9 +23,10 @@ export function CaseDetailsModal() {
 
   return (
     <Modal
+      className={styles.caseDetailsModal}
       opened={selectedCaseId !== null}
       onClose={onClose}
-      size='min-content'
+      size='xl'
       title={
         <Flex direction='row' gap={15} justify='center'>
           <Text size='xl' fw={700}>
@@ -53,7 +54,13 @@ function CaseDetailsContent({ chaseCase }: ChaseCaseProps) {
     isSocialLink(link)
   );
   return (
-    <Tabs defaultValue='data-table' variant='outline' color='gray' mt={2}>
+    <Tabs
+      defaultValue='data-table'
+      variant='outline'
+      color='gray'
+      mt={2}
+      w='full'
+    >
       <Tabs.List>
         <Tabs.Tab value='data-table'>Data Table</Tabs.Tab>
         <Tabs.Tab value='social-media'>Social Media</Tabs.Tab>

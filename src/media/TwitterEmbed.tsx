@@ -1,3 +1,4 @@
+import { useMediaQuery } from '@mantine/hooks';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import script from 'scriptjs';
 
@@ -12,6 +13,7 @@ const TWITTER_WIDGET_JS = 'https://platform.twitter.com/widgets.js';
 export function TweetEmbed({ tweetId, placeholder }: TweetEmbedProps) {
   const tweetRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const isMobile = useMediaQuery('(max-width: 480px)');
 
   useEffect(() => {
     let isComponentMounted = true;
@@ -36,6 +38,7 @@ export function TweetEmbed({ tweetId, placeholder }: TweetEmbedProps) {
             // theme: 'dark',
             align: 'center',
             conversation: 'none',
+            width: isMobile ? 325 : 480,
           })
           .then(() => {
             setIsLoading(false);
@@ -50,7 +53,7 @@ export function TweetEmbed({ tweetId, placeholder }: TweetEmbedProps) {
     return () => {
       isComponentMounted = false;
     };
-  }, [placeholder, tweetId]);
+  }, [isMobile, placeholder, tweetId]);
 
   return (
     <>

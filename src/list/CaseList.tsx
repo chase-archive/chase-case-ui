@@ -1,10 +1,11 @@
-import { Box, Center, Divider, Loader, Text } from '@mantine/core';
+import { Box, Center, Divider, Text } from '@mantine/core';
 import { useCases } from '../hooks';
 import { Fragment, HTMLProps } from 'react';
 import { useChaseCaseStore } from '../store';
 import { useScrollToEvent } from './context';
 import { useMap } from 'react-map-gl';
 import { CaseElement } from './CaseElement';
+import { ListLoader } from './ListLoader';
 
 export function CaseList({
   className,
@@ -19,9 +20,11 @@ export function CaseList({
   return (
     <Box className={className}>
       {isLoading ? (
-        <Center>
-          <Loader size='28' />
-        </Center>
+        <ListLoader
+          backgroundColor='#D3D3D3'
+          backgroundOpacity={0.75}
+          style={{ width: '90%', marginLeft: '1em', minHeight: '50vh' }}
+        />
       ) : queriedCases.length == 0 ? (
         <Center>
           <Text fs='italic' size='sm'>

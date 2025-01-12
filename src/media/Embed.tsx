@@ -6,6 +6,7 @@ import {
 import { useEffect, useState } from 'react';
 import { TweetEmbed } from './TwitterEmbed';
 import { Instagram as LoadingPlaceholder } from 'react-content-loader';
+import { Center } from '@mantine/core';
 
 interface EmbedProps {
   url: string;
@@ -40,7 +41,11 @@ export function TwitterEmbed({ url }: EmbedProps) {
   return (
     <TweetEmbed
       tweetId={tweetId}
-      placeholder={<LoadingPlaceholder viewBox='0 0 400 400' />}
+      placeholder={
+        <Center>
+          <LoadingPlaceholder width={480} height={480} />
+        </Center>
+      }
     />
   );
 }

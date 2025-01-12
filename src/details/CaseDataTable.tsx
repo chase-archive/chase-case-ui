@@ -58,14 +58,23 @@ export function CaseDataTable({ chaseCase }: ChaseCaseProps) {
         <tr>
           <td>external links</td>
           <td>
-            {externalLinks.map((link) => (
-              <Anchor href={link} target='_blank' size='sm' underline='hover'>
-                <Flex direction='row' align='center' gap={5}>
-                  {link}
-                  <FaExternalLinkAlt />
-                </Flex>
-              </Anchor>
-            ))}
+            <Flex direction='row' gap={5}>
+              {externalLinks.map((link, idx) => (
+                <Anchor
+                  key={link}
+                  href={link}
+                  target='_blank'
+                  size='sm'
+                  underline='hover'
+                >
+                  <Flex direction='row' align='center' gap={3}>
+                    {idx + 1}
+                    <FaExternalLinkAlt />
+                    {`${idx < externalLinks.length - 1 ? ',' : ''}`}
+                  </Flex>
+                </Anchor>
+              ))}
+            </Flex>
           </td>
         </tr>
         <tr>

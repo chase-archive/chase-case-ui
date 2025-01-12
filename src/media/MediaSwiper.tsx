@@ -30,9 +30,10 @@ export function MediaSwiper({ urls }: MediaSwiperProps) {
     <Flex
       direction='column'
       align='stretch'
-      justify='space-between'
+      justify='center'
       className={styles.mediaSwiper}
       gap={5}
+      flex={1}
     >
       <div className={styles.mediaContent}>
         {isYouTubeLink(activeUrl) && <YouTubeEmbed url={activeUrl} />}

@@ -12,8 +12,8 @@ export function TagList({ tags, maxTagLength = 10, ...rest }: TagListProps) {
   const otherTags = tags.slice(maxTagLength);
   return (
     <Flex direction='row' gap={5} align='center' wrap='wrap'>
-      {visibleTags.map((tag) => (
-        <Tag key={tag} name={tag} {...rest} />
+      {visibleTags.map((tag, idx) => (
+        <Tag key={`${tag}-${idx}`} name={tag} {...rest} />
       ))}
       {otherTags.length > 0 && (
         <Text size='xs'>{`and ${otherTags.length} more`}</Text>
