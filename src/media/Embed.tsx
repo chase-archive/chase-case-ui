@@ -5,6 +5,7 @@ import {
 } from 'react-social-media-embed';
 import { useEffect, useState } from 'react';
 import { TweetEmbed } from './TwitterEmbed';
+import { Instagram as InstagramLoadingPlaceholder } from 'react-content-loader';
 
 interface EmbedProps {
   url: string;
@@ -21,6 +22,12 @@ export function YouTubeEmbed({ url }: EmbedProps) {
       allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
       referrerPolicy='strict-origin-when-cross-origin'
       allowFullScreen
+      style={{
+        height: '100%',
+        width: '100%',
+        minHeight: '400px',
+        minWidth: '600px',
+      }}
     />
   );
 }
@@ -30,15 +37,20 @@ export function TwitterEmbed({ url }: EmbedProps) {
   if (!tweetId) {
     return null;
   }
-  return <TweetEmbed tweetId={tweetId} />;
+  return (
+    <TweetEmbed
+      tweetId={tweetId}
+      placeholder={<InstagramLoadingPlaceholder />}
+    />
+  );
 }
 
 export function InstagramEmbed({ url }: EmbedProps) {
-  return <ReactInstagramEmbed url={url} height='100%' width='90%' />;
+  return <ReactInstagramEmbed url={url} height='100%' width='100%' />;
 }
 
 export function FacebookEmbed({ url }: EmbedProps) {
-  return <ReactFacebookEmbed url={url} height='100%' width='90%' />;
+  return <ReactFacebookEmbed url={url} height='100%' width='100%' />;
 }
 
 export function ThreadsEmbed({ url }: EmbedProps) {

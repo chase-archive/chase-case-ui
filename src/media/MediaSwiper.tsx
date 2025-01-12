@@ -1,52 +1,56 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import { Navigation, Pagination } from 'swiper/modules';
-import {
-  isFacebookLink,
-  isInstagramLink,
-  isTwitterLink,
-  isYouTubeLink,
-} from './utils';
+import { Flex, Group, Pagination } from '@mantine/core';
+import { useState } from 'react';
+import styles from './MediaSwiper.module.css';
 import {
   FacebookEmbed,
   InstagramEmbed,
   TwitterEmbed,
   YouTubeEmbed,
 } from './Embed';
-import styles from './MediaSwiper.module.css';
-import { Flex } from '@mantine/core';
+import {
+  isFacebookLink,
+  isInstagramLink,
+  isTwitterLink,
+  isYouTubeLink,
+} from './utils';
 
 interface MediaSwiperProps {
   urls: string[];
 }
 
 export function MediaSwiper({ urls }: MediaSwiperProps) {
+  const [activePage, setActivePage] = useState(1);
+  if (!urls.length) {
+    return null;
+  }
+
+  const activeUrl = urls[activePage - 1];
+
   return (
-    <Swiper
-      modules={[Navigation, Pagination]}
-      spaceBetween={10}
-      slidesPerView={1}
-      navigation
-      loop
-      pagination={{ clickable: true }}
+    <Flex
+      direction='column'
+      align='stretch'
+      justify='space-between'
+      className={styles.mediaSwiper}
+      gap={5}
     >
-      {urls.map((url) => (
-        <SwiperSlide key={url}>
-          <Flex
-            className={styles.caseMediaCarousel}
-            direction='column'
-            justify='space-between'
-            align='center'
-          >
-            {isYouTubeLink(url) && <YouTubeEmbed url={url} />}
-            {isTwitterLink(url) && <TwitterEmbed url={url} />}
-            {isInstagramLink(url) && <InstagramEmbed url={url} />}
-            {isFacebookLink(url) && <FacebookEmbed url={url} />}
-          </Flex>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+      <div className={styles.mediaContent}>
+        {isYouTubeLink(activeUrl) && <YouTubeEmbed url={activeUrl} />}
+        {isTwitterLink(activeUrl) && <TwitterEmbed url={activeUrl} />}
+        {isInstagramLink(activeUrl) && <InstagramEmbed url={activeUrl} />}
+        {isFacebookLink(activeUrl) && <FacebookEmbed url={activeUrl} />}
+      </div>
+      <Pagination.Root
+        total={urls.length}
+        value={activePage}
+        onChange={setActivePage}
+      >
+        <Group gap={5} justify='center'>
+          <Pagination.Previous />
+          <Pagination.Items />
+          <Pagination.Next />
+        </Group>
+      </Pagination.Root>
+    </Flex>
   );
 }

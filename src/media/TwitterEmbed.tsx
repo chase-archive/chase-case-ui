@@ -12,7 +12,6 @@ const TWITTER_WIDGET_JS = 'https://platform.twitter.com/widgets.js';
 export function TweetEmbed({ tweetId, placeholder }: TweetEmbedProps) {
   const tweetRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const method = 'createTweet';
 
   useEffect(() => {
     let isComponentMounted = true;
@@ -24,25 +23,39 @@ export function TweetEmbed({ tweetId, placeholder }: TweetEmbedProps) {
       }
 
       if (isComponentMounted && tweetRef.current) {
-        if (!window.twttr.widgets[method]) {
+        if (!window.twttr.widgets.createTweet) {
           console.error('Failed to load Twitter widget JS.');
           return;
         }
 
-        window.twttr.widgets[method](tweetId, tweetRef.current, {
-          // theme: 'dark',
-          align: 'center',
-          conversation: 'none',
-        }).then(() => {
-          setIsLoading(false);
-        });
+        tweetRef.current.innerHTML = '';
+        setIsLoading(true);
+
+        window.twttr.widgets
+          .createTweet(tweetId, tweetRef.current, {
+            // theme: 'dark',
+            align: 'center',
+            conversation: 'none',
+          })
+          .then(() => {
+            setIsLoading(false);
+          })
+          .catch((error: Error) => {
+            console.error('Failed to create Twitter widget:', error);
+            setIsLoading(false);
+          });
       }
     });
 
     return () => {
       isComponentMounted = false;
     };
-  }, [tweetId]);
+  }, [placeholder, tweetId]);
 
-  return <div ref={tweetRef}>{isLoading && placeholder}</div>;
+  return (
+    <>
+      {isLoading && placeholder}
+      <div ref={tweetRef} />
+    </>
+  );
 }

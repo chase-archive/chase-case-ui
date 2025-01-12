@@ -25,7 +25,7 @@ export function CaseDetailsModal() {
     <Modal
       opened={selectedCaseId !== null}
       onClose={onClose}
-      size='90%'
+      size='min-content'
       title={
         <Flex direction='row' gap={15} justify='center'>
           <Text size='xl' fw={700}>
@@ -58,8 +58,8 @@ function CaseDetailsContent({ chaseCase }: ChaseCaseProps) {
         <Tabs.Tab value='data-table'>Data Table</Tabs.Tab>
         <Tabs.Tab value='social-media'>Social Media</Tabs.Tab>
         <Tabs.Tab value='soundings'>Soundings</Tabs.Tab>
-        <Tabs.Tab value='synoptic'>Synoptic Maps</Tabs.Tab>
-        <Tabs.Tab value='radar'>Radar</Tabs.Tab>
+        {/* <Tabs.Tab value='synoptic'>Synoptic Maps</Tabs.Tab>
+        <Tabs.Tab value='radar'>Radar</Tabs.Tab> */}
       </Tabs.List>
 
       <Tabs.Panel value='data-table' className={styles.caseDetailsContent}>
