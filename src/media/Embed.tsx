@@ -5,7 +5,7 @@ import {
 } from 'react-social-media-embed';
 import { useEffect, useState } from 'react';
 import { TweetEmbed } from './TwitterEmbed';
-import { Instagram as InstagramLoadingPlaceholder } from 'react-content-loader';
+import { Instagram as LoadingPlaceholder } from 'react-content-loader';
 
 interface EmbedProps {
   url: string;
@@ -40,7 +40,7 @@ export function TwitterEmbed({ url }: EmbedProps) {
   return (
     <TweetEmbed
       tweetId={tweetId}
-      placeholder={<InstagramLoadingPlaceholder />}
+      placeholder={<LoadingPlaceholder viewBox='0 0 400 400' />}
     />
   );
 }

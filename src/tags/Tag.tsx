@@ -112,9 +112,10 @@ export function EventTag({
       <Text
         size='xs'
         flex={1}
-        onClick={() => {
+        onClick={(e) => {
           if (onTagClick) {
             onTagClick(name);
+            e.stopPropagation();
           }
         }}
         td={onTagClick && hovered ? 'underline' : 'none'}
