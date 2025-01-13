@@ -4,4 +4,6 @@
 
 .caseDetailsModal {
   min-width: 480px;
+  overflow-x: auto;
+  touch-action: pan-x;
 }

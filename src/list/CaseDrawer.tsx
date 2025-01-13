@@ -41,6 +41,7 @@ export function CaseDrawer({ isOpen, onOpen, onClose }: CaseDrawerProps) {
       position='bottom'
       trapFocus={false}
       removeScrollProps={{ enabled: false }}
+      size='sm'
     >
       <Drawer.Content className={styles.caseDrawerContent}>
         <Drawer.Body className={styles.caseDrawerBg}>

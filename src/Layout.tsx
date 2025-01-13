@@ -48,6 +48,7 @@ function MobileOverlay() {
         onOpen={handlers.open}
         onClose={handlers.close}
       />
+      <CaseDetailsModal />
     </>
   );
 }
