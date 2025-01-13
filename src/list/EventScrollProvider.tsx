@@ -10,7 +10,7 @@ export function EventScrollProvider({ children }: PropsWithChildren) {
       event.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
-        inline: 'center',
+        inline: 'nearest',
       });
     }
   };

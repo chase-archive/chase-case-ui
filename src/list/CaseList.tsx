@@ -1,15 +1,14 @@
-import { Box, Center, Divider, Text } from '@mantine/core';
+import { Center, Divider, Text } from '@mantine/core';
 import { useCases } from '../hooks';
-import { Fragment, HTMLProps } from 'react';
+import { Fragment } from 'react';
 import { useChaseCaseStore } from '../store';
 import { useScrollToEvent } from './context';
 import { useMap } from 'react-map-gl';
 import { CaseElement } from './CaseElement';
 import { ListLoader } from './ListLoader';
+import styles from './CasePanel.module.css';
 
-export function CaseList({
-  className,
-}: Pick<HTMLProps<HTMLElement>, 'className'>) {
+export function CaseList() {
   const { queriedCases, isLoading, highlightedCase } = useCases();
   const [setHighlightedCaseId, setSelectedCaseId] = useChaseCaseStore(
     (state) => [state.setHighlightedCaseId, state.setSelectedCaseId]
@@ -18,7 +17,7 @@ export function CaseList({
   const { current: map } = useMap();
 
   return (
-    <Box className={className}>
+    <>
       {isLoading ? (
         <ListLoader
           backgroundColor='#D3D3D3'
@@ -26,7 +25,7 @@ export function CaseList({
           style={{ width: '90%', marginLeft: '1em', minHeight: '50vh' }}
         />
       ) : queriedCases.length == 0 ? (
-        <Center>
+        <Center className={styles.zeroState}>
           <Text fs='italic' size='sm'>
             No Cases Found
           </Text>
@@ -71,6 +70,6 @@ export function CaseList({
           ))}
         </>
       )}
-    </Box>
+    </>
   );
 }

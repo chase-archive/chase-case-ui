@@ -1,4 +1,4 @@
-import { Button, Drawer, Flex } from '@mantine/core';
+import { Button, Flex } from '@mantine/core';
 import Map from './Map';
 import { CasesMapDisplay } from './mapDisplay';
 import { QueryCases } from './query';
@@ -7,6 +7,7 @@ import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { CasePanel } from './list/CasePanel';
 import { EventScrollProvider } from './list/EventScrollProvider';
 import { CaseDetailsModal } from './details/CaseDetails';
+import { CaseDrawer } from './list/CaseDrawer';
 
 export default function Layout() {
   const isDesktop = useMediaQuery('(min-width: 768px)');
@@ -30,9 +31,7 @@ function DesktopOverlay() {
 }
 
 function MobileOverlay() {
-  const [areCasesOpen, { open: openCases, close: closeCases }] =
-    useDisclosure(false);
-
+  const [opened, handlers] = useDisclosure(false);
   return (
     <>
       <Flex
@@ -42,23 +41,13 @@ function MobileOverlay() {
         justify='space-between'
       >
         <QueryCases />
-        <Button onClick={openCases}>Open Cases</Button>
+        <Button onClick={handlers.open}>Open Cases</Button>
       </Flex>
-      <Drawer
-        opened={areCasesOpen}
-        onClose={closeCases}
-        position='bottom'
-        size='45svh'
-        shadow='md'
-        trapFocus={false}
-        withOverlay={false}
-        removeScrollProps={{ allowPinchZoom: true }}
-        closeOnClickOutside
-      >
-        <Flex direction='column' align='center' justify='center' mt={1}>
-          {/* <CasesDetails /> */}
-        </Flex>
-      </Drawer>
+      <CaseDrawer
+        isOpen={opened}
+        onOpen={handlers.open}
+        onClose={handlers.close}
+      />
     </>
   );
 }
