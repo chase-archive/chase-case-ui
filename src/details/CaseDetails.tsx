@@ -26,7 +26,7 @@ export function CaseDetailsModal() {
       className={styles.caseDetailsModal}
       opened={selectedCaseId !== null}
       onClose={onClose}
-      size='xl'
+      size='auto'
       title={
         <Flex direction='row' gap={15} justify='center'>
           <Text size='xl' fw={700}>
@@ -60,6 +60,7 @@ function CaseDetailsContent({ chaseCase }: ChaseCaseProps) {
       color='gray'
       mt={2}
       w='full'
+      className={styles.caseDetailsTabs}
     >
       <Tabs.List>
         <Tabs.Tab value='data-table'>Data Table</Tabs.Tab>

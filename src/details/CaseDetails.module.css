@@ -3,7 +3,13 @@
 }
 
 .caseDetailsModal {
-  min-width: 480px;
   overflow-x: auto;
   touch-action: pan-x;
 }
+
+@media screen and (min-width: 768px) {
+  .caseDetailsTabs {
+    min-width: 768px;
+  }
+}
+
