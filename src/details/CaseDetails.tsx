@@ -2,7 +2,7 @@ import { Center, Flex, Loader, Modal, Tabs, Text } from '@mantine/core';
 import { useChaseCaseStore } from '../store';
 import { useGetCaseDetails } from './api';
 import { TagList } from '../tags/TagList';
-import { MediaSwiper } from '../media/MediaSwiper';
+import { MediaSwiper } from '../media/MediaViewer';
 import { ChaseCase } from '../types';
 import styles from './CaseDetails.module.css';
 import { ChaseCaseProps } from './types';

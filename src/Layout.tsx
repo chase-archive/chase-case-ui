@@ -43,7 +43,7 @@ function MobileOverlay() {
       >
         <Flex gap={10} className={styles.mobileTopbar}>
           <img src='/logo.png' alt='logo' width={40} />
-          <SearchBar />
+          <SearchBar className={styles.searchBar} />
         </Flex>
         <Button onClick={handlers.open}>Open Cases</Button>
       </Flex>

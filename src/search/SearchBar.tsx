@@ -1,14 +1,15 @@
 import { useDebouncedValue } from '@mantine/hooks';
 import { useChaseCaseStore } from '../store';
-import { useEffect, useState } from 'react';
+import { HTMLProps, useEffect, useState } from 'react';
 import { CloseButton, Loader, TextInput } from '@mantine/core';
 import { MdSearch } from 'react-icons/md';
 import { useCases } from '../hooks';
-import styles from './SearchBar.module.css';
 
 const DEBOUNCE_TIME = 300;
 
-export function SearchBar() {
+export function SearchBar({
+  className,
+}: Partial<Pick<HTMLProps<HTMLElement>, 'className'>>) {
   const setSearchQuery = useChaseCaseStore((state) => state.setSearchQuery);
   const [value, setValue] = useState('');
   const [query] = useDebouncedValue(value, DEBOUNCE_TIME);
@@ -21,7 +22,7 @@ export function SearchBar() {
 
   return (
     <TextInput
-      className={styles.searchBar}
+      className={className}
       placeholder='Enter a town, year, date, or keyword'
       value={value}
       onChange={(event) => setValue(event.currentTarget.value)}

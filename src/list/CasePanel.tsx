@@ -1,8 +1,8 @@
 import { Flex } from '@mantine/core';
 import { CaseList } from './CaseList';
-import { SearchBar } from './SearchBar';
 import styles from './CasePanel.module.css';
 import { ToggleTagDisplay } from './ToggleTagDisplay';
+import { SearchBar } from '../search/SearchBar';
 
 export function CasePanel() {
   return (

@@ -1,6 +1,6 @@
 import { Flex, Group, Pagination } from '@mantine/core';
 import { useState } from 'react';
-import styles from './MediaSwiper.module.css';
+import styles from './MediaViewer.module.css';
 import {
   FacebookEmbed,
   InstagramEmbed,
