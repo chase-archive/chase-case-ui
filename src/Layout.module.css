@@ -9,7 +9,7 @@
   left: 1rem;
   top: 1rem;
   width: calc(100vw - 2rem);
-  height: calc(100vh - 5rem);
+  height: calc(100svh - 5rem);
   align-items: center;
   pointer-events: none;
 }
