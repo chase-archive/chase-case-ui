@@ -13,53 +13,59 @@ import { useEffect, useRef, useState } from 'react';
 interface SoundingParametersProps {
   parcel: ParcelType;
   setParcel: (parcel: ParcelType) => void;
-  isDesktop: boolean;
+  hideSelectedPoints?: boolean;
 }
 
 export function SoundingParameters({
-  isDesktop,
   parcel,
   setParcel,
+  hideSelectedPoints,
 }: SoundingParametersProps) {
+  const [tblMaxHght, setTblMaxHght] = useState<number | null>(null);
   const flexRef = useRef<HTMLDivElement>(null);
-  const [tblHght, setTblHght] = useState(0);
 
   useEffect(() => {
-    if (flexRef?.current) {
-      setTblHght(flexRef.current.offsetHeight);
+    if (!flexRef.current) {
+      return;
     }
-  }, []);
+    const resizeObserver = new ResizeObserver(() => {
+      if (flexRef.current?.offsetHeight !== tblMaxHght) {
+        setTblMaxHght(flexRef.current?.offsetHeight ?? null);
+      }
+    });
+    resizeObserver.observe(flexRef.current);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [tblMaxHght]);
 
   return (
     <>
-      <Flex
-        className={styles.datatables}
-        direction={isDesktop ? 'row' : 'column'}
-      >
+      <Flex className={styles.datatables}>
         <ParcelTable
           selectedParcelType={parcel}
           onSelectParcelType={setParcel}
         />
         <KinematicTable />
       </Flex>
-      <Flex
-        className={styles.datatables}
-        direction={isDesktop ? 'row' : 'column'}
-      >
-        <Flex direction='column' flex={1} ref={flexRef}>
+      <Flex className={styles.datatables} ref={flexRef}>
+        <Flex direction='column' flex={1}>
           <LayersTable />
           <ParametersTable />
         </Flex>
-        <Flex
-          flex={2}
-          className={styles.selectedTableContainer}
-          style={{
-            overflowY: 'auto',
-            maxHeight: tblHght,
-          }}
-        >
-          <SelectedPointsTable />
-        </Flex>
+        {!hideSelectedPoints && (
+          <Flex
+            flex={2}
+            className={styles.selectedTableContainer}
+            style={{
+              overflowY: 'auto',
+              maxHeight: tblMaxHght ? `${tblMaxHght}px` : 'auto',
+            }}
+          >
+            <SelectedPointsTable />
+          </Flex>
+        )}
       </Flex>
     </>
   );

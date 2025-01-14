@@ -1,20 +1,55 @@
+* {
+  --sounding-container-width: 1280px;
+}
+
+.soundingContainer {
+  width: var(--sounding-container-width);
+}
+
+.soundingContent {
+  flex-direction: row;
+}
 
 .datatables {
   font-size: 14px;
   font-weight: 500;
   color: #F5F5F5;
   max-width: 100%;
-}
-
-.datatables table {
-  width: 100%;
-  border: 1px solid #c3c3c3;
+  flex-direction: row;
 }
 
 .selectedTableContainer {
   min-height: 100%;
   overflow-y: auto;
 }
+
+@media screen and (max-width: 768px) {
+  .soundingContainer {
+    width: calc(var(--sounding-container-width) / 2.5);
+  }
+
+  .soundingContent {
+    flex-direction: column;
+  }
+
+  .datatables {
+    flex-direction: column;
+  }
+
+  .selectedTableContainer {
+    display: none;
+  }
+}
+
+
+
+
+.datatables table {
+  width: 100%;
+  border: 1px solid	#D3D3D3;
+}
+
+
 
 .selectedTableContainer table {
   height: min-content;

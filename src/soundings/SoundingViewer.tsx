@@ -4,7 +4,7 @@ import {
   Hodograph,
   InteractionMode,
   ParcelType,
-  ProfileProvider,
+  Profiles,
   SkewT,
 } from 'upperair';
 import 'upperair/core.css';
@@ -13,6 +13,8 @@ import { useState } from 'react';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { SoundingParameters } from './SoundingParameters';
 import { useGetSounding } from './api';
+import styles from './Soundings.module.css';
+import { useMediaQuery } from '@mantine/hooks';
 
 interface SoundingViewerProps {
   caseId: string;
@@ -24,6 +26,8 @@ export function SoundingViewer({ caseId }: SoundingViewerProps) {
   const [interactionMode, setInteractionMode] =
     useState<InteractionMode>('select');
 
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
   if (!sounding || !sounding.data) {
     return null;
   }
@@ -31,7 +35,7 @@ export function SoundingViewer({ caseId }: SoundingViewerProps) {
   const profile = sounding.data;
 
   return (
-    <Flex direction='column' bg='dark'>
+    <Flex direction='column' bg='dark' className={styles.soundingContainer}>
       <Flex direction='row' flex={1} justify='flex-end'>
         <ActionIcon
           size='lg'
@@ -52,23 +56,23 @@ export function SoundingViewer({ caseId }: SoundingViewerProps) {
           <AiOutlineDrag />
         </ActionIcon>
       </Flex>
-      <ProfileProvider profile={profile}>
-        <Flex direction='row'>
-          <SkewT interactive mode={interactionMode}>
+      <Profiles profile={profile} interactive={!isMobile}>
+        <Flex className={styles.soundingContent}>
+          <SkewT mode={interactionMode}>
             <SkewT.ReferenceLines />
             <SkewT.ProfileData showParcel={parcel} />
           </SkewT>
-          <Hodograph interactive mode={interactionMode}>
+          <Hodograph mode={interactionMode}>
             <Hodograph.ReferenceLines />
             <Hodograph.ProfileData />
           </Hodograph>
         </Flex>
         <SoundingParameters
-          isDesktop={true}
           parcel={parcel}
           setParcel={setParcel}
+          hideSelectedPoints={isMobile}
         />
-      </ProfileProvider>
+      </Profiles>
     </Flex>
   );
 }
