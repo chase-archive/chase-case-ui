@@ -1,13 +1,16 @@
 import { ChaseCaseProps } from './types';
 import styles from './CaseDataTable.module.css';
 import { isSocialLink } from '../media/utils';
-import { Anchor, Flex } from '@mantine/core';
-import { FaExternalLinkAlt } from 'react-icons/fa';
+import { ExternalLinkList } from './ExternalLinkList';
 
 export function CaseDataTable({ chaseCase }: ChaseCaseProps) {
   const externalLinks = chaseCase.photo_video.filter(
     (link) => !isSocialLink(link)
   );
+  const summaryLinks = chaseCase.account_summary
+    ? [chaseCase.account_summary]
+    : [];
+
   return (
     <table className={styles.dataTable}>
       <tbody>
@@ -58,28 +61,14 @@ export function CaseDataTable({ chaseCase }: ChaseCaseProps) {
         <tr>
           <td>external links</td>
           <td>
-            <Flex direction='row' gap={5}>
-              {externalLinks.map((link, idx) => (
-                <Anchor
-                  key={link}
-                  href={link}
-                  target='_blank'
-                  size='sm'
-                  underline='hover'
-                >
-                  <Flex direction='row' align='center' gap={3}>
-                    {idx + 1}
-                    <FaExternalLinkAlt />
-                    {`${idx < externalLinks.length - 1 ? ',' : ''}`}
-                  </Flex>
-                </Anchor>
-              ))}
-            </Flex>
+            <ExternalLinkList links={externalLinks} />
           </td>
         </tr>
         <tr>
           <td>account summary</td>
-          <td>{chaseCase.account_summary}</td>
+          <td>
+            <ExternalLinkList links={summaryLinks} />
+          </td>
         </tr>
       </tbody>
     </table>
