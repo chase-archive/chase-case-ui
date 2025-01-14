@@ -1,13 +1,13 @@
 import { Button, Flex } from '@mantine/core';
-import Map from './Map';
-import { CasesMapDisplay } from './mapDisplay';
+import { Map } from './map/Map';
+import { CasesMapDisplay } from './map/CasesMapDisplay';
 import styles from './Layout.module.css';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { CasePanel } from './list/CasePanel';
 import { EventScrollProvider } from './list/EventScrollProvider';
 import { CaseDetailsModal } from './details/CaseDetails';
 import { CaseDrawer } from './list/CaseDrawer';
-import { SearchBar } from './query/SearchBar';
+import { SearchBar } from './search/SearchBar';
 
 export default function Layout() {
   const isDesktop = useMediaQuery('(min-width: 768px)');

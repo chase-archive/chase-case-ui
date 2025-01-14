@@ -7,7 +7,7 @@ import {
 } from '../utils/mapbox';
 import { LayerDisplayProps } from './types';
 
-export default function CasesHeatmap({
+export function CasesHeatmap({
   layerId,
   sourceId,
   transitionOut,

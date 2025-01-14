@@ -2,7 +2,7 @@ import { Layer, LayerProps } from 'react-map-gl';
 import { transitionIn as generateTransitionIn } from '../utils/mapbox';
 import { LayerDisplayProps } from './types';
 
-export default function HighlightedPoints({
+export function HighlightedPoints({
   sourceId,
   layerId,
   transitionIn,

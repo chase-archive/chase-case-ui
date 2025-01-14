@@ -13,7 +13,7 @@ interface CasesPointsProps extends LayerDisplayProps {
   transitionIn: [number, number];
 }
 
-export default function CasesPoints({
+export function CasesPoints({
   layerId,
   sourceId,
   color,

@@ -1,11 +1,11 @@
 import { Source } from 'react-map-gl';
 import toGeojson from '../utils/geojson';
-import CasesHeatmap from './CasesHeatmap';
-import CasesPoints from './CasesPoints';
-import { sources, layers } from '../layers';
+import { CasesHeatmap } from './CasesHeatmap';
+import { CasesPoints } from './CasesPoints';
+import { sources, layers } from './layers';
 import { ChaseCase, HasLocation } from '../types';
 import { PropsWithChildren } from 'react';
-import HighlightedPoints from './HighlightedPoints';
+import { HighlightedPoints } from './HighlightedPoints';
 import { useCases } from '../hooks';
 
 interface CasesSourceProps<T extends HasLocation> extends PropsWithChildren {
@@ -21,7 +21,7 @@ function CasesSource({ id, cases, children }: CasesSourceProps<ChaseCase>) {
   );
 }
 
-export default function CasesMapDisplay() {
+export function CasesMapDisplay() {
   const { queriedCases, highlightedCase } = useCases();
 
   return (

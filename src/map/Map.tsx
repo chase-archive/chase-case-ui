@@ -2,16 +2,16 @@ import MapGL from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { PropsWithChildren, useState } from 'react';
 import { layers } from './layers';
-import { useChaseCaseStore } from './store';
-import { useScrollToEvent } from './list/context';
+import { useChaseCaseStore } from '../store';
+import { useScrollToEvent } from '../list/context';
 
 const INITIAL_VIEW_STATE = {
-  longitude: -98.5556,
-  latitude: 39.8097,
+  longitude: -86,
+  latitude: 39.5,
   zoom: 4,
 };
 
-export default function Map({ children }: PropsWithChildren) {
+export function Map({ children }: PropsWithChildren) {
   const [highlightedCaseId, setHighlightedCaseId, setSelectedCaseId] =
     useChaseCaseStore((state) => [
       state.highlightedCaseId,

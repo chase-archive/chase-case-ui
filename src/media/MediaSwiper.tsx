@@ -6,7 +6,7 @@ import {
   InstagramEmbed,
   TwitterEmbed,
   YouTubeEmbed,
-} from './Embed';
+} from './embeds';
 import {
   isFacebookLink,
   isInstagramLink,
