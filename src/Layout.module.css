@@ -1,28 +1,21 @@
-.overlay {
-  --left-padding: 1.5rem;
-  position: fixed;
+.logo {
+  position: absolute;
+  left: 1.5rem;
   top: 1rem;
-  left: var(--left-padding);
-  width: calc(100vw - 2 * var(--left-padding));
-  align-items: flex-start;
-  justify-content: space-between;
-  pointer-events: none;
-  gap: 1rem;
 }
 
-.overlay > * {
-  pointer-events: auto;
+.mobileOverlay{
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  width: calc(100vw - 2rem);
+  height: calc(100vh - 2rem);
+  align-items: center;
+  pointer-events: none;
 }
 
-.mobileOverlay {
-  --left-padding: 1rem;
-  --top-padding: 1rem;
-  height: calc(100svh - 2 * var(--top-padding) - 40px);
-  position: fixed;
-  top: var(--top-padding);
-  left: var(--left-padding);
-  width: calc(100vw - 2 * var(--left-padding));
-  pointer-events: none;
+.mobileTopbar {
+  width: 100%;
 }
 
 .mobileOverlay > * {

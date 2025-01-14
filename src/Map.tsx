@@ -67,7 +67,9 @@ export default function Map({ children }: PropsWithChildren) {
           .filter((chaseCase) => !!chaseCase) as string[];
 
         const highlightedCase = cases[0];
-        if (highlightedCase === highlightedCaseId) {
+        if (!highlightedCase) {
+          return;
+        } else if (highlightedCase === highlightedCaseId) {
           setSelectedCaseId(highlightedCase);
         } else {
           setHighlightedCaseId(highlightedCase);

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { CloseButton, Loader, TextInput } from '@mantine/core';
 import { MdSearch } from 'react-icons/md';
 import { useCases } from '../hooks';
-import styles from './QueryCases.module.css';
+import styles from './SearchBar.module.css';
 
 const DEBOUNCE_TIME = 300;
 

@@ -1,13 +1,13 @@
 import { Button, Flex } from '@mantine/core';
 import Map from './Map';
 import { CasesMapDisplay } from './mapDisplay';
-import { QueryCases } from './query';
 import styles from './Layout.module.css';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { CasePanel } from './list/CasePanel';
 import { EventScrollProvider } from './list/EventScrollProvider';
 import { CaseDetailsModal } from './details/CaseDetails';
 import { CaseDrawer } from './list/CaseDrawer';
+import { SearchBar } from './query/SearchBar';
 
 export default function Layout() {
   const isDesktop = useMediaQuery('(min-width: 768px)');
@@ -24,6 +24,7 @@ export default function Layout() {
 function DesktopOverlay() {
   return (
     <>
+      <img src='/logo.png' alt='logo' className={styles.logo} width={60} />
       <CasePanel />
       <CaseDetailsModal />
     </>
@@ -35,12 +36,15 @@ function MobileOverlay() {
   return (
     <>
       <Flex
-        className={styles.mobileOverlay}
         direction='column'
-        align='center'
+        gap={15}
         justify='space-between'
+        className={styles.mobileOverlay}
       >
-        <QueryCases />
+        <Flex gap={10} className={styles.mobileTopbar}>
+          <img src='/logo.png' alt='logo' width={40} />
+          <SearchBar />
+        </Flex>
         <Button onClick={handlers.open}>Open Cases</Button>
       </Flex>
       <CaseDrawer
