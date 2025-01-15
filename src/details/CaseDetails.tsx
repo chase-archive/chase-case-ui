@@ -2,7 +2,7 @@ import { Center, Flex, Loader, Modal, Tabs, Text } from '@mantine/core';
 import { useChaseCaseStore } from '../store';
 import { useGetCaseDetails } from './api';
 import { TagList } from '../tags/TagList';
-import { MediaSwiper } from '../media/MediaViewer';
+import { MediaViewer } from '../media/MediaViewer';
 import { ChaseCase } from '../types';
 import styles from './CaseDetails.module.css';
 import { ChaseCaseProps } from './types';
@@ -74,7 +74,7 @@ function CaseDetailsContent({ chaseCase }: ChaseCaseProps) {
         <CaseDataTable chaseCase={chaseCase} />
       </Tabs.Panel>
       <Tabs.Panel value='social-media' className={styles.caseDetailsContent}>
-        <MediaSwiper urls={socialLinks} />
+        <MediaViewer urls={socialLinks} />
       </Tabs.Panel>
       <Tabs.Panel value='soundings' className={styles.caseDetailsContent}>
         <SoundingViewer caseId={chaseCase.id} />

@@ -18,7 +18,7 @@ interface MediaSwiperProps {
   urls: string[];
 }
 
-export function MediaSwiper({ urls }: MediaSwiperProps) {
+export function MediaViewer({ urls }: MediaSwiperProps) {
   const [activePage, setActivePage] = useState(1);
   if (!urls.length) {
     return null;
